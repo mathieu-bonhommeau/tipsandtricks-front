@@ -1,17 +1,34 @@
-import { Button, FormControl, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Button, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { UserInput } from '../../domain/user/port/user.interface.ts';
+import { useAppDispatch } from '../utils/dispatch.ts';
+import { registerUser } from '../../domain/user/use-case/user.actions.ts';
+import dependencyContainer from '../../_config/dependencies/dependencies.ts';
+import { UserApi } from '../../server-side/user/user.api.ts';
 
 function Register() {
     const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmationPassword, setConfirmationPassword] = useState('');
+    const dispatch = useAppDispatch();
+
+    const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log('Submit');
+        const userInput: UserInput = {
+            username: userName,
+            email: email,
+            password: password,
+        };
+        dispatch(registerUser({ userInterface: dependencyContainer.get<UserApi>('UserApi'), userInput: userInput }));
+    };
 
     return (
         <>
             <Typography>Bienvenue !</Typography>
             <Typography component="h1">Créer un compte</Typography>
-            <FormControl>
+            <form onSubmit={onSubmitHandler}>
                 <TextField
                     label="Adresse email"
                     variant="outlined"
@@ -43,8 +60,10 @@ function Register() {
                     value={confirmationPassword}
                     onChange={(event) => setConfirmationPassword(event.target.value)}
                 />
-                <Button variant="contained">Envoyer</Button>
-            </FormControl>
+                <Button type="submit" variant="contained">
+                    Envoyer
+                </Button>
+            </form>
         </>
     );
 }

@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './client-side/index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomePage from './pages/Home.tsx';
-import Register from './pages/Register.tsx';
+import HomePage from './client-side/pages/Home.tsx';
+import Register from './client-side/pages/Register.tsx';
 import { ThemeProvider } from '@mui/material';
-import { theme } from './theme.ts';
+import { theme } from './client-side/theme.ts';
+import { Provider } from 'react-redux';
+import { store } from './domain/store.ts';
 
 const router = createBrowserRouter([
     {
@@ -21,8 +23,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <RouterProvider router={router} />
-        </ThemeProvider>
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+                <RouterProvider router={router} />
+            </ThemeProvider>
+        </Provider>
     </React.StrictMode>,
 );
