@@ -5,6 +5,7 @@ import { useAppDispatch } from '../utils/dispatch.ts';
 import { registerUser } from '../../domain/user/use-case/user.actions.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { UserApi } from '../../server-side/user/user.api.ts';
+import { isConfirmationPasswordEqual, isValidPassword } from '../utils/password.ts';
 
 function Register() {
     const [email, setEmail] = useState('');
@@ -16,19 +17,10 @@ function Register() {
 
     const dispatch = useAppDispatch();
 
-    const isConfirmationPasswordEqual = (password: string, confirmationPassword: string) => {
-        return password === confirmationPassword;
-    };
-
-    const isValidPassword = () => {
-        const passwordRegex = /^(?=(?:.*\d))(?=(?:.*[a-zA-Z]))(?=(?:.*[A-Z])).{12,}$/;
-        return passwordRegex.test(password);
-    };
-
     const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (isValidPassword()) {
+        if (isValidPassword(password)) {
             setIsPasswordWrong(false);
 
             if (isConfirmationPasswordEqual(password, confirmationPassword)) {
