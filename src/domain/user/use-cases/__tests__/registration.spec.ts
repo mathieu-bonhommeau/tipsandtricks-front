@@ -32,6 +32,7 @@ describe('When a user submits the register form', () => {
 
         await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
 
+        expect(store.getState().registration.usernameValidity).toEqual(true);
         expect(store.getState().registration.passwordValidity).toEqual(true);
         expect(store.getState().registration.passwordsEquality).toEqual(true);
         expect(store.getState().registration.user).toEqual(expectedUser);
@@ -50,6 +51,14 @@ describe('When a user submits the register form', () => {
 
         store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
         expect(store.getState().registration.passwordsEquality).toBe(false);
+        expect(store.getState().registration.user).toEqual(null);
+    });
+
+    test('when the userName is too short, there is a corresponding error an the API gateway is not called', () => {
+        const userInputs = sut.givenAUserInputWithBadUserName();
+
+        store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        expect(store.getState().registration.usernameValidity).toBe(false);
         expect(store.getState().registration.user).toEqual(null);
     });
 

@@ -60,19 +60,19 @@ export function checkConfirmationPassword(password: string, confirmationPassword
 
 export function registerUser({ userGatewayInterface, userInput }: registerUserParams) {
     return async function registerUserThunk(dispatch: AppDispatch, getState: RootState) {
-        const { password, confirmationPassword } = userInput;
+        const { username, password, confirmationPassword } = userInput;
 
         dispatch(checkPasswordValidity(password));
         dispatch(checkConfirmationPassword(password, confirmationPassword));
-
-        /*        const arePasswordsEqual = checkPasswordsEquity(password, confirmationPassword);
-        if (!arePasswordsEqual) {
-            dispatch(passwordsEquality(false));
-        }*/
+        dispatch(checkUsernameValidity(username));
 
         const state = getState();
 
-        if (state.registration.passwordValidity && state.registration.passwordsEquality) {
+        if (
+            state.registration.usernameValidity &&
+            state.registration.passwordValidity &&
+            state.registration.passwordsEquality
+        ) {
             await dispatch(
                 registerUserAsync({
                     userGatewayInterface: userGatewayInterface,

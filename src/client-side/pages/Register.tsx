@@ -1,7 +1,12 @@
 import { Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useAppDispatch } from '../utils/dispatch.ts';
-import { registerUser } from '../../domain/user/use-cases/registration.actions.ts';
+import {
+    checkConfirmationPassword,
+    checkPasswordValidity,
+    checkUsernameValidity,
+    registerUser,
+} from '../../domain/user/use-cases/registration.actions.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
@@ -16,8 +21,24 @@ function Register() {
 
     const isPasswordValid = useSelector((state: RootState) => state.registration.passwordValidity);
     const arePasswordsEqual = useSelector((state: RootState) => state.registration.passwordsEquality);
+    const isUsernameValid = useSelector((state: RootState) => state.registration.usernameValidity);
 
     const dispatch = useAppDispatch();
+
+    const onChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUserName(event.target.value);
+        dispatch(checkUsernameValidity(event.target.value));
+    };
+
+    const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
+        dispatch(checkPasswordValidity(event.target.value));
+    };
+
+    const onChangeConfirmationPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setConfirmationPassword(event.target.value);
+        dispatch(checkConfirmationPassword(password, event.target.value));
+    };
 
     const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -55,7 +76,9 @@ function Register() {
                     variant="outlined"
                     required
                     value={userName}
-                    onChange={(event) => setUserName(event.target.value)}
+                    error={!isUsernameValid}
+                    onChange={onChangeUsername}
+                    helperText={isUsernameValid ? '' : "Le nom d'utilisateur doit comporter au moins deux caractères"}
                 />
                 <TextField
                     label="Mot de passe"
@@ -64,7 +87,7 @@ function Register() {
                     error={!isPasswordValid}
                     required
                     value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    onChange={onChangePassword}
                     helperText="Le mot de passe doit faire au moins 12 caractères, doit contenir au moins une majuscule, un chiffre et un caractère spécial."
                 />
                 <TextField
@@ -74,7 +97,7 @@ function Register() {
                     error={!arePasswordsEqual}
                     required
                     value={confirmationPassword}
-                    onChange={(event) => setConfirmationPassword(event.target.value)}
+                    onChange={onChangeConfirmationPassword}
                     helperText={arePasswordsEqual ? '' : 'Les mots de passe ne correspondent pas'}
                 />
                 <Button type="submit" variant="contained">
