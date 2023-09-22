@@ -1,8 +1,8 @@
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
-import { UserApi } from '../../server-side/user/user.api.ts';
+import { UserGatewayApi } from '../../server-side/user/user-gateway.api.ts';
 
-dependencyContainer.set<UserApi>('UserApi', () => {
-    return new UserApi();
+dependencyContainer.set<UserGatewayApi>('UserGatewayApi', () => {
+    return new UserGatewayApi();
 });
 
 export default dependencyContainer;

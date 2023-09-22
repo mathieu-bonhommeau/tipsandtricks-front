@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RegistrationState } from '../models/registration.model.ts';
+import { registerUserAsync } from './registration.actions.ts';
 
 const initialState: RegistrationState = {
+    user: null,
     passwordValidity: true,
     passwordsEquality: true,
 };
@@ -17,7 +19,13 @@ export const registrationSlice = createSlice({
             state.passwordsEquality = action.payload;
         },
     },
-    extraReducers: () => {},
+    extraReducers: (builder) => {
+        builder.addCase(registerUserAsync.fulfilled, (state, action) => {
+            // console.log('action', action.payload);
+            state.user = action.payload;
+            // console.log(state.user);
+        });
+    },
 });
 
 // Action creators are generated for each case reducer function

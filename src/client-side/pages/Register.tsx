@@ -1,12 +1,12 @@
 import { Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { UserInput } from '../../domain/user/port/user.interface.ts';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import { registerUser } from '../../domain/user/use-cases/registration.actions.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
-import { UserApi } from '../../server-side/user/user.api.ts';
+import { UserGatewayApi } from '../../server-side/user/user-gateway.api.ts';
+import { UserInput } from '../../domain/user/models/registration.model.ts';
 
 function Register() {
     const [email, setEmail] = useState('');
@@ -29,7 +29,12 @@ function Register() {
             confirmationPassword: confirmationPassword,
         };
 
-        dispatch(registerUser({ userInterface: dependencyContainer.get<UserApi>('UserApi'), userInput: userInput }));
+        dispatch(
+            registerUser({
+                userGatewayInterface: dependencyContainer.get<UserGatewayApi>('UserGatewayApi'),
+                userInput: userInput,
+            }),
+        );
     };
 
     return (

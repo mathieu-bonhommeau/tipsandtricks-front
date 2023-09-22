@@ -1,8 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { UserInput, UserInterface } from '../port/user.interface.ts';
 import { passwordsEquality, passwordValidity } from './registration.slice.ts';
 import { AppDispatch } from '../../store.ts';
+import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
+import { UserInput } from '../models/registration.model.ts';
+import { User } from '../models/user.model.ts';
 
+export type registerUserParams = {
+    userGatewayInterface: UserGatewayInterface;
+    userInput: UserInput;
+};
 const checkPasswordsEquity = (password: string, confirmationPassword: string) => {
     return password === confirmationPassword;
 };
@@ -12,8 +18,8 @@ export const checkPasswordValidity = (password: string) => {
     return passwordRegex.test(password);
 };
 
-export function registerUser({ userInterface, userInput }: { userInterface: UserInterface; userInput: UserInput }) {
-    return function registerUserThunk(dispatch: AppDispatch) {
+export function registerUser({ userGatewayInterface, userInput }: registerUserParams) {
+    return async function registerUserThunk(dispatch: AppDispatch) {
         const { password, confirmationPassword } = userInput;
 
         const isPasswordValid = checkPasswordValidity(password);
@@ -27,9 +33,9 @@ export function registerUser({ userInterface, userInput }: { userInterface: User
         }
 
         if (isPasswordValid && arePasswordsEqual) {
-            dispatch(
+            await dispatch(
                 registerUserAsync({
-                    userInterface: userInterface,
+                    userGatewayInterface: userGatewayInterface,
                     userInput: userInput,
                 }),
             );
@@ -39,15 +45,14 @@ export function registerUser({ userInterface, userInput }: { userInterface: User
 
 export const registerUserAsync = createAsyncThunk(
     'user/registerUser',
-    async ({ userInterface, userInput }: { userInterface: UserInterface; userInput: UserInput }): Promise<string> => {
+    async ({ userGatewayInterface, userInput }: registerUserParams): Promise<User | null> => {
         try {
-            console.log("passage dans l'async thunk");
-            return await userInterface.registerUser(userInput);
+            return await userGatewayInterface.registerUser(userInput);
         } catch (error: unknown) {
             if (error && typeof error === 'string') {
                 throw new Error(error);
             }
-            return 'Internal error';
+            return null;
         }
     },
 );
