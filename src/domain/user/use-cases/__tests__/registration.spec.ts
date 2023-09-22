@@ -4,7 +4,7 @@ import RegistrationTestBuilder from './registrationTestBuilder.ts';
 import { UserInput } from '../../models/registration.model.ts';
 import { User } from '../../models/user.model.ts';
 import { setupStore } from '../../../store.ts';
-import { registerUser } from '../registration.actions.ts';
+import { checkConfirmationPassword, checkPasswordValidity, registerUser } from '../registration.actions.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
@@ -47,6 +47,34 @@ describe('When a user submits the register form', () => {
         expect(store.getState().registration.passwordsEquality).toBe(false);
         expect(store.getState().registration.user).toEqual(null);
     });
+
+    test('when user password is first invalid but corrected, the error message should vanish', async () => {
+        const userInputsWithWeakPassword = sut.givenAUserInputWithTooWeakPassword();
+        store.dispatch(checkPasswordValidity(userInputsWithWeakPassword.password));
+        const userInputsWithStrongPassword = sut.givenAUserInputWithStrongPassword();
+        store.dispatch(checkPasswordValidity(userInputsWithStrongPassword.password));
+
+        expect(store.getState().registration.passwordValidity).toEqual(true);
+    });
+
+    test('when user confirmation password is first not the same but corrected, the error message should vanish', async () => {
+        const userInputWithBadConfirmPassword = sut.givenAUserInputWithBadConfirmPassword();
+        store.dispatch(
+            checkConfirmationPassword(
+                userInputWithBadConfirmPassword.password,
+                userInputWithBadConfirmPassword.confirmationPassword,
+            ),
+        );
+        const userInputWithCorrectConfirmPassword = sut.givenAUserInputWithCorrectConfirmPassword();
+        store.dispatch(
+            checkConfirmationPassword(
+                userInputWithCorrectConfirmPassword.password,
+                userInputWithCorrectConfirmPassword.confirmationPassword,
+            ),
+        );
+
+        expect(store.getState().registration.passwordValidity).toEqual(true);
+    });
 });
 
 class SUT {
@@ -64,6 +92,11 @@ class SUT {
 
     givenAUserInputWithTooWeakPassword(): UserInput {
         this._registrationTestBuilder.withPassword('test');
+        return this._registrationTestBuilder.buildInputUserData();
+    }
+
+    givenAUserInputWithStrongPassword(): UserInput {
+        this._registrationTestBuilder.withPassword('123blablaBlop#');
         return this._registrationTestBuilder.buildInputUserData();
     }
 
