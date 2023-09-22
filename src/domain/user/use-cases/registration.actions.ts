@@ -4,6 +4,8 @@ import { AppDispatch } from '../../store.ts';
 import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
 import { UserInput } from '../models/registration.model.ts';
 import { User } from '../models/user.model.ts';
+// Empty type-import to clue TS into redux toolkit action type
+import type {} from 'redux-thunk/extend-redux';
 
 export type registerUserParams = {
     userGatewayInterface: UserGatewayInterface;

@@ -3,15 +3,14 @@ import { UserInput } from '../../domain/user/models/registration.model.ts';
 import { User } from '../../domain/user/models/user.model.ts';
 
 export class UserGatewayInMemory implements UserGatewayInterface {
+    private user: User | null = null;
+
     async registerUser(userInputs: UserInput): Promise<User | null> {
-        return {
-            id: 1,
-            email: userInputs.email,
-            username: userInputs.username,
-            roles: null,
-            created_at: '2022-12-17T03:24:00',
-            // created_at: new Date('2022-12-17T03:24:00').toDateString(),
-            updated_at: null,
-        } as User;
+        console.log(userInputs);
+        return this.user;
+    }
+
+    setUser(user: User): void {
+        this.user = user;
     }
 }
