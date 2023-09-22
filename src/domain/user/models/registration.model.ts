@@ -4,6 +4,7 @@ export interface RegistrationState {
     user: User | null;
     passwordValidity: boolean;
     passwordsEquality: boolean;
+    usernameValidity: boolean;
 }
 
 export type UserInput = {

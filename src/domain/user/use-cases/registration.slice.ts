@@ -6,6 +6,7 @@ const initialState: RegistrationState = {
     user: null,
     passwordValidity: true,
     passwordsEquality: true,
+    usernameValidity: true,
 };
 
 export const registrationSlice = createSlice({
@@ -18,17 +19,18 @@ export const registrationSlice = createSlice({
         passwordsEquality: (state, action: PayloadAction<boolean>) => {
             state.passwordsEquality = action.payload;
         },
+        usernameValidity: (state, action: PayloadAction<boolean>) => {
+            state.usernameValidity = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(registerUserAsync.fulfilled, (state, action) => {
-            // console.log('action', action.payload);
             state.user = action.payload;
-            // console.log(state.user);
         });
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { passwordValidity, passwordsEquality } = registrationSlice.actions;
+export const { passwordValidity, passwordsEquality, usernameValidity } = registrationSlice.actions;
 
 export const registrationReducer = registrationSlice.reducer;

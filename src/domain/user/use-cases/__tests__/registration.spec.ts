@@ -4,7 +4,12 @@ import RegistrationTestBuilder from './registrationTestBuilder.ts';
 import { UserInput } from '../../models/registration.model.ts';
 import { User } from '../../models/user.model.ts';
 import { setupStore } from '../../../store.ts';
-import { checkConfirmationPassword, checkPasswordValidity, registerUser } from '../registration.actions.ts';
+import {
+    checkConfirmationPassword,
+    checkPasswordValidity,
+    checkUsernameValidity,
+    registerUser,
+} from '../registration.actions.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
@@ -75,6 +80,22 @@ describe('When a user submits the register form', () => {
 
         expect(store.getState().registration.passwordValidity).toEqual(true);
     });
+
+    test('when username is shorter than 2 characters, there should be a corresponding error message', async () => {
+        const userInputWithBadUserName = sut.givenAUserInputWithBadUserName();
+        store.dispatch(checkUsernameValidity(userInputWithBadUserName.username));
+
+        expect(store.getState().registration.usernameValidity).toEqual(false);
+    });
+
+    test('when username is first shorter than 2 characters but corrected, the error message should vanish', async () => {
+        const userInputWithBadUserName = sut.givenAUserInputWithBadUserName();
+        store.dispatch(checkUsernameValidity(userInputWithBadUserName.username));
+        const userInputWithCorrectUserName = sut.givenAUserInputWithCorrectUserName();
+        store.dispatch(checkUsernameValidity(userInputWithCorrectUserName.username));
+
+        expect(store.getState().registration.usernameValidity).toEqual(true);
+    });
 });
 
 class SUT {
@@ -90,6 +111,16 @@ class SUT {
         return this._registrationTestBuilder.buildUser();
     }
 
+    givenAUserInputWithBadUserName(): UserInput {
+        this._registrationTestBuilder.withUsername('A');
+        return this._registrationTestBuilder.buildInputUserData();
+    }
+
+    givenAUserInputWithCorrectUserName(): UserInput {
+        this._registrationTestBuilder.withUsername('AB');
+        return this._registrationTestBuilder.buildInputUserData();
+    }
+
     givenAUserInputWithTooWeakPassword(): UserInput {
         this._registrationTestBuilder.withPassword('test');
         return this._registrationTestBuilder.buildInputUserData();
@@ -102,6 +133,11 @@ class SUT {
 
     givenAUserInputWithBadConfirmPassword(): UserInput {
         this._registrationTestBuilder.withConfirmationPassword('notthesame');
+        return this._registrationTestBuilder.buildInputUserData();
+    }
+
+    givenAUserInputWithCorrectConfirmPassword(): UserInput {
+        this._registrationTestBuilder.withConfirmationPassword(this.givenAUserInput().password);
         return this._registrationTestBuilder.buildInputUserData();
     }
 }

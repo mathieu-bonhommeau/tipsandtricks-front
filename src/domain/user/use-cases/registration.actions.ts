@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { passwordsEquality, passwordValidity } from './registration.slice.ts';
+import { passwordsEquality, passwordValidity, usernameValidity } from './registration.slice.ts';
 import { AppDispatch, RootState } from '../../store.ts';
 import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
 import { UserInput } from '../models/registration.model.ts';
@@ -20,6 +20,22 @@ export const checkPasswordRegex = (password: string): boolean => {
     return passwordRegex.test(password);
 };
 
+const checkUsernameLength = (username: string) => {
+    return username.length >= 2;
+};
+
+export function checkUsernameValidity(username: string) {
+    return function checkUsernameValidityThunk(dispatch: AppDispatch) {
+        const isUsernameValid = checkUsernameLength(username);
+
+        if (!isUsernameValid) {
+            dispatch(usernameValidity(false));
+        } else {
+            dispatch(usernameValidity(true));
+        }
+    };
+}
+
 export function checkPasswordValidity(password: string) {
     return function checkPasswordValidityThunk(dispatch: AppDispatch) {
         const isPasswordValid = checkPasswordRegex(password);
@@ -31,7 +47,6 @@ export function checkPasswordValidity(password: string) {
         }
     };
 }
-
 export function checkConfirmationPassword(password: string, confirmationPassword: string) {
     return function checkConfirmationPasswordThunk(dispatch: AppDispatch) {
         const arePasswordsEqual = checkPasswordsEquity(password, confirmationPassword);
