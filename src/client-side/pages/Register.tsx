@@ -2,43 +2,34 @@ import { Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { UserInput } from '../../domain/user/port/user.interface.ts';
 import { useAppDispatch } from '../utils/dispatch.ts';
-import { registerUser } from '../../domain/user/use-case/user.actions.ts';
+import { registerUser } from '../../domain/user/use-cases/registration.actions.ts';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { UserApi } from '../../server-side/user/user.api.ts';
-import { isConfirmationPasswordEqual, isValidPassword } from '../utils/password.ts';
 
 function Register() {
     const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmationPassword, setConfirmationPassword] = useState('');
-    const [isPasswordWrong, setIsPasswordWrong] = useState(false);
-    const [wrongConfirmationPasswordMessage, setWrongConfirmationPasswordMessage] = useState('');
+
+    const isPasswordValid = useSelector((state: RootState) => state.registration.passwordValidity);
+    const arePasswordsEqual = useSelector((state: RootState) => state.registration.passwordsEquality);
 
     const dispatch = useAppDispatch();
 
     const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (isValidPassword(password)) {
-            setIsPasswordWrong(false);
+        const userInput: UserInput = {
+            username: userName,
+            email: email,
+            password: password,
+            confirmationPassword: confirmationPassword,
+        };
 
-            if (isConfirmationPasswordEqual(password, confirmationPassword)) {
-                setWrongConfirmationPasswordMessage('');
-                const userInput: UserInput = {
-                    username: userName,
-                    email: email,
-                    password: password,
-                };
-                dispatch(
-                    registerUser({ userInterface: dependencyContainer.get<UserApi>('UserApi'), userInput: userInput }),
-                );
-            } else {
-                setWrongConfirmationPasswordMessage('Les mots de passe ne correspondent pas');
-            }
-        } else {
-            setIsPasswordWrong(true);
-        }
+        dispatch(registerUser({ userInterface: dependencyContainer.get<UserApi>('UserApi'), userInput: userInput }));
     };
 
     return (
@@ -65,7 +56,7 @@ function Register() {
                     label="Mot de passe"
                     variant="outlined"
                     type="password"
-                    error={isPasswordWrong}
+                    error={!isPasswordValid}
                     required
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
@@ -75,11 +66,11 @@ function Register() {
                     label="Confirmation du mot de passe"
                     variant="outlined"
                     type="password"
-                    error={wrongConfirmationPasswordMessage !== ''}
+                    error={!arePasswordsEqual}
                     required
                     value={confirmationPassword}
                     onChange={(event) => setConfirmationPassword(event.target.value)}
-                    helperText={wrongConfirmationPasswordMessage}
+                    helperText={arePasswordsEqual ? '' : 'Les mots de passe ne correspondent pas'}
                 />
                 <Button type="submit" variant="contained">
                     Envoyer

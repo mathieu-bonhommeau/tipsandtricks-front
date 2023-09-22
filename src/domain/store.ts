@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { userReducer } from './user/use-case/user.slice.ts';
+import { registrationReducer } from './user/use-cases/registration.slice.ts';
 export const store = configureStore({
     reducer: {
-        user: userReducer,
+        registration: registrationReducer,
     },
 });
 
