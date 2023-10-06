@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "pretty-lint": "prettier src --check --write && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "start": "vite preview",
     "test": "vitest"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.10",
     "@reduxjs/toolkit": "^1.9.5",
+    "dotenv": "^16.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2"
@@ -29,8 +30,8 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "typescript": "^5.0.2",
     "prettier": "3.0.3",
+    "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vitest": "^0.34.3"
   }
