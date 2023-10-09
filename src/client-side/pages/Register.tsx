@@ -13,6 +13,10 @@ import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
 import { Link } from 'react-router-dom';
 import { UserInput } from '../../domain/user/models/registration.model.ts';
+import {
+    resetEmailAlreadyUsedError,
+    resetUsernameAlreadyUsedError,
+} from '../../domain/user/use-cases/registration.slice.ts';
 
 function Register() {
     const [email, setEmail] = useState('');
@@ -36,9 +40,15 @@ function Register() {
 
     const dispatch = useAppDispatch();
 
+    const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
+        if (isEmailAlreadyUsedError) dispatch(resetEmailAlreadyUsedError());
+    };
+
     const onChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUserName(event.target.value);
         dispatch(checkUsernameValidity(event.target.value));
+        if (isUsernameAlreadyUsedError) dispatch(resetUsernameAlreadyUsedError());
     };
 
     const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +93,7 @@ function Register() {
                     type="email"
                     required
                     value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={onChangeEmail}
                 />
                 <TextField
                     label="Nom d'utilisateur"

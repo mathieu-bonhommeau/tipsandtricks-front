@@ -29,6 +29,7 @@ export const registrationSlice = createSlice({
             state.usernameAlreadyUsedError = false;
         },
         resetEmailAlreadyUsedError: (state) => {
+            console.log('Reducer !');
             state.emailAlreadyUsedError = false;
         },
     },
@@ -38,17 +39,19 @@ export const registrationSlice = createSlice({
             state.unknownServerError = false;
         });
         builder.addCase(registerUserAsync.rejected, (state, action) => {
-            console.log('action.error.message :', action.error.message);
             switch (action.error.message) {
                 case APIErrorMessages.USERNAME_ALREADY_USED:
                     state.usernameAlreadyUsedError = true;
+                    state.unknownServerError = false;
                     break;
                 case APIErrorMessages.EMAIL_ALREADY_USED:
                     state.emailAlreadyUsedError = true;
+                    state.unknownServerError = false;
                     break;
                 default:
+                    state.usernameAlreadyUsedError = false;
+                    state.emailAlreadyUsedError = false;
                     state.unknownServerError = true;
-                    break;
             }
         });
     },

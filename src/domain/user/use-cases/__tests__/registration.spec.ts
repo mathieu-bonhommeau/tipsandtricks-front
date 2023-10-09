@@ -13,6 +13,7 @@ import {
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
+import { resetEmailAlreadyUsedError, resetUsernameAlreadyUsedError } from '../registration.slice.ts';
 
 let store: ToolkitStore;
 let sut: SUT;
@@ -119,6 +120,7 @@ describe('When the registration form is submitted', () => {
 
         await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
 
+        expect(store.getState().registration.emailAlreadyUsedError).toEqual(false);
         expect(store.getState().registration.usernameAlreadyUsedError).toEqual(true);
     });
 
@@ -140,6 +142,7 @@ describe('When the registration form is submitted', () => {
 
         await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
 
+        expect(store.getState().registration.usernameAlreadyUsedError).toEqual(false);
         expect(store.getState().registration.emailAlreadyUsedError).toEqual(true);
     });
 
@@ -161,6 +164,8 @@ describe('When the registration form is submitted', () => {
 
         await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
 
+        expect(store.getState().registration.usernameAlreadyUsedError).toEqual(false);
+        expect(store.getState().registration.emailAlreadyUsedError).toEqual(false);
         expect(store.getState().registration.unknownServerError).toEqual(true);
     });
 
