@@ -1,31 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './client-side/index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomePage from './client-side/pages/Home.tsx';
-import Register from './client-side/pages/Register.tsx';
+import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './client-side/theme.ts';
 import { Provider } from 'react-redux';
 import { store } from './domain/store.ts';
+import BaseTemplate from "./client-side/components/BaseTemplate.tsx";
+import router from "./client-side/router/router.tsx";
 
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <HomePage />,
-    },
 
-    {
-        path: '/inscription',
-        element: <Register />,
-    },
-]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>
             <ThemeProvider theme={theme}>
-                <RouterProvider router={router} />
+                <BaseTemplate>
+                    <RouterProvider router={router} />
+                </BaseTemplate>
             </ThemeProvider>
         </Provider>
     </React.StrictMode>,

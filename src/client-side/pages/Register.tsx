@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import {
@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { UserGatewayApi } from '../../server-side/user/user-gateway.api.ts';
+import { Link } from 'react-router-dom';
 import { UserInput } from '../../domain/user/models/registration.model.ts';
 
 function Register() {
@@ -59,9 +60,11 @@ function Register() {
     };
 
     return (
-        <>
+        <Container maxWidth={'md'}>
             <Typography>Bienvenue !</Typography>
+            <Box sx={{ m: 3 }} />
             <Typography component="h1">Créer un compte</Typography>
+            <Box sx={{ m: 3 }} />
             <form onSubmit={onSubmitHandler} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <TextField
                     label="Adresse email"
@@ -100,11 +103,23 @@ function Register() {
                     onChange={onChangeConfirmationPassword}
                     helperText={arePasswordsEqual ? '' : 'Les mots de passe ne correspondent pas'}
                 />
-                <Button type="submit" variant="contained">
+                <Button
+                    type="submit"
+                    variant="contained"
+                    style={{ maxWidth: '150px', alignItems: 'right' }}
+                    color="primary"
+                >
                     Envoyer
                 </Button>
             </form>
-        </>
+            <Box sx={{ m: 3 }} />
+            <Typography component="p">
+                {'Vous avez déjà un compte ? '}
+                <Link color="inherit" to={'/connexion'}>
+                    {'Se connecter'}
+                </Link>
+            </Typography>
+        </Container>
     );
 }
 
