@@ -16,3 +16,9 @@ export type UserInput = {
     password: string;
     confirmationPassword: string;
 };
+
+export enum APIErrorMessages {
+    USERNAME_ALREADY_USED = 'USERNAME_ALREADY_USED',
+    EMAIL_ALREADY_USED = 'EMAIL_ALREADY_USED',
+    UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+}

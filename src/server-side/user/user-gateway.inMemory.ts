@@ -1,5 +1,5 @@
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
-import { UserInput } from '../../domain/user/models/registration.model.ts';
+import { APIErrorMessages, UserInput } from '../../domain/user/models/registration.model.ts';
 import { User } from '../../domain/user/models/user.model.ts';
 
 export class UserGatewayInMemory implements UserGatewayInterface {
@@ -14,11 +14,11 @@ export class UserGatewayInMemory implements UserGatewayInterface {
             return this.user;
         } else {
             if (this.usernameError) {
-                throw new Error('USERNAME_ALREADY_USED');
+                throw new Error(APIErrorMessages.USERNAME_ALREADY_USED);
             } else if (this.emailError) {
-                throw new Error('EMAIL_ALREADY_USED');
+                throw new Error(APIErrorMessages.EMAIL_ALREADY_USED);
             } else if (this.unknownError) {
-                throw new Error('UNKNOWN_ERROR');
+                throw new Error(APIErrorMessages.UNKNOWN_ERROR);
             }
             return null;
         }

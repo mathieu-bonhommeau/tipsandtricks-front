@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RegistrationState } from '../models/registration.model.ts';
+import { APIErrorMessages, RegistrationState } from '../models/registration.model.ts';
 import { registerUserAsync } from './registration.actions.ts';
 
 const initialState: RegistrationState = {
@@ -40,10 +40,10 @@ export const registrationSlice = createSlice({
         builder.addCase(registerUserAsync.rejected, (state, action) => {
             console.log('action.error.message :', action.error.message);
             switch (action.error.message) {
-                case 'USERNAME_ALREADY_USED':
+                case APIErrorMessages.USERNAME_ALREADY_USED:
                     state.usernameAlreadyUsedError = true;
                     break;
-                case 'EMAIL_ALREADY_USED':
+                case APIErrorMessages.EMAIL_ALREADY_USED:
                     state.emailAlreadyUsedError = true;
                     break;
                 default:
