@@ -5,6 +5,9 @@ export interface RegistrationState {
     passwordValidity: boolean;
     passwordsEquality: boolean;
     usernameValidity: boolean;
+    usernameAlreadyUsedError: boolean;
+    emailAlreadyUsedError: boolean;
+    unknownServerError: boolean;
 }
 
 export type UserInput = {

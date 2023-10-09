@@ -89,8 +89,8 @@ export const registerUserAsync = createAsyncThunk(
         try {
             return await userGatewayInterface.registerUser(userInput);
         } catch (error: unknown) {
-            if (error && typeof error === 'string') {
-                throw new Error(error);
+            if (error) {
+                throw error;
             }
             return null;
         }

@@ -41,7 +41,7 @@ function Register() {
         dispatch(checkConfirmationPassword(password, event.target.value));
     };
 
-    const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const userInput: UserInput = {
@@ -51,7 +51,7 @@ function Register() {
             confirmationPassword: confirmationPassword,
         };
 
-        dispatch(
+        await dispatch(
             registerUser({
                 userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
                 userInput: userInput,
