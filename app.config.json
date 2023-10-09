@@ -1,0 +1,10 @@
+{
+  "apps" : [
+    {
+      "name"      : "tipsandtricks-webapp",
+      "script"    : "npx",
+      "interpreter": "none",
+      "args": "serve -s dist/"
+    }
+  ]
+}
