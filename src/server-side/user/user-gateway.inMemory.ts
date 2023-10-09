@@ -13,10 +13,10 @@ export class UserGatewayInMemory implements UserGatewayInterface {
         if (!this.usernameError && !this.emailError && !this.unknownError) {
             return this.user;
         } else {
-            if (this.usernameError) {
-                throw new Error(APIErrorMessages.USERNAME_ALREADY_USED);
-            } else if (this.emailError) {
+            if (this.emailError) {
                 throw new Error(APIErrorMessages.EMAIL_ALREADY_USED);
+            } else if (this.usernameError) {
+                throw new Error(APIErrorMessages.USERNAME_ALREADY_USED);
             } else if (this.unknownError) {
                 throw new Error(APIErrorMessages.UNKNOWN_ERROR);
             }

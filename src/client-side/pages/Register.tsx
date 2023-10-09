@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { Alert, Button, Container, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import {
@@ -23,6 +23,16 @@ function Register() {
     const isPasswordValid = useSelector((state: RootState) => state.registration.passwordValidity);
     const arePasswordsEqual = useSelector((state: RootState) => state.registration.passwordsEquality);
     const isUsernameValid = useSelector((state: RootState) => state.registration.usernameValidity);
+
+    const isUsernameAlreadyUsedError = useSelector((state: RootState) => state.registration.usernameAlreadyUsedError);
+    const isEmailAlreadyUsedError = useSelector((state: RootState) => state.registration.emailAlreadyUsedError);
+    const isUnknownServerError = useSelector((state: RootState) => state.registration.unknownServerError);
+
+    let serverErrorMessage = null;
+    if (isUsernameAlreadyUsedError)
+        serverErrorMessage = "Ce nom d'utilisateur est déjà pris, veuillez en choisir un autre";
+    if (isEmailAlreadyUsedError) serverErrorMessage = 'Cet email est déjà utilisé';
+    if (isUnknownServerError) serverErrorMessage = 'Erreur inconnue, veuillez réessayer ultérieurement';
 
     const dispatch = useAppDispatch();
 
@@ -62,10 +72,11 @@ function Register() {
     return (
         <Container maxWidth={'md'}>
             <Typography>Bienvenue !</Typography>
-            <Box sx={{ m: 3 }} />
             <Typography component="h1">Créer un compte</Typography>
-            <Box sx={{ m: 3 }} />
-            <form onSubmit={onSubmitHandler} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <form
+                onSubmit={onSubmitHandler}
+                style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px 0' }}
+            >
                 <TextField
                     label="Adresse email"
                     variant="outlined"
@@ -103,6 +114,7 @@ function Register() {
                     onChange={onChangeConfirmationPassword}
                     helperText={arePasswordsEqual ? '' : 'Les mots de passe ne correspondent pas'}
                 />
+                {serverErrorMessage && <Alert severity="error">{serverErrorMessage}</Alert>}
                 <Button
                     type="submit"
                     variant="contained"
@@ -112,7 +124,6 @@ function Register() {
                     Envoyer
                 </Button>
             </form>
-            <Box sx={{ m: 3 }} />
             <Typography component="p">
                 {'Vous avez déjà un compte ? '}
                 <Link color="inherit" to={'/connexion'}>
