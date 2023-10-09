@@ -6,10 +6,12 @@ import { User } from '../models/user.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
 import { UserInput } from '../models/registration.model.ts';
+import { NavigateFunction } from 'react-router-dom';
 
 export type registerUserParams = {
     userGatewayInterface: UserGatewayInterface;
     userInput: UserInput;
+    navigate: NavigateFunction;
 };
 const checkPasswordsEquality = (password: string, confirmationPassword: string) => {
     return password === confirmationPassword;
@@ -58,7 +60,7 @@ export function checkConfirmationPassword(password: string, confirmationPassword
     };
 }
 
-export function registerUser({ userGatewayInterface, userInput }: registerUserParams) {
+export function registerUser({ userGatewayInterface, userInput, navigate }: registerUserParams) {
     return async function registerUserThunk(dispatch: AppDispatch, getState: RootState) {
         const { username, password, confirmationPassword } = userInput;
 
@@ -77,6 +79,7 @@ export function registerUser({ userGatewayInterface, userInput }: registerUserPa
                 registerUserAsync({
                     userGatewayInterface: userGatewayInterface,
                     userInput: userInput,
+                    navigate: navigate,
                 }),
             );
         }
@@ -85,9 +88,11 @@ export function registerUser({ userGatewayInterface, userInput }: registerUserPa
 
 export const registerUserAsync = createAsyncThunk(
     'user/registerUser',
-    async ({ userGatewayInterface, userInput }: registerUserParams): Promise<User | null> => {
+    async ({ userGatewayInterface, userInput, navigate }: registerUserParams): Promise<User | null> => {
         try {
-            return await userGatewayInterface.registerUser(userInput);
+            const result = await userGatewayInterface.registerUser(userInput);
+            navigate('/connexion');
+            return result;
         } catch (error: unknown) {
             if (error) {
                 throw error;

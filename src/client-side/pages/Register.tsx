@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserInput } from '../../domain/user/models/registration.model.ts';
 import {
     resetEmailAlreadyUsedError,
@@ -39,6 +39,7 @@ function Register() {
     if (isUnknownServerError) serverErrorMessage = 'Erreur inconnue, veuillez réessayer ultérieurement';
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -75,6 +76,7 @@ function Register() {
             registerUser({
                 userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
                 userInput: userInput,
+                navigate: navigate,
             }),
         );
     };

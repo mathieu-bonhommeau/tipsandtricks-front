@@ -29,7 +29,6 @@ export const registrationSlice = createSlice({
             state.usernameAlreadyUsedError = false;
         },
         resetEmailAlreadyUsedError: (state) => {
-            console.log('Reducer !');
             state.emailAlreadyUsedError = false;
         },
     },

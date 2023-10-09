@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, Mock, test } from 'vitest';
 import { UserGatewayInMemory } from '../../../../server-side/user/user-gateway.inMemory.ts';
 import RegistrationTestBuilder from './registrationTestBuilder.ts';
 import { UserInput } from '../../models/registration.model.ts';
@@ -14,10 +14,12 @@ import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
 import { resetEmailAlreadyUsedError, resetUsernameAlreadyUsedError } from '../registration.slice.ts';
+import { vi } from 'vitest';
 
 let store: ToolkitStore;
 let sut: SUT;
 let userGatewayInMemory: UserGatewayInMemory;
+let mockNavigate: Mock;
 
 beforeEach(() => {
     store = setupStore();
@@ -27,6 +29,7 @@ beforeEach(() => {
     userGatewayInMemory.setUsernameAlreadyUsedError(false);
     userGatewayInMemory.setEmailAlreadyUsedError(false);
     userGatewayInMemory.setUnknownError(false);
+    mockNavigate = vi.fn();
 });
 
 describe('When a user submits the register form', () => {
@@ -34,7 +37,9 @@ describe('When a user submits the register form', () => {
         const userInputs = sut.givenAUserInput();
         const expectedUser = sut.givenAUser();
 
-        await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
 
         expect(store.getState().registration.usernameValidity).toEqual(true);
         expect(store.getState().registration.passwordValidity).toEqual(true);
@@ -45,7 +50,9 @@ describe('When a user submits the register form', () => {
     test('when the password is not valid, there is a corresponding error and the API gateway is not called', () => {
         const userInputs = sut.givenAUserInputWithTooWeakPassword();
 
-        store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
         expect(store.getState().registration.passwordValidity).toBe(false);
         expect(store.getState().registration.user).toEqual(null);
     });
@@ -53,7 +60,9 @@ describe('When a user submits the register form', () => {
     test('when the two passwords are not the same, there is a corresponding error and the API gateway is not called', () => {
         const userInputs = sut.givenAUserInputWithBadConfirmPassword();
 
-        store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
         expect(store.getState().registration.passwordsEquality).toBe(false);
         expect(store.getState().registration.user).toEqual(null);
     });
@@ -61,7 +70,9 @@ describe('When a user submits the register form', () => {
     test('when the userName is too short, there is a corresponding error and the API gateway is not called', () => {
         const userInputs = sut.givenAUserInputWithBadUserName();
 
-        store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
         expect(store.getState().registration.usernameValidity).toBe(false);
         expect(store.getState().registration.user).toEqual(null);
     });
@@ -112,23 +123,36 @@ describe('When a user submits the register form', () => {
 });
 
 describe('When the registration form is submitted', () => {
-    // Todo : We could test the success case with redirection
+    test('if the response from API is a success, the user is redirected on the connexion page', async () => {
+        const userInputs = sut.givenAUserInput();
+
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
+
+        expect(mockNavigate).toHaveBeenCalledWith('/connexion');
+    });
 
     test('if the response from API says the username is already used, there is a corresponding error', async () => {
         const userInputs = sut.givenAUserInput();
         userGatewayInMemory.setUsernameAlreadyUsedError(true);
 
-        await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
 
         expect(store.getState().registration.emailAlreadyUsedError).toEqual(false);
         expect(store.getState().registration.usernameAlreadyUsedError).toEqual(true);
+        expect(mockNavigate).not.toBeCalled();
     });
 
     test('if the username is changed the error message should vanish', async () => {
         // Set the error state
         const userInputs = sut.givenAUserInput();
         userGatewayInMemory.setUsernameAlreadyUsedError(true);
-        await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
         expect(store.getState().registration.usernameAlreadyUsedError).toEqual(true);
 
         // The error should be removed
@@ -140,17 +164,22 @@ describe('When the registration form is submitted', () => {
         const userInputs = sut.givenAUserInput();
         userGatewayInMemory.setEmailAlreadyUsedError(true);
 
-        await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
 
         expect(store.getState().registration.usernameAlreadyUsedError).toEqual(false);
         expect(store.getState().registration.emailAlreadyUsedError).toEqual(true);
+        expect(mockNavigate).not.toBeCalled();
     });
 
     test('if the email is changed the error message should vanish', async () => {
         // Set the error state
         const userInputs = sut.givenAUserInput();
         userGatewayInMemory.setEmailAlreadyUsedError(true);
-        await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
         expect(store.getState().registration.emailAlreadyUsedError).toEqual(true);
 
         // The error should be removed
@@ -162,23 +191,30 @@ describe('When the registration form is submitted', () => {
         const userInputs = sut.givenAUserInput();
         userGatewayInMemory.setUnknownError(true);
 
-        await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
 
         expect(store.getState().registration.usernameAlreadyUsedError).toEqual(false);
         expect(store.getState().registration.emailAlreadyUsedError).toEqual(false);
         expect(store.getState().registration.unknownServerError).toEqual(true);
+        expect(mockNavigate).not.toBeCalled();
     });
 
     test('if the form is submitted the error message should vanish', async () => {
         // Set the error state
         const userInputs = sut.givenAUserInput();
         userGatewayInMemory.setUnknownError(true);
-        await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
         expect(store.getState().registration.unknownServerError).toEqual(true);
 
         // The error should be removed
         userGatewayInMemory.setUnknownError(false);
-        await store.dispatch(registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs }));
+        await store.dispatch(
+            registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
+        );
         expect(store.getState().registration.unknownServerError).toEqual(false);
     });
 });
