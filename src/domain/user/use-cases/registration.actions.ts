@@ -2,16 +2,16 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { passwordsEquality, passwordValidity, usernameValidity } from './registration.slice.ts';
 import { AppDispatch, RootState } from '../../store.ts';
 import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
-import { UserInput } from '../models/registration.model.ts';
 import { User } from '../models/user.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
+import { UserInput } from '../models/registration.model.ts';
 
 export type registerUserParams = {
     userGatewayInterface: UserGatewayInterface;
     userInput: UserInput;
 };
-const checkPasswordsEquity = (password: string, confirmationPassword: string) => {
+const checkPasswordsEquality = (password: string, confirmationPassword: string) => {
     return password === confirmationPassword;
 };
 
@@ -49,7 +49,7 @@ export function checkPasswordValidity(password: string) {
 }
 export function checkConfirmationPassword(password: string, confirmationPassword: string) {
     return function checkConfirmationPasswordThunk(dispatch: AppDispatch) {
-        const arePasswordsEqual = checkPasswordsEquity(password, confirmationPassword);
+        const arePasswordsEqual = checkPasswordsEquality(password, confirmationPassword);
         if (!arePasswordsEqual) {
             dispatch(passwordsEquality(false));
         } else {

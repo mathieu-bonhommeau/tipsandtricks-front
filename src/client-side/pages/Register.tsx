@@ -10,7 +10,7 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
-import { UserGatewayApi } from '../../server-side/user/user-gateway.api.ts';
+import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
 import { Link } from 'react-router-dom';
 import { UserInput } from '../../domain/user/models/registration.model.ts';
 
@@ -53,7 +53,7 @@ function Register() {
 
         dispatch(
             registerUser({
-                userGatewayInterface: dependencyContainer.get<UserGatewayApi>('UserGatewayApi'),
+                userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
                 userInput: userInput,
             }),
         );
