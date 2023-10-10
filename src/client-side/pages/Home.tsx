@@ -7,6 +7,10 @@ function App() {
             <Button variant="contained">
                 <Link to="/inscription">S'inscrire</Link>
             </Button>
+
+            <Button variant="contained">
+                <Link to="/fil-actus">Continuer sans compte</Link>
+            </Button>
         </>
     );
 }

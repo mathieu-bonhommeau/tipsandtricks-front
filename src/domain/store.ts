@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { registrationReducer } from './user/use-cases/registration.slice.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { tipsReducer } from './tips/use-cases/tips.slice.ts';
 
 /*export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const setupStore = (): ToolkitStore => {
     return configureStore({
         reducer: {
             registration: registrationReducer,
+            tipsReducer: tipsReducer
         },
     });
 };
