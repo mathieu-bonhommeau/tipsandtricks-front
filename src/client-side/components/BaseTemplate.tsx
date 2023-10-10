@@ -1,7 +1,7 @@
-import {AppBar, Box, Container, Toolbar, Typography} from "@mui/material";
-import {ReactElement} from 'react';
+import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material';
+import { ReactElement } from 'react';
 
-function BaseTemplate ({ children }: { children: ReactElement }) {
+function BaseTemplate({ children }: { children: ReactElement }) {
     return (
         <>
             <AppBar position="static">
@@ -28,11 +28,9 @@ function BaseTemplate ({ children }: { children: ReactElement }) {
                 </Container>
             </AppBar>
             <Box sx={{ m: 6 }} />
-            <Container maxWidth={"xl"}>
-                {children}
-            </Container>
+            <Container maxWidth={'xl'}>{children}</Container>
         </>
-    )
+    );
 }
 
-export default BaseTemplate
+export default BaseTemplate;

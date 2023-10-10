@@ -6,10 +6,8 @@ import { ThemeProvider } from '@mui/material';
 import { theme } from './client-side/theme.ts';
 import { Provider } from 'react-redux';
 import { store } from './domain/store.ts';
-import BaseTemplate from "./client-side/components/BaseTemplate.tsx";
-import router from "./client-side/router/router.tsx";
-
-
+import BaseTemplate from './client-side/components/BaseTemplate.tsx';
+import router from './client-side/router/router.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>

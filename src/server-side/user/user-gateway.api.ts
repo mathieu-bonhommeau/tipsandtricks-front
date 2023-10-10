@@ -1,7 +1,6 @@
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
 import { APIErrorMessages, UserInput } from '../../domain/user/models/registration.model.ts';
 import { User } from '../../domain/user/models/user.model.ts';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import axios, { AxiosError } from 'axios';
 
 export class UserGatewayApi implements UserGatewayInterface {
@@ -18,13 +17,11 @@ export class UserGatewayApi implements UserGatewayInterface {
             });
 
             return result.data.data as User;
-
-            // @ts-ignore
-        } catch (error: AxiosError) {
-            console.log('error :', error);
-            if (error.response.data === 'This email already exists in database !')
+        } catch (error: unknown) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response?.data === 'This email already exists in database !')
                 throw new Error(APIErrorMessages.EMAIL_ALREADY_USED);
-            if (error.response.data === 'This username already exists in database !')
+            if (axiosError.response?.data === 'This username already exists in database !')
                 throw new Error(APIErrorMessages.USERNAME_ALREADY_USED);
             throw new Error(APIErrorMessages.UNKNOWN_ERROR);
         }
