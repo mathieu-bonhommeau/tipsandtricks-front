@@ -1,5 +1,5 @@
 import dependencyContainer from '../dependencyContainer';
-import { describe, expect, test, beforeEach } from "vitest";
+import { describe, expect, test, beforeEach } from 'vitest';
 
 describe('A dependency container', () => {
     beforeEach(() => {
