@@ -1,6 +1,7 @@
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
 import { APIErrorMessages, UserInput } from '../../domain/user/models/registration.model.ts';
 import { User } from '../../domain/user/models/user.model.ts';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import axios, { AxiosError } from 'axios';
 
 export class UserGatewayApi implements UserGatewayInterface {
@@ -8,7 +9,7 @@ export class UserGatewayApi implements UserGatewayInterface {
         try {
             const result = await axios({
                 method: 'POST',
-                url: 'http://localhost:5000/api/register',
+                url: `${import.meta.env.VITE_API_URL}/api/register`,
                 data: {
                     email: userInputs.email,
                     username: userInputs.username,
