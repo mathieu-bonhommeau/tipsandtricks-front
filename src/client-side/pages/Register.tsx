@@ -18,6 +18,7 @@ import {
     resetUsernameAlreadyUsedError,
 } from '../../domain/user/use-cases/registration.slice.ts';
 import BaseTemplate from '../layout/BaseTemplate.tsx';
+import { routes } from '../router/router.tsx';
 
 function Register() {
     const [email, setEmail] = useState('');
@@ -142,7 +143,7 @@ function Register() {
                 </form>
                 <Typography component="p">
                     Vous avez déjà un compte ?{' '}
-                    <Link color="inherit" to={'/connexion'}>
+                    <Link color="inherit" to={routes.login}>
                         Se connecter
                     </Link>
                 </Typography>

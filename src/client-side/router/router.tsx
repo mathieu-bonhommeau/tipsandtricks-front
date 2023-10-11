@@ -5,17 +5,23 @@ import Login from '../pages/Login.tsx';
 import Feed from '../pages/Feed.tsx';
 import TipsCollection from '../pages/TipsCollection.tsx';
 
+export enum routes {
+    homepage = '/',
+    register = '/inscription',
+    login = '/connexion',
+}
+
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: routes.homepage,
         element: <HomePage />,
     },
     {
-        path: '/inscription',
+        path: routes.register,
         element: <Register />,
     },
     {
-        path: '/connexion',
+        path: routes.login,
         element: <Login />,
     },
 

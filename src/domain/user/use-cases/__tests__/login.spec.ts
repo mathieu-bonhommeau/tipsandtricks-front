@@ -35,7 +35,7 @@ describe('When a user submits the register form', () => {
         expect(store.getState().login.unknownError).toEqual(false);
         expect(store.getState().login.user).toEqual(expectedUser);
 
-        expect(mockNavigate).toHaveBeenCalledWith('/mes-tips');
+        expect(mockNavigate).toHaveBeenCalledWith('/flux');
     });
 
     test('when there is a credentials error, there is a corresponding error message and there is no redirect', async () => {
