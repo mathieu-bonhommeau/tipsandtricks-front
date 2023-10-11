@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, Mock, test } from 'vitest';
+import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { Tips } from "../../models/tips.model";
 import TipsTestBuilder from "./tipsTestBuilder";
@@ -45,6 +45,33 @@ describe('when a user is on the tips bank page', () => {
 
 
 });
+
+
+
+
+
+
+// describe('Copy To Clipboard', () => {
+//     test('return true when copying is successful', async () => {
+
+//         global.navigator.clipboard = {
+//             writeText: vi.fn(() => Promise.resolve()),
+//         };
+
+//     });
+
+
+//     test('return false when copying fails', async () => {
+//         tipsGatewayInMemory.simulateServerError();
+
+//         await store.dispatch(getTips({ tipsGatewayInterface: tipsGatewayInMemory }));
+
+//         expect(store.getState().tipsReducer.error).toBe('Internal Server Error');
+//     });
+
+
+// });
+
 
 
 

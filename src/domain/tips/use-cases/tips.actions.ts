@@ -10,6 +10,8 @@ export type tipsParams = {
 };
 
 
+
+
 export const getTips = createAsyncThunk(
     'tips/getTips',
     async ({ tipsGatewayInterface }: tipsParams): Promise<Tips[] | []> => {
@@ -24,3 +26,16 @@ export const getTips = createAsyncThunk(
         }
     },
 );
+
+
+
+export const handleCopyToClipboard = async (command: string): Promise<boolean> => {
+    try {
+        await navigator.clipboard.writeText(command);
+        return true;
+    } catch (err) {
+        return false;
+    }
+
+};
+

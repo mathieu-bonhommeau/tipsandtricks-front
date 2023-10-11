@@ -1,42 +1,35 @@
-import { Card, CardContent, CardHeader, IconButton, TextField, Chip, InputAdornment } from "@mui/material";
+import { Card, CardContent, CardHeader, IconButton, TextField, Chip, InputAdornment, Alert } from "@mui/material";
 import ShareIcon from '@mui/icons-material/Share';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Tips } from "../../domain/tips/models/tips.model";
+import { handleCopyToClipboard } from "../../domain/tips/use-cases/tips.actions";
+import { useState } from "react";
 
 function TipsCard({ oneTips }: TipsCardProps) {
 
+    const [textCopied, setTextCopied] = useState(false);
+    const [failCopied, setFailCopied] = useState(false);
 
-    // Fonction pour copier le texte dans le presse-papiers
-    const handleCopyToClipboard = () => {
-        const textCopy = oneTips.command;
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(textCopy).then(
-                function () {
-                    console.log("Texte copié avec succès !");
-                },
-                function (err) {
-                    console.error("Impossible de copier le texte : ", err);
-                }
-            );
+
+    const handleCopy = async (command: string) => {
+        const success = await handleCopyToClipboard(command);
+        if (success) {
+            setTextCopied(true);
+            setTimeout(() => {
+                setTextCopied(false);
+            }, 3000);
         } else {
-
-            const textarea = document.createElement("textarea");
-            textarea.value = textCopy;
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                console.log("Texte copié avec succès !");
-            } catch (err) {
-                console.error("Impossible de copier le texte", err);
-            }
-            document.body.removeChild(textarea);
+            setFailCopied(true);
+            setTimeout(() => {
+                setFailCopied(false);
+            }, 3000);
         }
-
-
     };
+
+    console.log(textCopied);
+
 
     return (
         <Card style={{ maxWidth: '500px', margin: '10px auto' }}>
@@ -57,9 +50,24 @@ function TipsCard({ oneTips }: TipsCardProps) {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton onClick={handleCopyToClipboard}>
-                                        <ContentCopyIcon />
-                                    </IconButton>
+                                    {
+                                        textCopied ? (
+                                            <Alert variant="filled" severity="success" >Copié !</Alert>
+                                        ) : failCopied ? (
+                                            <Alert severity="error">Echec de la copie !</Alert>
+                                        ) :
+
+                                            (
+                                                <IconButton onClick={() => handleCopy(oneTips.command)}>
+                                                    <ContentCopyIcon />
+                                                </IconButton>
+
+                                            )
+
+
+
+                                    }
+
                                 </InputAdornment>
                             )
                         }}
