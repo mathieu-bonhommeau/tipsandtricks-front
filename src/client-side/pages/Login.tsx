@@ -10,6 +10,7 @@ import { loginUser } from '../../domain/user/use-cases/login.actions.ts';
 import { resetErrorState } from '../../domain/user/use-cases/login.slice.ts';
 import { Link, useNavigate } from 'react-router-dom';
 import BaseTemplate from '../layout/BaseTemplate.tsx';
+import { routes } from '../router/router.tsx';
 
 function Login() {
     const isCredentialsError = useSelector((state: RootState) => state.login.credentialsError);
@@ -83,7 +84,7 @@ function Login() {
                 </form>
                 <Typography component="p">
                     Vous n'avez pas encore de compte ?{' '}
-                    <Link color="inherit" to={'/inscription'}>
+                    <Link color="inherit" to={routes.register}>
                         S'inscrire
                     </Link>
                 </Typography>

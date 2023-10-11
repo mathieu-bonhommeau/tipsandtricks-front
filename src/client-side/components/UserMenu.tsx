@@ -2,6 +2,7 @@ import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
+import { routes } from '../router/router.tsx';
 
 type UserMenuProps = {
     username: string;
@@ -11,11 +12,11 @@ function UserMenu({ username }: UserMenuProps) {
     const links = [
         {
             label: 'Tips Board',
-            path: '/mes-tips',
+            path: routes.homepage,
         },
         {
             label: 'Profil',
-            path: '/mon-compte',
+            path: routes.homepage,
         },
     ];
 

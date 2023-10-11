@@ -3,17 +3,23 @@ import HomePage from '../pages/Home.tsx';
 import Register from '../pages/Register.tsx';
 import Login from '../pages/Login.tsx';
 
+export enum routes {
+    homepage = '/',
+    register = '/inscription',
+    login = '/connexion',
+}
+
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: routes.homepage,
         element: <HomePage />,
     },
     {
-        path: '/inscription',
+        path: routes.register,
         element: <Register />,
     },
     {
-        path: '/connexion',
+        path: routes.login,
         element: <Login />,
     },
 ]);

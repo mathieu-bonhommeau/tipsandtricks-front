@@ -2,6 +2,7 @@ import { AppBar, Container, Toolbar, Typography } from '@mui/material';
 import UserMenu from './UserMenu.tsx';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
+import { routes } from '../router/router.tsx';
 
 function AppHeader() {
     const user = useSelector((state: RootState) => state.login.user);
@@ -14,7 +15,7 @@ function AppHeader() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        href={routes.homepage}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
