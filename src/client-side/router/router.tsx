@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import HomePage from '../pages/Home.tsx';
 import Register from '../pages/Register.tsx';
 import Login from '../pages/Login.tsx';
+import BaseTemplate from '../layout/BaseTemplate.tsx';
 
 export enum routes {
     homepage = '/',
@@ -12,15 +13,21 @@ export enum routes {
 const router = createBrowserRouter([
     {
         path: routes.homepage,
-        element: <HomePage />,
-    },
-    {
-        path: routes.register,
-        element: <Register />,
-    },
-    {
-        path: routes.login,
-        element: <Login />,
+        element: <BaseTemplate />,
+        children: [
+            {
+                index: true,
+                element: <HomePage />,
+            },
+            {
+                path: routes.register,
+                element: <Register />,
+            },
+            {
+                path: routes.login,
+                element: <Login />,
+            },
+        ],
     },
 ]);
 

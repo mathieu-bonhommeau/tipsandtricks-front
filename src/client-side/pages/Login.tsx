@@ -9,7 +9,6 @@ import { useAppDispatch } from '../utils/dispatch.ts';
 import { loginUser } from '../../domain/user/use-cases/login.actions.ts';
 import { resetErrorState } from '../../domain/user/use-cases/login.slice.ts';
 import { Link, useNavigate } from 'react-router-dom';
-import BaseTemplate from '../layout/BaseTemplate.tsx';
 import { routes } from '../router/router.tsx';
 
 function Login() {
@@ -43,53 +42,49 @@ function Login() {
     };
 
     return (
-        <BaseTemplate>
-            <Container maxWidth={'md'}>
-                <Typography component="h1">Se connecter</Typography>
-                {userNewlyRegistered && (
-                    <Alert severity="success">Votre compte a bien été créé ! Veuillez vous connecter.</Alert>
-                )}
-                <form
-                    onSubmit={onSubmitHandler}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px 0' }}
+        <Container maxWidth={'md'}>
+            <Typography component="h1">Se connecter</Typography>
+            {userNewlyRegistered && (
+                <Alert severity="success">Votre compte a bien été créé ! Veuillez vous connecter.</Alert>
+            )}
+            <form
+                onSubmit={onSubmitHandler}
+                style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px 0' }}
+            >
+                <TextField
+                    label="Email"
+                    variant="outlined"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                />
+                <TextField
+                    label="Mot de passe"
+                    variant="outlined"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                />
+                {isCredentialsError && <Alert severity="error">Les identifiants sont incorrects</Alert>}
+                {isUnknownError && <Alert severity="error">Erreur inconnue, veuillez réessayer ultérieurement</Alert>}
+                <Button
+                    type="submit"
+                    variant="contained"
+                    style={{ maxWidth: '150px', alignItems: 'right' }}
+                    color="primary"
                 >
-                    <TextField
-                        label="Email"
-                        variant="outlined"
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                    />
-                    <TextField
-                        label="Mot de passe"
-                        variant="outlined"
-                        type="password"
-                        required
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                    />
-                    {isCredentialsError && <Alert severity="error">Les identifiants sont incorrects</Alert>}
-                    {isUnknownError && (
-                        <Alert severity="error">Erreur inconnue, veuillez réessayer ultérieurement</Alert>
-                    )}
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        style={{ maxWidth: '150px', alignItems: 'right' }}
-                        color="primary"
-                    >
-                        Envoyer
-                    </Button>
-                </form>
-                <Typography component="p">
-                    Vous n'avez pas encore de compte ?{' '}
-                    <Link color="inherit" to={routes.register}>
-                        S'inscrire
-                    </Link>
-                </Typography>
-            </Container>
-        </BaseTemplate>
+                    Envoyer
+                </Button>
+            </form>
+            <Typography component="p">
+                Vous n'avez pas encore de compte ?{' '}
+                <Link color="inherit" to={routes.register}>
+                    S'inscrire
+                </Link>
+            </Typography>
+        </Container>
     );
 }
 
