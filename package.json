@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "pretty-lint": "prettier src --check --write && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "start": "vite preview",
+    "start-prod": "sudo pm2 start --name webapp npm -- start",
+    "restart-prod": "sudo pm2 restart webapp",
     "test": "vitest"
   },
   "dependencies": {

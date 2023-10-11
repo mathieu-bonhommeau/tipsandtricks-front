@@ -1,63 +1,95 @@
-import { Button, Container, Box, Typography, TextField, FormControlLabel, Checkbox, Grid, Link } from "@mui/material";
-
+import { Alert, Button, Container, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../domain/store.ts';
+import dependencyContainer from '../../_config/dependencies/dependencies.ts';
+import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
+import { LoginUserInput } from '../../domain/user/models/login.model.ts';
+import { useAppDispatch } from '../utils/dispatch.ts';
+import { loginUser } from '../../domain/user/use-cases/login.actions.ts';
+import { resetErrorState } from '../../domain/user/use-cases/login.slice.ts';
+import { Link, useNavigate } from 'react-router-dom';
+import BaseTemplate from '../layout/BaseTemplate.tsx';
 
 function Login() {
+    const isCredentialsError = useSelector((state: RootState) => state.login.credentialsError);
+    const isUnknownError = useSelector((state: RootState) => state.login.unknownError);
+    const userNewlyRegistered = useSelector((state: RootState) => state.registration.user);
+    const emailInitValue = userNewlyRegistered ? userNewlyRegistered.email : '';
+
+    const [email, setEmail] = useState(emailInitValue);
+    const [password, setPassword] = useState('');
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        dispatch(resetErrorState());
+
+        const userInput: LoginUserInput = {
+            email: email,
+            password: password,
+        };
+
+        await dispatch(
+            loginUser({
+                userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                userInput: userInput,
+                navigate: navigate,
+            }),
+        );
+    };
+
     return (
-
-        <Container component="main" maxWidth="xs">
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
-                <Typography component="h1" variant="h5">
-                    Connexion
-                </Typography>
-                <Box component="form" noValidate sx={{ mt: 1 }}>
+        <BaseTemplate>
+            <Container maxWidth={'md'}>
+                <Typography component="h1">Se connecter</Typography>
+                {userNewlyRegistered && (
+                    <Alert severity="success">Votre compte a bien été créé ! Veuillez vous connecter.</Alert>
+                )}
+                <form
+                    onSubmit={onSubmitHandler}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px 0' }}
+                >
                     <TextField
-                        margin="normal"
+                        label="Email"
+                        variant="outlined"
+                        type="email"
                         required
-                        fullWidth
-                        id="email"
-                        label="Adresse Email"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
                     />
                     <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Mot de Passe"
+                        label="Mot de passe"
+                        variant="outlined"
                         type="password"
-                        id="password"
-                        autoComplete="current-password"
+                        required
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
                     />
-
+                    {isCredentialsError && <Alert severity="error">Les identifiants sont incorrects</Alert>}
+                    {isUnknownError && (
+                        <Alert severity="error">Erreur inconnue, veuillez réessayer ultérieurement</Alert>
+                    )}
                     <Button
                         type="submit"
-                        fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        style={{ maxWidth: '150px', alignItems: 'right' }}
+                        color="primary"
                     >
-                        Se Connecter
+                        Envoyer
                     </Button>
-                    <Grid container>
-                        <Grid item>
-                            <Link href="/inscription" variant="body2">
-                                {"Vous n'avez pas de compte? Créez en un"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Box>
-        </Container>
-
-    )
+                </form>
+                <Typography component="p">
+                    Vous n'avez pas encore de compte ?{' '}
+                    <Link color="inherit" to={'/inscription'}>
+                        S'inscrire
+                    </Link>
+                </Typography>
+            </Container>
+        </BaseTemplate>
+    );
 }
 
 export default Login;

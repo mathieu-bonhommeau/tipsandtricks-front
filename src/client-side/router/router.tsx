@@ -5,7 +5,7 @@ import Login from '../pages/Login.tsx';
 import Feed from '../pages/Feed.tsx';
 import TipsCollection from '../pages/TipsCollection.tsx';
 
-export default createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: '/',
         element: <HomePage />,
@@ -29,3 +29,6 @@ export default createBrowserRouter([
         element: <TipsCollection />,
     },
 ]);
+
+
+export default router
