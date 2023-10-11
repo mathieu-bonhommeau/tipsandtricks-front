@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { APIErrorMessages, RegistrationState } from '../models/registration.model.ts';
+import { RegistrationState } from '../models/registration.model.ts';
 import { registerUserAsync } from './registration.actions.ts';
+import { APIErrorMessages } from '../models/user.model.ts';
 
 const initialState: RegistrationState = {
     user: null,
@@ -13,7 +14,7 @@ const initialState: RegistrationState = {
 };
 
 export const registrationSlice = createSlice({
-    name: 'user',
+    name: 'registration',
     initialState,
     reducers: {
         passwordValidity: (state, action: PayloadAction<boolean>) => {

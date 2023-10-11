@@ -1,17 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { registrationReducer } from './user/use-cases/registration.slice.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
-
-/*export const store = configureStore({
-    reducer: {
-        registration: registrationReducer,
-    },
-});*/
+import { loginReducer } from './user/use-cases/login.slice.ts';
 
 export const setupStore = (): ToolkitStore => {
     return configureStore({
         reducer: {
             registration: registrationReducer,
+            login: loginReducer,
         },
     });
 };
