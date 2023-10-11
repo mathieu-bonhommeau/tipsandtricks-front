@@ -5,14 +5,15 @@ import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
 import { User } from '../models/user.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
-import { UserInput } from '../models/registration.model.ts';
+import { RegistrationUserInput } from '../models/registration.model.ts';
 import { NavigateFunction } from 'react-router-dom';
 
 export type registerUserParams = {
     userGatewayInterface: UserGatewayInterface;
-    userInput: UserInput;
+    userInput: RegistrationUserInput;
     navigate: NavigateFunction;
 };
+
 const checkPasswordsEquality = (password: string, confirmationPassword: string) => {
     return password === confirmationPassword;
 };
@@ -87,7 +88,7 @@ export function registerUser({ userGatewayInterface, userInput, navigate }: regi
 }
 
 export const registerUserAsync = createAsyncThunk(
-    'user/registerUser',
+    'registration/registerUser',
     async ({ userGatewayInterface, userInput, navigate }: registerUserParams): Promise<User | null> => {
         try {
             const result = await userGatewayInterface.registerUser(userInput);

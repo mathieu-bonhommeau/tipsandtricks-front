@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, Mock, test } from 'vitest';
 import { UserGatewayInMemory } from '../../../../server-side/user/user-gateway.inMemory.ts';
-import RegistrationTestBuilder from './registrationTestBuilder.ts';
-import { UserInput } from '../../models/registration.model.ts';
+import TestBuilder from './testBuilder.ts';
+import { RegistrationUserInput } from '../../models/registration.model.ts';
 import { User } from '../../models/user.model.ts';
 import { setupStore } from '../../../store.ts';
 import {
@@ -28,7 +28,7 @@ beforeEach(() => {
     userGatewayInMemory.setUser(sut.givenAUser());
     userGatewayInMemory.setUsernameAlreadyUsedError(false);
     userGatewayInMemory.setEmailAlreadyUsedError(false);
-    userGatewayInMemory.setUnknownError(false);
+    userGatewayInMemory.setRegisterUnknownError(false);
     mockNavigate = vi.fn();
 });
 
@@ -189,7 +189,7 @@ describe('When the registration form is submitted', () => {
 
     test('if the response from API says unknown error, there is a corresponding error', async () => {
         const userInputs = sut.givenAUserInput();
-        userGatewayInMemory.setUnknownError(true);
+        userGatewayInMemory.setRegisterUnknownError(true);
 
         await store.dispatch(
             registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
@@ -204,14 +204,14 @@ describe('When the registration form is submitted', () => {
     test('if the form is submitted the error message should vanish', async () => {
         // Set the error state
         const userInputs = sut.givenAUserInput();
-        userGatewayInMemory.setUnknownError(true);
+        userGatewayInMemory.setRegisterUnknownError(true);
         await store.dispatch(
             registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
         );
         expect(store.getState().registration.unknownServerError).toEqual(true);
 
         // The error should be removed
-        userGatewayInMemory.setUnknownError(false);
+        userGatewayInMemory.setRegisterUnknownError(false);
         await store.dispatch(
             registerUser({ userGatewayInterface: userGatewayInMemory, userInput: userInputs, navigate: mockNavigate }),
         );
@@ -220,45 +220,45 @@ describe('When the registration form is submitted', () => {
 });
 
 class SUT {
-    private _registrationTestBuilder: RegistrationTestBuilder;
+    private _registrationTestBuilder: TestBuilder;
     constructor() {
-        this._registrationTestBuilder = new RegistrationTestBuilder();
+        this._registrationTestBuilder = new TestBuilder();
     }
-    givenAUserInput(): UserInput {
-        return this._registrationTestBuilder.buildInputUserData();
+    givenAUserInput(): RegistrationUserInput {
+        return this._registrationTestBuilder.buildRegistrationUserInput();
     }
 
     givenAUser(): User {
         return this._registrationTestBuilder.buildUser();
     }
 
-    givenAUserInputWithBadUserName(): UserInput {
+    givenAUserInputWithBadUserName(): RegistrationUserInput {
         this._registrationTestBuilder.withUsername('A');
-        return this._registrationTestBuilder.buildInputUserData();
+        return this._registrationTestBuilder.buildRegistrationUserInput();
     }
 
-    givenAUserInputWithCorrectUserName(): UserInput {
+    givenAUserInputWithCorrectUserName(): RegistrationUserInput {
         this._registrationTestBuilder.withUsername('AB');
-        return this._registrationTestBuilder.buildInputUserData();
+        return this._registrationTestBuilder.buildRegistrationUserInput();
     }
 
-    givenAUserInputWithTooWeakPassword(): UserInput {
+    givenAUserInputWithTooWeakPassword(): RegistrationUserInput {
         this._registrationTestBuilder.withPassword('test');
-        return this._registrationTestBuilder.buildInputUserData();
+        return this._registrationTestBuilder.buildRegistrationUserInput();
     }
 
-    givenAUserInputWithStrongPassword(): UserInput {
+    givenAUserInputWithStrongPassword(): RegistrationUserInput {
         this._registrationTestBuilder.withPassword('123blablaBlop#');
-        return this._registrationTestBuilder.buildInputUserData();
+        return this._registrationTestBuilder.buildRegistrationUserInput();
     }
 
-    givenAUserInputWithBadConfirmPassword(): UserInput {
+    givenAUserInputWithBadConfirmPassword(): RegistrationUserInput {
         this._registrationTestBuilder.withConfirmationPassword('notthesame');
-        return this._registrationTestBuilder.buildInputUserData();
+        return this._registrationTestBuilder.buildRegistrationUserInput();
     }
 
-    givenAUserInputWithCorrectConfirmPassword(): UserInput {
+    givenAUserInputWithCorrectConfirmPassword(): RegistrationUserInput {
         this._registrationTestBuilder.withConfirmationPassword(this.givenAUserInput().password);
-        return this._registrationTestBuilder.buildInputUserData();
+        return this._registrationTestBuilder.buildRegistrationUserInput();
     }
 }

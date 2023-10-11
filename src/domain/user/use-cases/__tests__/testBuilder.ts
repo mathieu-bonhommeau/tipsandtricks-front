@@ -1,7 +1,8 @@
 import { Roles, User } from '../../models/user.model.ts';
-import { UserInput } from '../../models/registration.model.ts';
+import { RegistrationUserInput } from '../../models/registration.model.ts';
+import { LoginUserInput } from '../../models/login.model.ts';
 
-export default class RegistrationTestBuilder {
+export default class TestBuilder {
     private readonly _id: number | null = 1;
     private _email: string = 'email@email.com';
     private _username: string = 'usertest';
@@ -22,31 +23,38 @@ export default class RegistrationTestBuilder {
         } as User;
     }
 
-    buildInputUserData(): UserInput {
+    buildRegistrationUserInput(): RegistrationUserInput {
         return {
             email: this._email,
             username: this._username,
             password: this._password,
             confirmationPassword: this._confirmationPassword,
-        } as UserInput;
+        };
     }
 
-    withEmail(email: string): RegistrationTestBuilder {
+    buildLoginUserInput(): LoginUserInput {
+        return {
+            email: this._username,
+            password: this._password,
+        };
+    }
+
+    withEmail(email: string): TestBuilder {
         this._email = email;
         return this;
     }
 
-    withUsername(username: string): RegistrationTestBuilder {
+    withUsername(username: string): TestBuilder {
         this._username = username;
         return this;
     }
 
-    withPassword(password: string): RegistrationTestBuilder {
+    withPassword(password: string): TestBuilder {
         this._password = password;
         return this;
     }
 
-    withConfirmationPassword(password: string): RegistrationTestBuilder {
+    withConfirmationPassword(password: string): TestBuilder {
         this._confirmationPassword = password;
         return this;
     }
