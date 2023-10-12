@@ -11,6 +11,7 @@ export class UserGatewayInMemory implements UserGatewayInterface {
     private credentialsError: boolean = false;
     private loginUnknownError: boolean = false;
     private logoutUnknownError: boolean = false;
+    private unauthorizedError: boolean = false;
 
     async registerUser(userInputs: RegistrationUserInput): Promise<User | null> {
         userInputs; // Disable typescript no-used error
@@ -47,6 +48,13 @@ export class UserGatewayInMemory implements UserGatewayInterface {
         throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
     }
 
+    async reconnectUser(): Promise<User | null> {
+        if (!this.unauthorizedError) {
+            return this.user;
+        }
+        throw new Error(APIErrorMessages.UNAUTHORIZED_ERROR);
+    }
+
     setUser(user: User): void {
         this.user = user;
     }
@@ -73,5 +81,9 @@ export class UserGatewayInMemory implements UserGatewayInterface {
 
     setLogoutUnknownError(value: boolean) {
         this.logoutUnknownError = value;
+    }
+
+    setUnauthorizedError(value: boolean) {
+        this.unauthorizedError = value;
     }
 }

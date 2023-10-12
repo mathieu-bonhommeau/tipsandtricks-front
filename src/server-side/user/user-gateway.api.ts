@@ -2,11 +2,7 @@ import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interf
 import { RegistrationUserInput } from '../../domain/user/models/registration.model.ts';
 import { APIErrorMessages, User } from '../../domain/user/models/user.model.ts';
 import axios, { AxiosError } from 'axios';
-
-type AxiosErrorData = {
-    message: string;
-    status: number;
-};
+import { AxiosErrorData } from '../../domain/core/models/axios.model.ts';
 
 export class UserGatewayApi implements UserGatewayInterface {
     async registerUser(userInputs: RegistrationUserInput): Promise<User> {
@@ -61,6 +57,21 @@ export class UserGatewayApi implements UserGatewayInterface {
             });
         } catch {
             throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
+        }
+    }
+
+    async reconnectUser(): Promise<User | null> {
+        console.log('reconnectUser');
+        try {
+            const result = await axios({
+                method: 'GET',
+                url: `${import.meta.env.VITE_API_URL}/api/reconnect`,
+                withCredentials: true,
+            });
+            // console.log('reconnectUser result :', result);
+            return result;
+        } catch (error: unknown) {
+            throw new Error(APIErrorMessages.RECONNECT_UNKNOWN_ERROR);
         }
     }
 }
