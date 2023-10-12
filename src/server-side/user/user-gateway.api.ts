@@ -53,13 +53,12 @@ export class UserGatewayApi implements UserGatewayInterface {
         }
     }
 
-    async logoutUser(): Promise<boolean> {
+    async logoutUser(): Promise<void> {
         try {
             await axios({
                 method: 'POST',
                 url: `${import.meta.env.VITE_API_URL}/api/logout`,
             });
-            return true;
         } catch {
             throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
         }

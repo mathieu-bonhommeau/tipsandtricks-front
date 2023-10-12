@@ -33,16 +33,14 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
     'authentication/logoutUser',
-    async ({ userGatewayInterface, navigate }: logoutUserParams): Promise<boolean> => {
+    async ({ userGatewayInterface, navigate }: logoutUserParams): Promise<void> => {
         try {
-            const result = await userGatewayInterface.logoutUser();
+            await userGatewayInterface.logoutUser();
             navigate('/');
-            return result;
         } catch (error: unknown) {
             if (error) {
                 throw error;
             }
-            return false;
         }
     },
 );

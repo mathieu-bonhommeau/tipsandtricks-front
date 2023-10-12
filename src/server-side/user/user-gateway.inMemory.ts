@@ -40,9 +40,9 @@ export class UserGatewayInMemory implements UserGatewayInterface {
         return null;
     }
 
-    async logoutUser(): Promise<boolean> {
+    async logoutUser(): Promise<void> {
         if (!this.logoutUnknownError) {
-            return true;
+            return;
         }
         throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
     }
