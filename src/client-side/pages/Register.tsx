@@ -17,7 +17,6 @@ import {
     resetEmailAlreadyUsedError,
     resetUsernameAlreadyUsedError,
 } from '../../domain/user/use-cases/registration.slice.ts';
-import BaseTemplate from '../layout/BaseTemplate.tsx';
 import { routes } from '../router/router.tsx';
 
 function Register() {
@@ -84,71 +83,67 @@ function Register() {
     };
 
     return (
-        <BaseTemplate>
-            <Container maxWidth={'md'}>
-                <Typography>Bienvenue !</Typography>
-                <Typography component="h1">Créer un compte</Typography>
-                <form
-                    onSubmit={onSubmitHandler}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px 0' }}
+        <Container maxWidth={'md'}>
+            <Typography>Bienvenue !</Typography>
+            <Typography component="h1">Créer un compte</Typography>
+            <form
+                onSubmit={onSubmitHandler}
+                style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px 0' }}
+            >
+                <TextField
+                    label="Adresse email"
+                    variant="outlined"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={onChangeEmail}
+                />
+                <TextField
+                    label="Nom d'utilisateur"
+                    variant="outlined"
+                    required
+                    value={userName}
+                    error={!isUsernameValid}
+                    onChange={onChangeUsername}
+                    helperText={isUsernameValid ? '' : "Le nom d'utilisateur doit comporter au moins deux caractères"}
+                />
+                <TextField
+                    label="Mot de passe"
+                    variant="outlined"
+                    type="password"
+                    error={!isPasswordValid}
+                    required
+                    value={password}
+                    onChange={onChangePassword}
+                    helperText="Le mot de passe doit faire au moins 12 caractères, doit contenir au moins une majuscule, un chiffre et un caractère spécial."
+                />
+                <TextField
+                    label="Confirmation du mot de passe"
+                    variant="outlined"
+                    type="password"
+                    error={!arePasswordsEqual}
+                    required
+                    value={confirmationPassword}
+                    onChange={onChangeConfirmationPassword}
+                    helperText={arePasswordsEqual ? '' : 'Les mots de passe ne correspondent pas'}
+                />
+                {serverErrorMessage && <Alert severity="error">{serverErrorMessage}</Alert>}
+                <Button
+                    type="submit"
+                    variant="contained"
+                    style={{ maxWidth: '150px', alignItems: 'right' }}
+                    color="primary"
                 >
-                    <TextField
-                        label="Adresse email"
-                        variant="outlined"
-                        type="email"
-                        required
-                        value={email}
-                        onChange={onChangeEmail}
-                    />
-                    <TextField
-                        label="Nom d'utilisateur"
-                        variant="outlined"
-                        required
-                        value={userName}
-                        error={!isUsernameValid}
-                        onChange={onChangeUsername}
-                        helperText={
-                            isUsernameValid ? '' : "Le nom d'utilisateur doit comporter au moins deux caractères"
-                        }
-                    />
-                    <TextField
-                        label="Mot de passe"
-                        variant="outlined"
-                        type="password"
-                        error={!isPasswordValid}
-                        required
-                        value={password}
-                        onChange={onChangePassword}
-                        helperText="Le mot de passe doit faire au moins 12 caractères, doit contenir au moins une majuscule, un chiffre et un caractère spécial."
-                    />
-                    <TextField
-                        label="Confirmation du mot de passe"
-                        variant="outlined"
-                        type="password"
-                        error={!arePasswordsEqual}
-                        required
-                        value={confirmationPassword}
-                        onChange={onChangeConfirmationPassword}
-                        helperText={arePasswordsEqual ? '' : 'Les mots de passe ne correspondent pas'}
-                    />
-                    {serverErrorMessage && <Alert severity="error">{serverErrorMessage}</Alert>}
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        style={{ maxWidth: '150px', alignItems: 'right' }}
-                        color="primary"
-                    >
-                        Envoyer
-                    </Button>
-                </form>
-                <Typography component="p">
-                    Vous avez déjà un compte ?{' '}
-                    <Link color="inherit" to={routes.login}>
-                        Se connecter
-                    </Link>
-                </Typography>
-            </Container>
-        </BaseTemplate>
+                    Envoyer
+                </Button>
+            </form>
+            <Typography component="p">
+                Vous avez déjà un compte ?{' '}
+                <Link color="inherit" to={routes.login}>
+                    Se connecter
+                </Link>
+            </Typography>
+        </Container>
     );
 }
 

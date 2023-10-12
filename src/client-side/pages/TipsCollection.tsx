@@ -8,7 +8,7 @@ import dependencyContainer from "../../_config/dependencies/dependencies.ts";
 import { TipsGatewayInterface } from "../../domain/tips/port/tips-gateway.interface.ts";
 import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination } from "@mui/material";
 import { Tips } from "../../domain/tips/models/tips.model.ts";
-import BaseTemplate from "../layout/BaseTemplate.tsx";
+
 
 
 function TipsCollection() {
@@ -41,63 +41,55 @@ function TipsCollection() {
     }, [dispatch, currentPage]);
 
 
-    console.log(loading);
-    console.log(tips)
-
-
 
     let content;
 
     if (tips.length > 0) {
         content = (
-            <>
+            <Grid container spacing={4}>
                 {tips.map((oneTips: Tips) => (
                     <Grid item xs={12} sm={6} key={oneTips.id}>
                         <TipsCard oneTips={oneTips} />
                     </Grid>
                 ))}
-                <Pagination count={Math.ceil(totalTips / lengthPerPage)} page={currentPage} onChange={handleChange} />
-            </>
+            </Grid>
         );
     } else if (error) {
         content = (
             <Alert severity="error">
                 <AlertTitle>Erreur !</AlertTitle>
-                Erreur inattendue — <strong> Réessayez ulterieurement !</strong>
+                Erreur inattendue — <strong>Réessayez ultérieurement !</strong>
             </Alert>
         );
     } else {
         content = <Alert severity="info">Aucun Tips dans votre Tips Board !</Alert>;
     }
 
-
     return (
-        <>
-            <BaseTemplate>
-                <Container maxWidth="md">
-                    <Grid container spacing={4} justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
-                        {
-                            loading ?
-                                (
-                                    <Box sx={{ display: 'flex' }}>
-                                        <CircularProgress />
-                                    </Box>
-                                )
+        <Container maxWidth="md">
+            <Grid container direction="column" style={{ minHeight: '100vh' }}>
+                <Box flex="1" display="flex" flexDirection="column" justifyContent="center">
+                    {loading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        content
+                    )}
+                </Box>
 
-                                :
-
-                                content
-
-
-
-
-                        }
-
-                    </Grid>
-                </Container>
-            </BaseTemplate>
-        </>
-
+                {totalTips > lengthPerPage && (
+                    <Box display="flex" justifyContent="center" mt={2}>
+                        <Pagination
+                            shape="rounded"
+                            count={Math.ceil(totalTips / lengthPerPage)}
+                            page={currentPage}
+                            onChange={handleChange}
+                        />
+                    </Box>
+                )}
+            </Grid>
+        </Container>
     );
 }
 

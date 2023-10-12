@@ -1,13 +1,13 @@
 import { Container } from '@mui/material';
-import { ReactElement } from 'react';
 import AppHeader from '../components/AppHeader.tsx';
+import { Outlet } from 'react-router-dom';
 
-function BaseTemplate({ children }: { children: ReactElement }) {
+function BaseTemplate() {
     return (
         <>
             <AppHeader />
             <Container style={{ marginTop: '15px' }} maxWidth={'xl'}>
-                {children}
+                <Outlet />
             </Container>
         </>
     );

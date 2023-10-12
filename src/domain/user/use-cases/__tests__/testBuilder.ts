@@ -1,6 +1,6 @@
 import { Roles, User } from '../../models/user.model.ts';
 import { RegistrationUserInput } from '../../models/registration.model.ts';
-import { LoginUserInput } from '../../models/login.model.ts';
+import { LoginUserInput } from '../../models/authentication.model.ts';
 
 export default class TestBuilder {
     private readonly _id: number | null = 1;

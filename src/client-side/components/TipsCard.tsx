@@ -28,7 +28,6 @@ function TipsCard({ oneTips }: TipsCardProps) {
         }
     };
 
-    console.log(textCopied);
 
 
     return (

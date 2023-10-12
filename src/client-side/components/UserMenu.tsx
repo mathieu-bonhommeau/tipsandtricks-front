@@ -1,8 +1,12 @@
 import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { routes } from '../router/router.tsx';
+import { logoutUser } from '../../domain/user/use-cases/authentication.actions.ts';
+import dependencyContainer from '../../_config/dependencies/dependencies.ts';
+import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
+import { useAppDispatch } from '../utils/dispatch.ts';
 
 type UserMenuProps = {
     username: string;
@@ -28,6 +32,18 @@ function UserMenu({ username }: UserMenuProps) {
 
     const handleCloseUserMenu = () => {
         setNavAnchor(null);
+    };
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const handleLogoutUser = async () => {
+        await dispatch(
+            logoutUser({
+                userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                navigate: navigate,
+            }),
+        );
     };
 
     return (
@@ -61,7 +77,7 @@ function UserMenu({ username }: UserMenuProps) {
                         </Typography>
                     </MenuItem>
                 ))}
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={handleLogoutUser}>
                     <Typography textAlign="center">Déconnexion</Typography>
                 </MenuItem>
             </Menu>

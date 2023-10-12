@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test } from 'vitest';
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { Tips } from "../../models/tips.model";
 import TipsTestBuilder from "./tipsTestBuilder";
-import { TipsGatewayInMemory } from '../../../../server-side/tips/tips_gateway.inMemory';
+import { TipsGatewayInMemory } from '../../../../server-side/tips/tips-gateway.inMemory';
 import { setupStore } from '../../../store';
 import { getTips } from '../tips.actions';
 
