@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { TipsGatewayInterface } from '../port/tips-gateway.interface.ts';
+import { PaginatedResponse, TipsGatewayInterface } from '../port/tips-gateway.interface.ts';
 import { Tips } from '../models/tips.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type { } from 'redux-thunk/extend-redux';
@@ -7,6 +7,8 @@ import type { } from 'redux-thunk/extend-redux';
 
 export type tipsParams = {
     tipsGatewayInterface: TipsGatewayInterface;
+    page: number;
+    length: number
 };
 
 
@@ -14,28 +16,24 @@ export type tipsParams = {
 
 export const getTips = createAsyncThunk(
     'tips/getTips',
-    async ({ tipsGatewayInterface }: tipsParams): Promise<Tips[] | []> => {
+    async ({ tipsGatewayInterface, page, length }: tipsParams): Promise<PaginatedResponse<Tips>> => {
         try {
-            const result = await tipsGatewayInterface.getTips();
+            const result = await tipsGatewayInterface.getTips(page, length);
             return result;
         } catch (error: unknown) {
             if (error) {
                 throw error;
             }
-            return [];
+            return { page, lengthPerPage: length, total: 0, data: [] };
         }
     },
 );
 
 
+export const resetError = () => ({
+    type: 'tips/resetError'
+});
 
-export const handleCopyToClipboard = async (command: string): Promise<boolean> => {
-    try {
-        await navigator.clipboard.writeText(command);
-        return true;
-    } catch (err) {
-        return false;
-    }
 
-};
+
 

@@ -1,14 +1,17 @@
 
 import { Button } from '@mui/material';
 import { Link } from "react-router-dom";
+import BaseTemplate from '../layout/BaseTemplate';
 
 function Feed() {
 
 
     return (
-        <Button variant="contained">
-            <Link to="/mes-tips">mes Tips</Link>
-        </Button>
+        <BaseTemplate>
+            <Button variant="contained">
+                <Link to="/mes-tips">mes Tips</Link>
+            </Button>
+        </BaseTemplate>
 
     );
 }

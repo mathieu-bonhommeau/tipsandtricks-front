@@ -9,6 +9,8 @@ export enum routes {
     homepage = '/',
     register = '/inscription',
     login = '/connexion',
+    feed = '/fil-actus',
+    tipsBoard = '/mes-tips'
 }
 
 const router = createBrowserRouter([
@@ -26,12 +28,12 @@ const router = createBrowserRouter([
     },
 
     {
-        path: '/fil-actus',
+        path: routes.feed,
         element: <Feed />,
     },
 
     {
-        path: '/mes-tips',
+        path: routes.tipsBoard,
         element: <TipsCollection />,
     },
 ]);

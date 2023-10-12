@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, Mock, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { Tips } from "../../models/tips.model";
 import TipsTestBuilder from "./tipsTestBuilder";
@@ -18,6 +18,9 @@ beforeEach(() => {
     sut = new SUT();
     tipsGatewayInMemory = new TipsGatewayInMemory;
     tipsGatewayInMemory.setTips(sut.generateArrayOfTips(6));
+    if (typeof global.navigator === 'undefined') {
+        global.navigator = {} as any;
+    }
 });
 
 
@@ -25,23 +28,51 @@ describe('when a user is on the tips bank page', () => {
     test('when the request to retrieve their tips is successful his tips are retrived', async () => {
 
 
-        const expectedTips = sut.generateArrayOfTips(6);
+        const expectedTips = sut.generateArrayOfTips(2);
 
         await store.dispatch(
-            getTips({ tipsGatewayInterface: tipsGatewayInMemory }),
+            getTips({ tipsGatewayInterface: tipsGatewayInMemory, page: 1, length: 2 }),
         );
 
-        expect(store.getState().tipsReducer.tips).toEqual(expectedTips);
+        expect(store.getState().tipsReducer.data).toEqual(expectedTips);
+        expect(store.getState().tipsReducer.totalTips).toEqual(6);
+
+
     });
 
 
     test('when there is a server error, it is reflected in the state', async () => {
         tipsGatewayInMemory.simulateServerError();
 
-        await store.dispatch(getTips({ tipsGatewayInterface: tipsGatewayInMemory }));
+        await store.dispatch(getTips({ tipsGatewayInterface: tipsGatewayInMemory, page: 1, length: 2 }));
 
-        expect(store.getState().tipsReducer.error).toBe('Internal Server Error');
+        expect(store.getState().tipsReducer.error).toBe(true);
     });
+
+
+
+    test('it retrieves the correct tips for the second page', async () => {
+        const expectedTipsPage2 = sut.generateArrayOfTips(4).slice(2, 4);
+
+        await store.dispatch(
+            getTips({ tipsGatewayInterface: tipsGatewayInMemory, page: 2, length: 2 }),
+        );
+
+        expect(store.getState().tipsReducer.data).toEqual(expectedTipsPage2);
+    });
+
+
+
+    test('it retrieves the correct tips for the third page', async () => {
+        const expectedTipsPage3 = sut.generateArrayOfTips(6).slice(4, 6);
+
+        await store.dispatch(
+            getTips({ tipsGatewayInterface: tipsGatewayInMemory, page: 3, length: 2 }),
+        );
+
+        expect(store.getState().tipsReducer.data).toEqual(expectedTipsPage3);
+    });
+
 
 
 });
@@ -51,26 +82,8 @@ describe('when a user is on the tips bank page', () => {
 
 
 
-// describe('Copy To Clipboard', () => {
-//     test('return true when copying is successful', async () => {
-
-//         global.navigator.clipboard = {
-//             writeText: vi.fn(() => Promise.resolve()),
-//         };
-
-//     });
 
 
-//     test('return false when copying fails', async () => {
-//         tipsGatewayInMemory.simulateServerError();
-
-//         await store.dispatch(getTips({ tipsGatewayInterface: tipsGatewayInMemory }));
-
-//         expect(store.getState().tipsReducer.error).toBe('Internal Server Error');
-//     });
-
-
-// });
 
 
 

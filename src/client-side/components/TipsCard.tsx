@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Tips } from "../../domain/tips/models/tips.model";
-import { handleCopyToClipboard } from "../../domain/tips/use-cases/tips.actions";
+import { handleCopyToClipboard } from "../utils/copyToClipBoard";
 import { useState } from "react";
 
 function TipsCard({ oneTips }: TipsCardProps) {

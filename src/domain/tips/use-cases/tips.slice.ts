@@ -4,28 +4,45 @@ import { getTips } from "./tips.actions.ts";
 
 
 export interface TipsState {
-    tips: Tips[] | [];
-    error: string | null | undefined;
+    data: Tips[];
+    error: Boolean;
+    lengthPerPage: number
+    totalTips: number
+    loading: boolean
 }
 
 
 const initialState: TipsState = {
-    tips: [],
-    error: "",
+    data: [],
+    error: false,
+    lengthPerPage: 2,
+    totalTips: 0,
+    loading: false
+
 };
 
 
 export const tipsSlice = createSlice({
     name: 'tips',
     initialState,
-    reducers: {},
+    reducers: {
+        resetError: (state) => {
+            state.error = false;
+        }
+    },
     extraReducers: (builder) => {
         builder
-            .addCase(getTips.fulfilled, (state, action) => {
-                state.tips = action.payload;
+            .addCase(getTips.pending, (state) => {
+                state.loading = true;
             })
-            .addCase(getTips.rejected, (state, action) => {
-                state.error = action.error.message
+            .addCase(getTips.fulfilled, (state, action) => {
+                state.loading = false
+                state.data = action.payload.data;
+                state.lengthPerPage = action.payload.lengthPerPage
+                state.totalTips = action.payload.total
+            })
+            .addCase(getTips.rejected, (state) => {
+                state.error = true
             })
 
     },
@@ -35,7 +52,7 @@ export const tipsSlice = createSlice({
 
 });
 
-
+export const { resetError } = tipsSlice.actions;
 export const tipsReducer = tipsSlice.reducer;
 
 
