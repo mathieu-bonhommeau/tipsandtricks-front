@@ -4,16 +4,16 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
-import { LoginUserInput } from '../../domain/user/models/login.model.ts';
+import { LoginUserInput } from '../../domain/user/models/authentication.model.ts';
 import { useAppDispatch } from '../utils/dispatch.ts';
-import { loginUser } from '../../domain/user/use-cases/login.actions.ts';
-import { resetErrorState } from '../../domain/user/use-cases/login.slice.ts';
+import { loginUser } from '../../domain/user/use-cases/authentication.actions.ts';
+import { resetErrorState } from '../../domain/user/use-cases/authentication.slice.ts';
 import { Link, useNavigate } from 'react-router-dom';
 import { routes } from '../router/router.tsx';
 
 function Login() {
-    const isCredentialsError = useSelector((state: RootState) => state.login.credentialsError);
-    const isUnknownError = useSelector((state: RootState) => state.login.unknownError);
+    const isCredentialsError = useSelector((state: RootState) => state.authentication.credentialsError);
+    const isUnknownError = useSelector((state: RootState) => state.authentication.unknownServerLoginError);
     const userNewlyRegistered = useSelector((state: RootState) => state.registration.user);
     const emailInitValue = userNewlyRegistered ? userNewlyRegistered.email : '';
 

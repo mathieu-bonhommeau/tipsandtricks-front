@@ -5,7 +5,7 @@ import { RootState } from '../../domain/store.ts';
 import { routes } from '../router/router.tsx';
 
 function AppHeader() {
-    const user = useSelector((state: RootState) => state.login.user);
+    const user = useSelector((state: RootState) => state.authentication.user);
 
     return (
         <AppBar position="static">

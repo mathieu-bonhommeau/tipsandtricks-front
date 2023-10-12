@@ -3,10 +3,10 @@ import TestBuilder from './testBuilder.ts';
 import { User } from '../../models/user.model.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { setupStore } from '../../../store.ts';
-import { LoginUserInput } from '../../models/login.model.ts';
+import { LoginUserInput } from '../../models/authentication.model.ts';
 import { UserGatewayInMemory } from '../../../../server-side/user/user-gateway.inMemory.ts';
-import { loginUser } from '../login.actions.ts';
-import { resetErrorState } from '../login.slice.ts';
+import { loginUser, logoutUser } from '../authentication.actions.ts';
+import { resetErrorState } from '../authentication.slice.ts';
 
 let store: ToolkitStore;
 let sut: SUT;
@@ -22,7 +22,7 @@ beforeEach(() => {
     mockNavigate = vi.fn();
 });
 
-describe('When a user submits the register form', () => {
+describe('Login: when a user submits the register form', () => {
     test('when user inputs are correct, there are no error messages, the user is retreived and there is a redirection', async () => {
         const userInput = sut.givenAUserInput();
         const expectedUser = sut.givenAUser();
@@ -31,9 +31,9 @@ describe('When a user submits the register form', () => {
             loginUser({ userGatewayInterface: userGatewayInMemory, userInput: userInput, navigate: mockNavigate }),
         );
 
-        expect(store.getState().login.credentialsError).toEqual(false);
-        expect(store.getState().login.unknownError).toEqual(false);
-        expect(store.getState().login.user).toEqual(expectedUser);
+        expect(store.getState().authentication.credentialsError).toEqual(false);
+        expect(store.getState().authentication.unknownServerLoginError).toEqual(false);
+        expect(store.getState().authentication.user).toEqual(expectedUser);
 
         expect(mockNavigate).toHaveBeenCalledWith('/flux');
     });
@@ -46,7 +46,7 @@ describe('When a user submits the register form', () => {
             loginUser({ userGatewayInterface: userGatewayInMemory, userInput: userInput, navigate: mockNavigate }),
         );
 
-        expect(store.getState().login.credentialsError).toEqual(true);
+        expect(store.getState().authentication.credentialsError).toEqual(true);
         expect(mockNavigate).not.toBeCalled();
     });
 
@@ -58,7 +58,7 @@ describe('When a user submits the register form', () => {
             loginUser({ userGatewayInterface: userGatewayInMemory, userInput: userInput, navigate: mockNavigate }),
         );
 
-        expect(store.getState().login.unknownError).toEqual(true);
+        expect(store.getState().authentication.unknownServerLoginError).toEqual(true);
         expect(mockNavigate).not.toBeCalled();
     });
     test('if the form was submitted and an error arised, it is removed when the reset error event is called', async () => {
@@ -71,8 +71,38 @@ describe('When a user submits the register form', () => {
 
         store.dispatch(resetErrorState());
 
-        expect(store.getState().login.credentialsError).toEqual(false);
-        expect(store.getState().login.unknownError).toEqual(false);
+        expect(store.getState().authentication.credentialsError).toEqual(false);
+        expect(store.getState().authentication.unknownServerLoginError).toEqual(false);
+    });
+});
+
+describe('Logout : when a connected user wants to disconnect', () => {
+    test('if the API request succeeds, his data are removed from the state and he is redirected toward homepage', async () => {
+        const userInput = sut.givenAUserInput();
+        await store.dispatch(
+            loginUser({ userGatewayInterface: userGatewayInMemory, userInput: userInput, navigate: mockNavigate }),
+        );
+
+        await store.dispatch(logoutUser({ userGatewayInterface: userGatewayInMemory, navigate: mockNavigate }));
+
+        expect(store.getState().authentication.user).toEqual(null);
+        expect(mockNavigate).toHaveBeenCalledWith('/');
+    });
+
+    test('if the API request fails, his data are not lost and he is not redirected toward homepage', async () => {
+        const userInput = sut.givenAUserInput();
+        const expectedUser = sut.givenAUser();
+
+        await store.dispatch(
+            loginUser({ userGatewayInterface: userGatewayInMemory, userInput: userInput, navigate: mockNavigate }),
+        );
+
+        userGatewayInMemory.setLogoutUnknownError(true);
+
+        await store.dispatch(logoutUser({ userGatewayInterface: userGatewayInMemory, navigate: mockNavigate }));
+
+        expect(store.getState().authentication.user).toEqual(expectedUser);
+        expect(mockNavigate).not.toHaveBeenCalledWith('/');
     });
 });
 
