@@ -18,9 +18,7 @@ beforeEach(() => {
     sut = new SUT();
     tipsGatewayInMemory = new TipsGatewayInMemory;
     tipsGatewayInMemory.setTips(sut.generateArrayOfTips(6));
-    if (typeof global.navigator === 'undefined') {
-        global.navigator = {} as any;
-    }
+
 });
 
 
@@ -76,14 +74,6 @@ describe('when a user is on the tips bank page', () => {
 
 
 });
-
-
-
-
-
-
-
-
 
 
 

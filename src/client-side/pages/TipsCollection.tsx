@@ -38,7 +38,7 @@ function TipsCollection() {
         return () => {
             dispatch(resetError());
         };
-    }, [dispatch, currentPage]);
+    }, [dispatch, currentPage, lengthPerPage]);
 
 
 

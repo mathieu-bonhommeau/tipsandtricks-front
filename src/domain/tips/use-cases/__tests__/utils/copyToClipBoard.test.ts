@@ -5,7 +5,8 @@ import { handleCopyToClipboard } from '../../../../../client-side/utils/copyToCl
 
 beforeEach(() => {
     if (typeof global.navigator === 'undefined') {
-        global.navigator = {} as any;
+        const navigatorMock: Partial<Navigator> = {};
+        global.navigator = navigatorMock as Navigator;
     }
 });
 

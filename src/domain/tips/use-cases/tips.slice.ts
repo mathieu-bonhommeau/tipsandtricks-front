@@ -8,7 +8,7 @@ export interface TipsState {
     error: Boolean;
     lengthPerPage: number
     totalTips: number
-    loading: boolean
+    loading: Boolean
 }
 
 
