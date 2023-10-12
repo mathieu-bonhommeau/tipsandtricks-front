@@ -1,7 +1,7 @@
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
 import { RegistrationUserInput } from '../../domain/user/models/registration.model.ts';
 import { APIErrorMessages, User } from '../../domain/user/models/user.model.ts';
-import { LoginUserInput } from '../../domain/user/models/login.model.ts';
+import { LoginUserInput } from '../../domain/user/models/authentication.model.ts';
 
 export class UserGatewayInMemory implements UserGatewayInterface {
     private user: User | null = null;
@@ -10,6 +10,7 @@ export class UserGatewayInMemory implements UserGatewayInterface {
     private registerUnknownError: boolean = false;
     private credentialsError: boolean = false;
     private loginUnknownError: boolean = false;
+    private logoutUnknownError: boolean = false;
 
     async registerUser(userInputs: RegistrationUserInput): Promise<User | null> {
         userInputs; // Disable typescript no-used error
@@ -39,6 +40,13 @@ export class UserGatewayInMemory implements UserGatewayInterface {
         return null;
     }
 
+    async logoutUser(): Promise<boolean> {
+        if (!this.logoutUnknownError) {
+            return true;
+        }
+        throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
+    }
+
     setUser(user: User): void {
         this.user = user;
     }
@@ -61,5 +69,9 @@ export class UserGatewayInMemory implements UserGatewayInterface {
 
     setLoginUnknownError(value: boolean) {
         this.loginUnknownError = value;
+    }
+
+    setLogoutUnknownError(value: boolean) {
+        this.logoutUnknownError = value;
     }
 }

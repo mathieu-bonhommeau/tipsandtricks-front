@@ -52,4 +52,16 @@ export class UserGatewayApi implements UserGatewayInterface {
             throw new Error(APIErrorMessages.REGISTER_UNKNOWN_ERROR);
         }
     }
+
+    async logoutUser(): Promise<boolean> {
+        try {
+            await axios({
+                method: 'POST',
+                url: `${import.meta.env.VITE_API_URL}/api/logout`,
+            });
+            return true;
+        } catch {
+            throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
+        }
+    }
 }

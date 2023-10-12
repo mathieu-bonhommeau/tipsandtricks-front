@@ -1,9 +1,9 @@
 import { User } from './user.model.ts';
 
-export interface LoginState {
+export interface AuthenticationState {
     user: User | null;
     credentialsError: boolean;
-    unknownError: boolean;
+    unknownServerLoginError: boolean;
 }
 
 export type LoginUserInput = {
