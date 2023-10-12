@@ -5,10 +5,10 @@ import { getTips } from "./tips.actions.ts";
 
 export interface TipsState {
     data: Tips[];
-    error: Boolean;
+    error: boolean;
     lengthPerPage: number
     totalTips: number
-    loading: Boolean
+    loading: boolean
 }
 
 
