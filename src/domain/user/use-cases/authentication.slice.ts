@@ -1,22 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LoginState } from '../models/login.model.ts';
-import { loginUser } from './login.actions.ts';
+import { AuthenticationState } from '../models/authentication.model.ts';
+import { loginUser, logoutUser } from './authentication.actions.ts';
 
 import { APIErrorMessages } from '../models/user.model.ts';
 
-const initialState: LoginState = {
+const initialState: AuthenticationState = {
     user: null,
     credentialsError: false,
-    unknownError: false,
+    unknownServerLoginError: false,
 };
 
-export const loginSlice = createSlice({
-    name: 'login',
+export const authenticationSlice = createSlice({
+    name: 'authentication',
     initialState,
     reducers: {
         resetErrorState: (state) => {
             state.credentialsError = false;
-            state.unknownError = false;
+            state.unknownServerLoginError = false;
         },
     },
     extraReducers: (builder) => {
@@ -26,18 +26,21 @@ export const loginSlice = createSlice({
         builder.addCase(loginUser.rejected, (state, action) => {
             switch (action.error.message) {
                 case APIErrorMessages.WRONG_CREDENTIALS:
-                    state.unknownError = false;
+                    state.unknownServerLoginError = false;
                     state.credentialsError = true;
                     break;
                 default:
-                    state.unknownError = true;
+                    state.unknownServerLoginError = true;
                     state.credentialsError = false;
             }
+        });
+        builder.addCase(logoutUser.fulfilled, (state) => {
+            state.user = null;
         });
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { resetErrorState } = loginSlice.actions;
+export const { resetErrorState } = authenticationSlice.actions;
 
-export const loginReducer = loginSlice.reducer;
+export const authenticationReducer = authenticationSlice.reducer;
