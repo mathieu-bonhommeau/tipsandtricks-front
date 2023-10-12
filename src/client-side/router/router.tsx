@@ -11,7 +11,7 @@ export enum routes {
     homepage = '/',
     register = '/inscription',
     login = '/connexion',
-    feed = '/fil-actus',
+    feed = '/flux',
     tipsBoard = '/mes-tips'
 }
 

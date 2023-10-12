@@ -79,7 +79,7 @@ function TipsCollection() {
                 </Box>
 
                 {totalTips > lengthPerPage && (
-                    <Box display="flex" justifyContent="center" mt={2}>
+                    <Box display="flex" justifyContent="center" mb={4}>
                         <Pagination
                             shape="rounded"
                             count={Math.ceil(totalTips / lengthPerPage)}
