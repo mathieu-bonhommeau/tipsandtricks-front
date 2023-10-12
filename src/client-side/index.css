@@ -144,7 +144,5 @@ table {
 
 .MuiPaginationItem-page.Mui-selected {
     border: 2px solid #000;
-    /* Par exemple, pour mettre une bordure noire autour de la page active */
     background-color: #eee;
-    /* Changez la couleur de fond, si nécessaire */
 }
