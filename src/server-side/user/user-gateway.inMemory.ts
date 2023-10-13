@@ -55,6 +55,10 @@ export class UserGatewayInMemory implements UserGatewayInterface {
         throw new Error(APIErrorMessages.UNAUTHORIZED_ERROR);
     }
 
+    refreshToken(): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+
     setUser(user: User): void {
         this.user = user;
     }

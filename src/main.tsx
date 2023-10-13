@@ -1,6 +1,13 @@
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/roboto-mono/400.css';
+import '@fontsource/roboto-mono/700.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './client-side/index.css';
+import './client-side/reset.css';
 import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './client-side/theme.ts';

@@ -83,12 +83,20 @@ function Register() {
     };
 
     return (
-        <Container maxWidth={'md'}>
+        <Container maxWidth={'md'} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Typography>Bienvenue !</Typography>
-            <Typography component="h1">Créer un compte</Typography>
+            <Typography component="h1" variant="h1">
+                Créer un compte
+            </Typography>
             <form
                 onSubmit={onSubmitHandler}
-                style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px 0' }}
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '10px',
+                    margin: '20px 0',
+                }}
             >
                 <TextField
                     label="Adresse email"
@@ -97,6 +105,7 @@ function Register() {
                     required
                     value={email}
                     onChange={onChangeEmail}
+                    sx={{ width: '100%' }}
                 />
                 <TextField
                     label="Nom d'utilisateur"
@@ -106,6 +115,7 @@ function Register() {
                     error={!isUsernameValid}
                     onChange={onChangeUsername}
                     helperText={isUsernameValid ? '' : "Le nom d'utilisateur doit comporter au moins deux caractères"}
+                    sx={{ width: '100%' }}
                 />
                 <TextField
                     label="Mot de passe"
@@ -116,6 +126,7 @@ function Register() {
                     value={password}
                     onChange={onChangePassword}
                     helperText="Le mot de passe doit faire au moins 12 caractères, doit contenir au moins une majuscule, un chiffre et un caractère spécial."
+                    sx={{ width: '100%' }}
                 />
                 <TextField
                     label="Confirmation du mot de passe"
@@ -126,6 +137,7 @@ function Register() {
                     value={confirmationPassword}
                     onChange={onChangeConfirmationPassword}
                     helperText={arePasswordsEqual ? '' : 'Les mots de passe ne correspondent pas'}
+                    sx={{ width: '100%' }}
                 />
                 {serverErrorMessage && <Alert severity="error">{serverErrorMessage}</Alert>}
                 <Button
