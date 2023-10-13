@@ -12,7 +12,7 @@ import {
 } from '../registration.actions.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 // Empty type-import to clue TS into redux toolkit action type
-import type { } from 'redux-thunk/extend-redux';
+import type {} from 'redux-thunk/extend-redux';
 import { resetEmailAlreadyUsedError, resetUsernameAlreadyUsedError } from '../registration.slice.ts';
 import { vi } from 'vitest';
 

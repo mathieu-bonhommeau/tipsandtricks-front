@@ -12,7 +12,7 @@ export enum routes {
     register = '/inscription',
     login = '/connexion',
     feed = '/flux',
-    tipsBoard = '/mes-tips'
+    tipsBoard = '/mes-tips',
 }
 
 const router = createBrowserRouter([
@@ -44,12 +44,12 @@ const router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <TipsBoard />
-                    }
-                ]
+                        element: <TipsBoard />,
+                    },
+                ],
             },
         ],
     },
 ]);
 
-export default router
+export default router;

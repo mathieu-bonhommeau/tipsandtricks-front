@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../../store.ts';
 import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
 import { User } from '../models/user.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
-import type { } from 'redux-thunk/extend-redux';
+import type {} from 'redux-thunk/extend-redux';
 import { RegistrationUserInput } from '../models/registration.model.ts';
 import { NavigateFunction } from 'react-router-dom';
 

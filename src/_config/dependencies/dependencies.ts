@@ -8,9 +8,8 @@ dependencyContainer.set<UserGatewayInterface>('UserGateway', () => {
     return new UserGatewayApi();
 });
 
-
 dependencyContainer.set<TipsGatewayInterface>('TipsGateway', () => {
     return new TipsGatewayApi();
-})
+});
 
 export default dependencyContainer;

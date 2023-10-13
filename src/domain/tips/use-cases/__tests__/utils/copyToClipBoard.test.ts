@@ -9,7 +9,6 @@ beforeEach(() => {
 });
 
 describe('Copy To Clipboard', () => {
-
     test('return true when copying is successful', async () => {
         Object.defineProperty(global.navigator, 'clipboard', {
             value: {
@@ -24,7 +23,6 @@ describe('Copy To Clipboard', () => {
     });
 
     test('return false when copying fails', async () => {
-
         Object.defineProperty(global.navigator, 'clipboard', {
             value: {
                 writeText: vi.fn(() => Promise.reject(new Error('Mocked clipboard failure'))),
@@ -35,6 +33,5 @@ describe('Copy To Clipboard', () => {
 
         const result = await handleCopyToClipboard('test');
         expect(result).toBe(false);
-
     });
 });

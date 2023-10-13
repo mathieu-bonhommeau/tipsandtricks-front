@@ -1,19 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Tips } from "../models/tips.model.ts";
-import { getTips } from "./tips.actions.ts";
+import { createSlice } from '@reduxjs/toolkit';
+import { Tips } from '../models/tips.model.ts';
+import { getTips } from './tips.actions.ts';
 
 export interface TipsState {
     data: Tips[];
     error: boolean;
-    totalTips: number
-    loading: boolean
+    totalTips: number;
+    loading: boolean;
 }
 
 const initialState: TipsState = {
     data: [],
     error: false,
     totalTips: 0,
-    loading: false
+    loading: false,
 };
 
 export const tipsSlice = createSlice({
@@ -22,7 +22,7 @@ export const tipsSlice = createSlice({
     reducers: {
         resetError: (state) => {
             state.error = false;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -30,18 +30,16 @@ export const tipsSlice = createSlice({
                 state.loading = true;
             })
             .addCase(getTips.fulfilled, (state, action) => {
-                state.loading = false
+                state.loading = false;
                 state.data = action.payload.data;
-                state.totalTips = action.payload.total
+                state.totalTips = action.payload.total;
             })
             .addCase(getTips.rejected, (state) => {
-                state.loading = false
-                state.error = true
-            })
+                state.loading = false;
+                state.error = true;
+            });
     },
 });
 
 export const { resetError } = tipsSlice.actions;
 export const tipsReducer = tipsSlice.reducer;
-
-

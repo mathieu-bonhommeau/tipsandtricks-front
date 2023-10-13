@@ -1,4 +1,4 @@
-import { Tag } from "../../tags/models/tag.model";
+import { Tag } from '../../tags/models/tag.model';
 
 export type Tips = {
     id: number;
@@ -10,4 +10,4 @@ export type Tips = {
     updated_at: string | null;
     user_id: number;
     tags: Tag[];
-}   
+};

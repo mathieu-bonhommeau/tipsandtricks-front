@@ -1,25 +1,22 @@
-import TipsCard from "../components/TipsCard.tsx";
+import TipsCard from '../components/TipsCard.tsx';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import { useSelector } from 'react-redux';
-import { getTips, resetError } from "../../domain/tips/use-cases/tips.actions.ts";
-import { useEffect, useState } from "react";
+import { getTips, resetError } from '../../domain/tips/use-cases/tips.actions.ts';
+import { useEffect, useState } from 'react';
 import { RootState } from '../../domain/store.ts';
-import dependencyContainer from "../../_config/dependencies/dependencies.ts";
-import { TipsGatewayInterface } from "../../domain/tips/port/tips-gateway.interface.ts";
-import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination } from "@mui/material";
-import { Tips } from "../../domain/tips/models/tips.model.ts";
-
-
+import dependencyContainer from '../../_config/dependencies/dependencies.ts';
+import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
+import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination } from '@mui/material';
+import { Tips } from '../../domain/tips/models/tips.model.ts';
 
 function TipsBoard() {
     const dispatch = useAppDispatch();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const lengthPerPage = 14
+    const lengthPerPage = 14;
 
     const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
-
     };
 
     const tips = useSelector((state: RootState) => state.tipsReducer.data);
@@ -27,19 +24,18 @@ function TipsBoard() {
     const error = useSelector((state: RootState) => state.tipsReducer.error);
     const loading = useSelector((state: RootState) => state.tipsReducer.loading);
 
-
     useEffect(() => {
-        dispatch(getTips({
-            tipsGatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway'),
-            page: currentPage,
-            length: lengthPerPage
-        }));
+        dispatch(
+            getTips({
+                tipsGatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway'),
+                page: currentPage,
+                length: lengthPerPage,
+            }),
+        );
         return () => {
             dispatch(resetError());
         };
     }, [dispatch, currentPage, lengthPerPage]);
-
-
 
     let content;
 

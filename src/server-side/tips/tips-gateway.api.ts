@@ -1,14 +1,9 @@
-import { PaginatedResponse, TipsGatewayInterface } from "../../domain/tips/port/tips-gateway.interface";
-import { Tips } from "../../domain/tips/models/tips.model";
+import { PaginatedResponse, TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface';
+import { Tips } from '../../domain/tips/models/tips.model';
 import axios from 'axios';
 
-
-
-
 export class TipsGatewayApi implements TipsGatewayInterface {
-
     async getTips(page: number, length: number): Promise<PaginatedResponse<Tips>> {
-
         try {
             const response = await axios({
                 method: 'GET',
@@ -17,9 +12,8 @@ export class TipsGatewayApi implements TipsGatewayInterface {
             });
 
             return response.data;
-
         } catch (error) {
-            throw new Error("Failed to fetch tips from API");
+            throw new Error('Failed to fetch tips from API');
         }
     }
 }
