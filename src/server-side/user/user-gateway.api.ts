@@ -38,7 +38,7 @@ export class UserGatewayApi implements UserGatewayInterface {
                     email: userInputs.email,
                     password: userInputs.password,
                 },
-                withCredentials: true,
+                withCredentials: true
             });
 
             return result.data.data as User;
@@ -55,7 +55,7 @@ export class UserGatewayApi implements UserGatewayInterface {
             await axios({
                 method: 'POST',
                 url: `${import.meta.env.VITE_API_URL}/api/logout`,
-                withCredentials: true,
+                withCredentials: true
             });
         } catch {
             throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
@@ -67,6 +67,20 @@ export class UserGatewayApi implements UserGatewayInterface {
             const result = await axios({
                 method: 'GET',
                 url: `${import.meta.env.VITE_API_URL}/api/reconnect`,
+                withCredentials: true,
+            });
+            return result.data.data;
+        } catch (error: unknown) {
+            throw new Error(APIErrorMessages.RECONNECT_UNKNOWN_ERROR);
+        }
+    }
+
+    async refreshToken(): Promise<User | null> {
+        console.log('refreshToken');
+        try {
+            const result = await axios({
+                method: 'GET',
+                url: `${import.meta.env.VITE_API_URL}/api/refresh-token`,
                 withCredentials: true,
             });
             return result.data.data;

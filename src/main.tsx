@@ -14,12 +14,15 @@ import { theme } from './client-side/theme.ts';
 import { Provider } from 'react-redux';
 import { store } from './domain/store.ts';
 import router from './client-side/router/router.tsx';
+import Interceptor from "./client-side/hook/Intercepror.ts";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>
             <ThemeProvider theme={theme}>
-                <RouterProvider router={router} />
+                <Interceptor>
+                    <RouterProvider router={router} />
+                </Interceptor>
             </ThemeProvider>
         </Provider>
     </React.StrictMode>,
