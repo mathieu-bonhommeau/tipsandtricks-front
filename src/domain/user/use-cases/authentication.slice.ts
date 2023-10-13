@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthenticationState } from '../models/authentication.model.ts';
-import { loginUser, logoutUser } from './authentication.actions.ts';
+import { loginUser, logoutUser, reconnectUser } from './authentication.actions.ts';
 
 import { APIErrorMessages } from '../models/user.model.ts';
 
@@ -36,6 +36,9 @@ export const authenticationSlice = createSlice({
         });
         builder.addCase(logoutUser.fulfilled, (state) => {
             state.user = null;
+        });
+        builder.addCase(reconnectUser.fulfilled, (state, action) => {
+            state.user = action.payload;
         });
     },
 });
