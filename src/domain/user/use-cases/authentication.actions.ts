@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { User } from '../models/user.model.ts';
+import { APIErrorMessages, User } from '../models/user.model.ts';
 import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
 import { LoginUserInput } from '../models/authentication.model.ts';
 import { NavigateFunction } from 'react-router-dom';
@@ -13,6 +13,10 @@ export type loginUserParams = {
 type logoutUserParams = {
     userGatewayInterface: UserGatewayInterface;
     navigate: NavigateFunction;
+};
+
+type userGatewayParam = {
+    userGatewayInterface: UserGatewayInterface;
 };
 
 export const loginUser = createAsyncThunk(
@@ -33,16 +37,30 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
     'authentication/logoutUser',
-    async ({ userGatewayInterface, navigate }: logoutUserParams): Promise<boolean> => {
+    async ({ userGatewayInterface, navigate }: logoutUserParams): Promise<void> => {
         try {
-            const result = await userGatewayInterface.logoutUser();
+            await userGatewayInterface.logoutUser();
             navigate('/');
-            return result;
         } catch (error: unknown) {
             if (error) {
                 throw error;
             }
-            return false;
+        }
+    },
+);
+
+export const reconnectUser = createAsyncThunk(
+    'authentication/reconnectUser',
+    async ({ userGatewayInterface }: userGatewayParam): Promise<User | null> => {
+        try {
+            const user = await userGatewayInterface.reconnectUser();
+            if (!user) {
+                //TODO: attemps to refresh-token
+                return null;
+            }
+            return user;
+        } catch {
+            throw new Error(APIErrorMessages.RECONNECT_UNKNOWN_ERROR);
         }
     },
 );

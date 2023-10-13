@@ -5,7 +5,7 @@ import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { setupStore } from '../../../store.ts';
 import { LoginUserInput } from '../../models/authentication.model.ts';
 import { UserGatewayInMemory } from '../../../../server-side/user/user-gateway.inMemory.ts';
-import { loginUser, logoutUser } from '../authentication.actions.ts';
+import { loginUser, logoutUser, reconnectUser } from '../authentication.actions.ts';
 import { resetErrorState } from '../authentication.slice.ts';
 
 let store: ToolkitStore;
@@ -103,6 +103,24 @@ describe('Logout : when a connected user wants to disconnect', () => {
 
         expect(store.getState().authentication.user).toEqual(expectedUser);
         expect(mockNavigate).not.toHaveBeenCalledWith('/');
+    });
+});
+
+describe('Reconnect : if a user is connected (via cookies) but lost his data into the state', () => {
+    test('if his access token is still valid, his data is retreived', async () => {
+        const expectedUser = sut.givenAUser();
+
+        await store.dispatch(reconnectUser({ userGatewayInterface: userGatewayInMemory }));
+
+        expect(store.getState().authentication.user).toEqual(expectedUser);
+    });
+
+    test('if his access token is not valid, the user data is not retreived', async () => {
+        userGatewayInMemory.setUnauthorizedError(true);
+
+        await store.dispatch(reconnectUser({ userGatewayInterface: userGatewayInMemory }));
+
+        expect(store.getState().authentication.user).toEqual(null);
     });
 });
 
