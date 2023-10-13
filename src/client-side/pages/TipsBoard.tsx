@@ -1,4 +1,4 @@
-import TipsCard from "../components/TipsCard";
+import TipsCard from "../components/TipsCard.tsx";
 import { useAppDispatch } from '../utils/dispatch.ts';
 import { useSelector } from 'react-redux';
 import { getTips, resetError } from "../../domain/tips/use-cases/tips.actions.ts";
@@ -11,7 +11,7 @@ import { Tips } from "../../domain/tips/models/tips.model.ts";
 
 
 
-function TipsCollection() {
+function TipsBoard() {
     const dispatch = useAppDispatch();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -92,4 +92,4 @@ function TipsCollection() {
     );
 }
 
-export default TipsCollection;
+export default TipsBoard;

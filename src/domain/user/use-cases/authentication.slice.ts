@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthenticationState } from '../models/authentication.model.ts';
 import { loginUser, logoutUser, reconnectUser } from './authentication.actions.ts';
-
 import { APIErrorMessages } from '../models/user.model.ts';
 
 const initialState: AuthenticationState = {

@@ -3,9 +3,9 @@ import HomePage from '../pages/Home.tsx';
 import Register from '../pages/Register.tsx';
 import Login from '../pages/Login.tsx';
 import Feed from '../pages/Feed.tsx';
-import TipsCollection from '../pages/TipsCollection.tsx';
 import PrivateRoute from '../wrappers/privateRoute.tsx';
 import AppWrapper from '../components/AppWrapper.tsx';
+import TipsBoard from '../pages/TipsBoard.tsx';
 
 export enum routes {
     homepage = '/',
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <TipsCollection />
+                        element: <TipsBoard />
                     }
                 ]
             },

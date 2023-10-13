@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Tips } from "../models/tips.model.ts";
 import { getTips } from "./tips.actions.ts";
 
-
 export interface TipsState {
     data: Tips[];
     error: boolean;
@@ -10,15 +9,12 @@ export interface TipsState {
     loading: boolean
 }
 
-
 const initialState: TipsState = {
     data: [],
     error: false,
     totalTips: 0,
     loading: false
-
 };
-
 
 export const tipsSlice = createSlice({
     name: 'tips',
@@ -42,12 +38,7 @@ export const tipsSlice = createSlice({
                 state.loading = false
                 state.error = true
             })
-
     },
-
-
-
-
 });
 
 export const { resetError } = tipsSlice.actions;

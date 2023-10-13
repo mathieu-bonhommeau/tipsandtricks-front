@@ -14,7 +14,6 @@ const PrivateRoute = () => {
             </Box>
         );
     }
-
     if (user !== null) {
         return <Outlet />;
     } else {

@@ -2,6 +2,7 @@ export enum Roles {
     admin = 'admin',
     moderator = 'moderator',
 }
+
 export type User = {
     id: number | null;
     email: string;
