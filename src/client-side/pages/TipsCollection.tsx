@@ -15,7 +15,7 @@ function TipsCollection() {
     const dispatch = useAppDispatch();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [lengthPerPage, _setLengthPerPage] = useState<number>(14);
+    const lengthPerPage = 14
 
     const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);

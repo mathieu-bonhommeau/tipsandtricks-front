@@ -9,7 +9,6 @@ export class TipsGatewayApi implements TipsGatewayInterface {
 
     async getTips(page: number, length: number): Promise<PaginatedResponse<Tips>> {
 
-        console.log(length)
         try {
             const response = await axios({
                 method: 'GET',

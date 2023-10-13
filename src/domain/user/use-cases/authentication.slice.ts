@@ -8,6 +8,7 @@ const initialState: AuthenticationState = {
     user: null,
     credentialsError: false,
     unknownServerLoginError: false,
+    isReconnecting: true,
 };
 
 export const authenticationSlice = createSlice({
@@ -39,6 +40,7 @@ export const authenticationSlice = createSlice({
         });
         builder.addCase(reconnectUser.fulfilled, (state, action) => {
             state.user = action.payload;
+            state.isReconnecting = false;
         });
     },
 });
