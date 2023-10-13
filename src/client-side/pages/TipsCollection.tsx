@@ -28,6 +28,7 @@ function TipsCollection() {
     const loading = useSelector((state: RootState) => state.tipsReducer.loading);
 
 
+    console.log(error)
 
     useEffect(() => {
         dispatch(getTips({

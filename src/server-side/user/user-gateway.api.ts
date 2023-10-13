@@ -38,10 +38,12 @@ export class UserGatewayApi implements UserGatewayInterface {
             const result = await axios({
                 method: 'POST',
                 url: `${import.meta.env.VITE_API_URL}/api/login`,
+                withCredentials: true,
                 data: {
                     email: userInputs.email,
                     password: userInputs.password,
                 },
+
             });
 
             return result.data.data as User;

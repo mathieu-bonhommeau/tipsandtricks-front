@@ -76,13 +76,15 @@ function TipsCard({ oneTips }: TipsCardProps) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
 
-                        {
-                            oneTips.tags.map((tag) =>
 
-                                <Chip label={tag.label} key={tag.id} style={{ marginRight: '5px' }} />
 
-                            )
-                        }
+
+                        <Chip label="tag 1" style={{ marginRight: '5px' }} />
+                        <Chip label="tag 2" style={{ marginRight: '5px' }} />
+                        <Chip label="tag 3" style={{ marginRight: '5px' }} />
+
+
+
 
 
                     </div>

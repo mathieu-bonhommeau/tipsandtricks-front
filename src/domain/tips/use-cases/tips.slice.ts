@@ -42,6 +42,7 @@ export const tipsSlice = createSlice({
                 state.totalTips = action.payload.total
             })
             .addCase(getTips.rejected, (state) => {
+                state.loading = false
                 state.error = true
             })
 
