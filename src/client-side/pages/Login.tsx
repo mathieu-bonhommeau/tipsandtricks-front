@@ -42,14 +42,22 @@ function Login() {
     };
 
     return (
-        <Container maxWidth={'md'}>
-            <Typography component="h1">Se connecter</Typography>
+        <Container maxWidth={'md'} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Typography component="h1" variant="h1">
+                Se connecter
+            </Typography>
             {userNewlyRegistered && (
                 <Alert severity="success">Votre compte a bien été créé ! Veuillez vous connecter.</Alert>
             )}
             <form
                 onSubmit={onSubmitHandler}
-                style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '20px 0' }}
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    alignItems: 'center',
+                    margin: '20px 0',
+                }}
             >
                 <TextField
                     label="Email"
