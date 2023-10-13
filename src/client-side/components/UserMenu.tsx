@@ -16,7 +16,7 @@ function UserMenu({ username }: UserMenuProps) {
     const links = [
         {
             label: 'Tips Board',
-            path: routes.homepage,
+            path: routes.tipsBoard,
         },
         {
             label: 'Profil',
@@ -73,7 +73,7 @@ function UserMenu({ username }: UserMenuProps) {
                 {links.map((link) => (
                     <MenuItem key={link.label} onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">
-                            <Link to={'/test'}>{link.label}</Link>
+                            <Link to={link.path}>{link.label}</Link>
                         </Typography>
                     </MenuItem>
                 ))}

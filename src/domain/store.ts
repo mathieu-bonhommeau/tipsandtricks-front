@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { registrationReducer } from './user/use-cases/registration.slice.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { tipsReducer } from './tips/use-cases/tips.slice.ts';
 import { authenticationReducer } from './user/use-cases/authentication.slice.ts';
 
 export const setupStore = (): ToolkitStore => {
     return configureStore({
         reducer: {
             registration: registrationReducer,
+            tipsReducer: tipsReducer,
             authentication: authenticationReducer,
         },
     });

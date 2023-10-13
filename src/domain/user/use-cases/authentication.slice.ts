@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthenticationState } from '../models/authentication.model.ts';
 import { loginUser, logoutUser, reconnectUser } from './authentication.actions.ts';
-
 import { APIErrorMessages } from '../models/user.model.ts';
 
 const initialState: AuthenticationState = {
     user: null,
     credentialsError: false,
     unknownServerLoginError: false,
+    isReconnecting: true,
 };
 
 export const authenticationSlice = createSlice({
@@ -39,6 +39,7 @@ export const authenticationSlice = createSlice({
         });
         builder.addCase(reconnectUser.fulfilled, (state, action) => {
             state.user = action.payload;
+            state.isReconnecting = false;
         });
     },
 });
