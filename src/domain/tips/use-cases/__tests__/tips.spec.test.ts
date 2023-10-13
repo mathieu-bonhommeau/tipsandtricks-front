@@ -6,12 +6,9 @@ import { TipsGatewayInMemory } from '../../../../server-side/tips/tips-gateway.i
 import { setupStore } from '../../../store';
 import { getTips } from '../tips.actions';
 
-
-
 let store: ToolkitStore;
 let sut: SUT;
 let tipsGatewayInMemory: TipsGatewayInMemory;
-
 
 beforeEach(() => {
     store = setupStore();
@@ -21,10 +18,8 @@ beforeEach(() => {
 
 });
 
-
 describe('when a user is on the tips bank page', () => {
     test('when the request to retrieve their tips is successful his tips are retrived', async () => {
-
 
         const expectedTips = sut.generateArrayOfTips(2);
 
@@ -35,9 +30,7 @@ describe('when a user is on the tips bank page', () => {
         expect(store.getState().tipsReducer.data).toEqual(expectedTips);
         expect(store.getState().tipsReducer.totalTips).toEqual(6);
 
-
     });
-
 
     test('when there is a server error, it is reflected in the state', async () => {
         tipsGatewayInMemory.simulateServerError();
@@ -46,8 +39,6 @@ describe('when a user is on the tips bank page', () => {
 
         expect(store.getState().tipsReducer.error).toBe(true);
     });
-
-
 
     test('it retrieves the correct tips for the second page', async () => {
         const expectedTipsPage2 = sut.generateArrayOfTips(4).slice(2, 4);
@@ -59,8 +50,6 @@ describe('when a user is on the tips bank page', () => {
         expect(store.getState().tipsReducer.data).toEqual(expectedTipsPage2);
     });
 
-
-
     test('it retrieves the correct tips for the third page', async () => {
         const expectedTipsPage3 = sut.generateArrayOfTips(6).slice(4, 6);
 
@@ -70,13 +59,7 @@ describe('when a user is on the tips bank page', () => {
 
         expect(store.getState().tipsReducer.data).toEqual(expectedTipsPage3);
     });
-
-
-
 });
-
-
-
 
 class SUT {
     private _tipsTestBuilder: TipsTestBuilder;
