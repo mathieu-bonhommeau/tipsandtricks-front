@@ -15,6 +15,7 @@ function TipsCollection() {
     const dispatch = useAppDispatch();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [lengthPerPage, _setLengthPerPage] = useState<number>(14);
 
     const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
@@ -22,13 +23,10 @@ function TipsCollection() {
     };
 
     const tips = useSelector((state: RootState) => state.tipsReducer.data);
-    const lengthPerPage = useSelector((state: RootState) => state.tipsReducer.lengthPerPage);
     const totalTips = useSelector((state: RootState) => state.tipsReducer.totalTips);
     const error = useSelector((state: RootState) => state.tipsReducer.error);
     const loading = useSelector((state: RootState) => state.tipsReducer.loading);
 
-
-    console.log(error)
 
     useEffect(() => {
         dispatch(getTips({
@@ -47,7 +45,7 @@ function TipsCollection() {
 
     if (tips.length > 0) {
         content = (
-            <Grid container spacing={4}>
+            <Grid container spacing={4} alignItems="stretch">
                 {tips.map((oneTips: Tips) => (
                     <Grid item xs={12} sm={6} key={oneTips.id}>
                         <TipsCard oneTips={oneTips} />
@@ -80,7 +78,7 @@ function TipsCollection() {
                 </Box>
 
                 {totalTips > lengthPerPage && (
-                    <Box display="flex" justifyContent="center" mb={4}>
+                    <Box display="flex" justifyContent="center" mt={4} mb={4}>
                         <Pagination
                             shape="rounded"
                             count={Math.ceil(totalTips / lengthPerPage)}

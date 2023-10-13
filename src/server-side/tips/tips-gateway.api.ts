@@ -8,6 +8,8 @@ import axios from 'axios';
 export class TipsGatewayApi implements TipsGatewayInterface {
 
     async getTips(page: number, length: number): Promise<PaginatedResponse<Tips>> {
+
+        console.log(length)
         try {
             const response = await axios({
                 method: 'GET',
@@ -15,7 +17,6 @@ export class TipsGatewayApi implements TipsGatewayInterface {
                 withCredentials: true,
             });
 
-            console.log(response.data.data);
             return response.data;
 
         } catch (error) {

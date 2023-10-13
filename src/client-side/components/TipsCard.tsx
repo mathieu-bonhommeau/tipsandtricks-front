@@ -31,7 +31,7 @@ function TipsCard({ oneTips }: TipsCardProps) {
 
 
     return (
-        <Card style={{ maxWidth: '500px', margin: '10px auto' }}>
+        <Card raised elevation={3} sx={{ maxWidth: 500 }}>
             <CardHeader
                 title={oneTips.title}
                 action={
@@ -45,7 +45,7 @@ function TipsCard({ oneTips }: TipsCardProps) {
                     <TextField
                         variant="outlined"
                         fullWidth
-                        value={oneTips.command}
+                        value={oneTips.command.length > 37 ? `${oneTips.command.substring(0, 34)}...` : oneTips.command}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -72,7 +72,15 @@ function TipsCard({ oneTips }: TipsCardProps) {
                         }}
                     />
                 </div>
-                <p style={{ margin: '15px' }} >{oneTips.description}</p>
+                <p style={{
+                    margin: '15px',
+                    display: '-webkit-box',
+                    WebkitLineClamp: '3',
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                }} >
+                    {oneTips.description}
+                </p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
 

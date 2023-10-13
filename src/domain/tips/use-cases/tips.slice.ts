@@ -6,7 +6,6 @@ import { getTips } from "./tips.actions.ts";
 export interface TipsState {
     data: Tips[];
     error: boolean;
-    lengthPerPage: number
     totalTips: number
     loading: boolean
 }
@@ -15,7 +14,6 @@ export interface TipsState {
 const initialState: TipsState = {
     data: [],
     error: false,
-    lengthPerPage: 2,
     totalTips: 0,
     loading: false
 
@@ -38,7 +36,6 @@ export const tipsSlice = createSlice({
             .addCase(getTips.fulfilled, (state, action) => {
                 state.loading = false
                 state.data = action.payload.data;
-                state.lengthPerPage = action.payload.lengthPerPage
                 state.totalTips = action.payload.total
             })
             .addCase(getTips.rejected, (state) => {
