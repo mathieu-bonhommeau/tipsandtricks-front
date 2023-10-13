@@ -24,7 +24,7 @@ export const loginUser = createAsyncThunk(
     async ({ userGatewayInterface, userInput, navigate }: loginUserParams): Promise<User | null> => {
         try {
             const result = await userGatewayInterface.loginUser(userInput);
-            navigate('/');
+            navigate('/flux');
             return result;
         } catch (error: unknown) {
             if (error) {
