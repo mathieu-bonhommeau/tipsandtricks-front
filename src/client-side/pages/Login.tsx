@@ -17,9 +17,6 @@ function Login() {
     const userNewlyRegistered = useSelector((state: RootState) => state.registration.user);
     const emailInitValue = userNewlyRegistered ? userNewlyRegistered.email : '';
 
-
-
-
     const [email, setEmail] = useState(emailInitValue);
     const [password, setPassword] = useState('');
 

@@ -12,7 +12,6 @@ function TipsCard({ oneTips }: TipsCardProps) {
     const [textCopied, setTextCopied] = useState(false);
     const [failCopied, setFailCopied] = useState(false);
 
-
     const handleCopy = async (command: string) => {
         const success = await handleCopyToClipboard(command);
         if (success) {
@@ -27,8 +26,6 @@ function TipsCard({ oneTips }: TipsCardProps) {
             }, 3000);
         }
     };
-
-
 
     return (
         <Card raised elevation={3} sx={{ maxWidth: 500 }}>
@@ -55,18 +52,12 @@ function TipsCard({ oneTips }: TipsCardProps) {
                                         ) : failCopied ? (
                                             <Alert severity="error">Echec de la copie !</Alert>
                                         ) :
-
                                             (
                                                 <IconButton onClick={() => handleCopy(oneTips.command)}>
                                                     <ContentCopyIcon />
                                                 </IconButton>
-
                                             )
-
-
-
                                     }
-
                                 </InputAdornment>
                             )
                         }}
@@ -83,18 +74,9 @@ function TipsCard({ oneTips }: TipsCardProps) {
                 </p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
-
-
-
-
                         <Chip label="tag 1" style={{ marginRight: '5px' }} />
                         <Chip label="tag 2" style={{ marginRight: '5px' }} />
                         <Chip label="tag 3" style={{ marginRight: '5px' }} />
-
-
-
-
-
                     </div>
                     <div>
                         <IconButton aria-label="edit">

@@ -42,14 +42,14 @@ const router = createBrowserRouter([
                 path: routes.tipsBoard,
                 element: <PrivateRoute />,
                 children: [
-                    { index: true, element: <TipsCollection /> }
+                    {
+                        index: true,
+                        element: <TipsCollection />
+                    }
                 ]
             },
         ],
     },
-
-
 ]);
-
 
 export default router
