@@ -38,6 +38,7 @@ export class UserGatewayApi implements UserGatewayInterface {
                     email: userInputs.email,
                     password: userInputs.password,
                 },
+                withCredentials: true,
             });
 
             return result.data.data as User;
@@ -54,6 +55,7 @@ export class UserGatewayApi implements UserGatewayInterface {
             await axios({
                 method: 'POST',
                 url: `${import.meta.env.VITE_API_URL}/api/logout`,
+                withCredentials: true,
             });
         } catch {
             throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
@@ -61,15 +63,13 @@ export class UserGatewayApi implements UserGatewayInterface {
     }
 
     async reconnectUser(): Promise<User | null> {
-        console.log('reconnectUser');
         try {
             const result = await axios({
                 method: 'GET',
                 url: `${import.meta.env.VITE_API_URL}/api/reconnect`,
                 withCredentials: true,
             });
-            // console.log('reconnectUser result :', result);
-            return result;
+            return result.data.data;
         } catch (error: unknown) {
             throw new Error(APIErrorMessages.RECONNECT_UNKNOWN_ERROR);
         }

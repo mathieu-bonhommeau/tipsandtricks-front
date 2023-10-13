@@ -54,9 +54,8 @@ export const reconnectUser = createAsyncThunk(
     async ({ userGatewayInterface }: userGatewayParam): Promise<User | null> => {
         try {
             const user = await userGatewayInterface.reconnectUser();
-            console.log(user);
             if (!user) {
-                console.log('TODO : deal with user');
+                //TODO: attemps to refresh-token
                 return null;
             }
             return user;
@@ -65,11 +64,3 @@ export const reconnectUser = createAsyncThunk(
         }
     },
 );
-
-/*export const refreshToken = createAsyncThunk(
-    'authentication/refreshToken',
-    async ({ userGatewayInterface }: userGatewayParam, thunkAPI): Promise<User | null> => {
-        thunkAPI.dispatch(reconnectUser({ userGatewayInterface }));
-        return null;
-    },
-);*/
