@@ -7,4 +7,5 @@ export interface UserGatewayInterface {
     loginUser(userInput: LoginUserInput): Promise<User | null>;
     logoutUser(): Promise<void>;
     reconnectUser(): Promise<User | null>;
+    refreshToken(): Promise<User | null>
 }

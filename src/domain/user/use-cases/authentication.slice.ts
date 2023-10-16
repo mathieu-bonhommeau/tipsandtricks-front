@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthenticationState } from '../models/authentication.model.ts';
-import { loginUser, logoutUser, reconnectUser } from './authentication.actions.ts';
+import { loginUser, logoutUser, reconnectUser, refreshToken } from './authentication.actions.ts';
+
 import { APIErrorMessages } from '../models/user.model.ts';
 
 const initialState: AuthenticationState = {
@@ -41,6 +42,9 @@ export const authenticationSlice = createSlice({
             state.user = action.payload;
             state.isReconnecting = false;
         });
+        builder.addCase(refreshToken.fulfilled, (state, action) => {
+            state.user = action.payload
+        })
     },
 });
 
