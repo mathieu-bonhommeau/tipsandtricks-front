@@ -1,19 +1,24 @@
 import { PaginatedResponse, TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface';
 import { Tips } from '../../domain/tips/models/tips.model';
-import axios from 'axios';
+import { AxiosError } from 'axios';
+import { ApiError, UnauthorizedError } from '../../domain/core/models/errors/globalError.ts';
+import axiosInstance from '../core/axios.instance.ts';
 
 export class TipsGatewayApi implements TipsGatewayInterface {
     async getTips(page: number, length: number): Promise<PaginatedResponse<Tips>> {
         try {
-            const response = await axios({
+            const response = await axiosInstance({
                 method: 'GET',
-                url: `${import.meta.env.VITE_API_URL}/api/tips?page=${page}&length=${length}`,
-                withCredentials: true,
+                url: `tips?page=${page}&length=${length}`,
             });
 
             return response.data;
         } catch (error) {
-            throw new Error('Failed to fetch tips from API');
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 401) throw new UnauthorizedError();
+                throw new ApiError('Failed to fetch tips from API');
+            }
+            throw new Error('UNKNOWN_ERROR');
         }
     }
 }

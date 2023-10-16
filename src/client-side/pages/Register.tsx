@@ -75,9 +75,11 @@ function Register() {
 
         await dispatch(
             registerUser({
-                userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                params: {
+                    gatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                    navigate: navigate,
+                },
                 userInput: userInput,
-                navigate: navigate,
             }),
         );
     };

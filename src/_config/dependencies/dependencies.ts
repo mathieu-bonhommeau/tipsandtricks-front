@@ -11,5 +11,4 @@ dependencyContainer.set<UserGatewayInterface>('UserGateway', () => {
 dependencyContainer.set<TipsGatewayInterface>('TipsGateway', () => {
     return new TipsGatewayApi();
 });
-
 export default dependencyContainer;

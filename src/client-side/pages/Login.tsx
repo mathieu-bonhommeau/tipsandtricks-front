@@ -34,9 +34,11 @@ function Login() {
 
         await dispatch(
             loginUser({
-                userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                params: {
+                    gatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                    navigate: navigate,
+                },
                 userInput: userInput,
-                navigate: navigate,
             }),
         );
     };

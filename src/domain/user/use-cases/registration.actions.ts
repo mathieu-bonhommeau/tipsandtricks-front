@@ -1,17 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { passwordsEquality, passwordValidity, usernameValidity } from './registration.slice.ts';
 import { AppDispatch, RootState } from '../../store.ts';
-import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
 import { User } from '../models/user.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
 import { RegistrationUserInput } from '../models/registration.model.ts';
-import { NavigateFunction } from 'react-router-dom';
+import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
+import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
 
 export type registerUserParams = {
-    userGatewayInterface: UserGatewayInterface;
     userInput: RegistrationUserInput;
-    navigate: NavigateFunction;
+    params: Params;
 };
 
 const checkPasswordsEquality = (password: string, confirmationPassword: string) => {
@@ -61,7 +60,7 @@ export function checkConfirmationPassword(password: string, confirmationPassword
     };
 }
 
-export function registerUser({ userGatewayInterface, userInput, navigate }: registerUserParams) {
+export function registerUser({ params, userInput }: registerUserParams) {
     return async function registerUserThunk(dispatch: AppDispatch, getState: RootState) {
         const { username, password, confirmationPassword } = userInput;
 
@@ -78,9 +77,8 @@ export function registerUser({ userGatewayInterface, userInput, navigate }: regi
         ) {
             await dispatch(
                 registerUserAsync({
-                    userGatewayInterface: userGatewayInterface,
-                    userInput: userInput,
-                    navigate: navigate,
+                    params,
+                    userInput,
                 }),
             );
         }
@@ -89,16 +87,15 @@ export function registerUser({ userGatewayInterface, userInput, navigate }: regi
 
 export const registerUserAsync = createAsyncThunk(
     'registration/registerUser',
-    async ({ userGatewayInterface, userInput, navigate }: registerUserParams): Promise<User | null> => {
-        try {
-            const result = await userGatewayInterface.registerUser(userInput);
-            navigate('/connexion');
-            return result;
-        } catch (error: unknown) {
-            if (error) {
-                throw error;
-            }
-            return null;
-        }
+    async ({ params, userInput }: registerUserParams, { dispatch }): Promise<User | null> => {
+        return (await handleErrors(
+            async () => {
+                const result = await (params.gatewayInterface as UserGatewayInterface).registerUser(userInput);
+                params.navigate!('/connexion');
+                return result;
+            },
+            params,
+            dispatch,
+        )) as User | null;
     },
 );

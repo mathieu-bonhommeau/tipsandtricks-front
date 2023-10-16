@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthenticationState } from '../models/authentication.model.ts';
-import { loginUser, logoutUser, reconnectUser, refreshToken } from './authentication.actions.ts';
-
-import { APIErrorMessages } from '../models/user.model.ts';
+import { loginUser, logoutUser, reconnectUser } from './authentication.actions.ts';
 
 const initialState: AuthenticationState = {
     user: null,
@@ -19,14 +17,17 @@ export const authenticationSlice = createSlice({
             state.credentialsError = false;
             state.unknownServerLoginError = false;
         },
+        deconnectUser: (state) => {
+            state.user = null;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.user = action.payload;
         });
         builder.addCase(loginUser.rejected, (state, action) => {
-            switch (action.error.message) {
-                case APIErrorMessages.WRONG_CREDENTIALS:
+            switch (action.error.code) {
+                case 'WRONG_CREDENTIALS_ERROR':
                     state.unknownServerLoginError = false;
                     state.credentialsError = true;
                     break;
@@ -42,13 +43,10 @@ export const authenticationSlice = createSlice({
             state.user = action.payload;
             state.isReconnecting = false;
         });
-        builder.addCase(refreshToken.fulfilled, (state, action) => {
-            state.user = action.payload
-        })
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { resetErrorState } = authenticationSlice.actions;
+export const { resetErrorState, deconnectUser } = authenticationSlice.actions;
 
 export const authenticationReducer = authenticationSlice.reducer;
