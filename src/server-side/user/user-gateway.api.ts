@@ -1,15 +1,28 @@
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
 import { RegistrationUserInput } from '../../domain/user/models/registration.model.ts';
-import { APIErrorMessages, User } from '../../domain/user/models/user.model.ts';
-import axios, { AxiosError } from 'axios';
-import { AxiosErrorData } from '../../domain/core/models/axios.model.ts';
+import { User } from '../../domain/user/models/user.model.ts';
+import { AxiosError } from 'axios';
+import {
+    AuthError,
+    LogoutError,
+    ReconnectError,
+    RefreshTokenError,
+    WrongCredentialsError,
+} from '../../domain/core/models/errors/authError.ts';
+import { LoginUserInput } from '../../domain/user/models/authentication.model.ts';
+import RegisterError, {
+    EmailAlreadyUsedError,
+    UsernameAlreadyUsedError,
+} from '../../domain/core/models/errors/registerError.ts';
+import { UnauthorizedError } from '../../domain/core/models/errors/globalError.ts';
+import axiosInstance from '../core/axios.instance.ts';
 
 export class UserGatewayApi implements UserGatewayInterface {
     async registerUser(userInputs: RegistrationUserInput): Promise<User> {
         try {
-            const result = await axios({
+            const result = await axiosInstance({
                 method: 'POST',
-                url: `${import.meta.env.VITE_API_URL}/api/register`,
+                url: `register`,
                 data: {
                     email: userInputs.email,
                     username: userInputs.username,
@@ -19,59 +32,85 @@ export class UserGatewayApi implements UserGatewayInterface {
 
             return result.data.data as User;
         } catch (error: unknown) {
-            const axiosError = error as AxiosError;
-            const axiosErrorData = axiosError.response?.data as AxiosErrorData;
-            if (axiosErrorData.message === 'This email already exists in database !')
-                throw new Error(APIErrorMessages.EMAIL_ALREADY_USED);
-            if (axiosErrorData.message === 'This username already exists in database !')
-                throw new Error(APIErrorMessages.USERNAME_ALREADY_USED);
-            throw new Error(APIErrorMessages.REGISTER_UNKNOWN_ERROR);
+            if (error instanceof AxiosError) {
+                const errorData = error.response?.data;
+                if (errorData.code === 'EMAIL_ALREADY_EXIST_ERROR') throw new EmailAlreadyUsedError();
+                if (errorData.code === 'USERNAME_ALREADY_EXIST_ERROR') throw new UsernameAlreadyUsedError();
+                throw new RegisterError();
+            }
+            throw new Error('UNKNOWN_ERROR');
         }
     }
 
-    async loginUser(userInputs: RegistrationUserInput): Promise<User> {
+    async loginUser(userInputs: LoginUserInput): Promise<User> {
         try {
-            const result = await axios({
+            const result = await axiosInstance({
                 method: 'POST',
-                url: `${import.meta.env.VITE_API_URL}/api/login`,
+                url: `login`,
                 data: {
                     email: userInputs.email,
                     password: userInputs.password,
                 },
-                withCredentials: true,
             });
 
             return result.data.data as User;
         } catch (error: unknown) {
-            const axiosError = error as AxiosError;
-            const axiosErrorData = axiosError.response?.data as AxiosErrorData;
-            if (axiosErrorData.status === 400) throw new Error(APIErrorMessages.WRONG_CREDENTIALS);
-            throw new Error(APIErrorMessages.REGISTER_UNKNOWN_ERROR);
+            if (error instanceof AxiosError) {
+                const errorData = error.response?.data;
+                if (errorData.status === 400) throw new WrongCredentialsError();
+                throw new AuthError();
+            }
+            throw new Error('UNKNOWN_ERROR');
         }
     }
 
     async logoutUser(): Promise<void> {
         try {
-            await axios({
+            await axiosInstance({
                 method: 'POST',
-                url: `${import.meta.env.VITE_API_URL}/api/logout`,
-                withCredentials: true,
+                url: `logout`,
             });
-        } catch {
-            throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
+        } catch (error: unknown) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 401) {
+                    throw new UnauthorizedError();
+                }
+                throw new LogoutError();
+            }
+            throw new Error('UNKNOWN_ERROR');
         }
     }
 
     async reconnectUser(): Promise<User | null> {
         try {
-            const result = await axios({
+            const result = await axiosInstance({
                 method: 'GET',
-                url: `${import.meta.env.VITE_API_URL}/api/reconnect`,
-                withCredentials: true,
+                url: `reconnect`,
             });
             return result.data.data;
         } catch (error: unknown) {
-            throw new Error(APIErrorMessages.RECONNECT_UNKNOWN_ERROR);
+            if (error instanceof AxiosError) {
+                throw new ReconnectError();
+            }
+            throw new Error('UNKNOWN_ERROR');
+        }
+    }
+
+    async refreshToken(): Promise<User | null> {
+        try {
+            const result = await axiosInstance({
+                method: 'GET',
+                url: `refresh-token`,
+            });
+            return result.data.data;
+        } catch (error: unknown) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 401) {
+                    throw new UnauthorizedError();
+                }
+                throw new RefreshTokenError();
+            }
+            throw new Error('UNKNOWN_ERROR');
         }
     }
 }

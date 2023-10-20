@@ -31,8 +31,8 @@ export const tipsSlice = createSlice({
             })
             .addCase(getTips.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = action.payload.data;
-                state.totalTips = action.payload.total;
+                state.data = action.payload?.data || [];
+                state.totalTips = action.payload?.total || 0;
             })
             .addCase(getTips.rejected, (state) => {
                 state.loading = false;

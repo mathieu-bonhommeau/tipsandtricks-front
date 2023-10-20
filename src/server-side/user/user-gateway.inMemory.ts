@@ -1,7 +1,11 @@
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
-import { RegistrationUserInput } from '../../domain/user/models/registration.model.ts';
-import { APIErrorMessages, User } from '../../domain/user/models/user.model.ts';
-import { LoginUserInput } from '../../domain/user/models/authentication.model.ts';
+import { User } from '../../domain/user/models/user.model.ts';
+import { AuthError, LogoutError, WrongCredentialsError } from '../../domain/core/models/errors/authError.ts';
+import RegisterError, {
+    EmailAlreadyUsedError,
+    UsernameAlreadyUsedError,
+} from '../../domain/core/models/errors/registerError.ts';
+import { UnauthorizedError } from '../../domain/core/models/errors/globalError.ts';
 
 export class UserGatewayInMemory implements UserGatewayInterface {
     private user: User | null = null;
@@ -13,30 +17,28 @@ export class UserGatewayInMemory implements UserGatewayInterface {
     private logoutUnknownError: boolean = false;
     private unauthorizedError: boolean = false;
 
-    async registerUser(userInputs: RegistrationUserInput): Promise<User | null> {
-        userInputs; // Disable typescript no-used error
+    async registerUser(): Promise<User | null> {
         if (!this.usernameError && !this.emailError && !this.registerUnknownError) {
             return this.user;
         } else {
             if (this.emailError) {
-                throw new Error(APIErrorMessages.EMAIL_ALREADY_USED);
+                throw new EmailAlreadyUsedError();
             } else if (this.usernameError) {
-                throw new Error(APIErrorMessages.USERNAME_ALREADY_USED);
+                throw new UsernameAlreadyUsedError();
             } else if (this.registerUnknownError) {
-                throw new Error(APIErrorMessages.REGISTER_UNKNOWN_ERROR);
+                throw new RegisterError();
             }
             return null;
         }
     }
 
-    async loginUser(userInputs: LoginUserInput): Promise<User | null> {
-        userInputs; // Disable typescript no-used error
+    async loginUser(): Promise<User | null> {
         if (!this.credentialsError && !this.loginUnknownError) {
             return this.user;
         } else if (this.credentialsError) {
-            throw new Error(APIErrorMessages.WRONG_CREDENTIALS);
+            throw new WrongCredentialsError();
         } else if (this.loginUnknownError) {
-            throw new Error(APIErrorMessages.LOGIN_UNKNOWN_ERROR);
+            throw new AuthError();
         }
         return null;
     }
@@ -45,18 +47,21 @@ export class UserGatewayInMemory implements UserGatewayInterface {
         if (!this.logoutUnknownError) {
             return;
         }
-        throw new Error(APIErrorMessages.LOGOUT_UNKNOWN_ERROR);
+        throw new LogoutError();
     }
 
     async reconnectUser(): Promise<User | null> {
         if (!this.unauthorizedError) {
             return this.user;
         }
-        throw new Error(APIErrorMessages.UNAUTHORIZED_ERROR);
+        throw new UnauthorizedError();
     }
 
-    refreshToken(): Promise<void> {
-        throw new Error('Method not implemented.');
+    async refreshToken(): Promise<User | null> {
+        if (!this.unauthorizedError) {
+            return this.user;
+        }
+        throw new UnauthorizedError();
     }
 
     setUser(user: User): void {

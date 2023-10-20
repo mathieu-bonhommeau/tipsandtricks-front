@@ -40,8 +40,10 @@ function UserMenu({ username }: UserMenuProps) {
     const handleLogoutUser = async () => {
         await dispatch(
             logoutUser({
-                userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
-                navigate: navigate,
+                params: {
+                    gatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                    navigate: navigate,
+                },
             }),
         );
     };

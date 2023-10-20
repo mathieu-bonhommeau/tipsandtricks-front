@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import AppHeader from './AppHeader.tsx';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import { reconnectUser } from '../../domain/user/use-cases/authentication.actions.ts';
@@ -9,14 +9,16 @@ import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interf
 
 function AppWrapper() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(
             reconnectUser({
-                userGatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                gatewayInterface: dependencyContainer.get<UserGatewayInterface>('UserGateway'),
+                navigate,
             }),
         );
-    }, [dispatch]);
+    }, [dispatch, navigate]);
 
     return (
         <>

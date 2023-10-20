@@ -8,9 +8,11 @@ import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
 import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination } from '@mui/material';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
+import { useNavigate } from 'react-router-dom';
 
 function TipsBoard() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
     const lengthPerPage = 14;
@@ -27,7 +29,10 @@ function TipsBoard() {
     useEffect(() => {
         dispatch(
             getTips({
-                tipsGatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway'),
+                params: {
+                    gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway'),
+                    navigate: navigate,
+                },
                 page: currentPage,
                 length: lengthPerPage,
             }),
@@ -35,7 +40,7 @@ function TipsBoard() {
         return () => {
             dispatch(resetError());
         };
-    }, [dispatch, currentPage, lengthPerPage]);
+    }, [dispatch, currentPage, lengthPerPage, navigate]);
 
     let content;
 
