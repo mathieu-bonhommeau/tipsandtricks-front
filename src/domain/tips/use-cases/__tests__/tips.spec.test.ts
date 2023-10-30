@@ -79,7 +79,6 @@ describe('when a user want to deleted a tips', () => {
     });
 });
 
-
 class SUT {
     private _tipsTestBuilder: TipsTestBuilder;
     constructor() {

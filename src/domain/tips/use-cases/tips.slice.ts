@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Tips } from '../models/tips.model.ts';
-import {deleteTip, getTips} from './tips.actions.ts';
+import { deleteTip, getTips } from './tips.actions.ts';
 
 export interface TipsState {
     data: Tips[];

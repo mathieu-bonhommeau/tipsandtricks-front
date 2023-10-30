@@ -88,7 +88,7 @@ function TipsCard(tipsCardProps: TipsCardProps) {
                                     Êtes-vous sûr de supprimer ce tips ?
                                 </Typography>
 
-                                <div style={{ textAlign: 'center'}}>
+                                <div style={{ textAlign: 'center' }}>
                                     <Button onClick={handleClose}>Annuler</Button>
                                     <Button onClick={() => handleDeleteTips(tipsCardProps.oneTips.id)}>Ok</Button>
                                 </div>

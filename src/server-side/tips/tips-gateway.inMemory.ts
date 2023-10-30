@@ -34,7 +34,7 @@ export class TipsGatewayInMemory implements TipsGatewayInterface {
             throw new Error('Internal Server Error');
         }
 
-        this.tips.splice(tipsId - 1, 1)
+        this.tips.splice(tipsId - 1, 1);
 
         return Promise.resolve();
     }
