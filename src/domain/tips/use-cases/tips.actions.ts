@@ -12,6 +12,11 @@ export type TipsParams = {
     length: number;
 };
 
+export type TipsDelete = {
+    params: Params;
+    tipsId: number;
+};
+
 export const getTips = createAsyncThunk(
     'tips/getTips',
     async ({ params, page, length }: TipsParams, { dispatch }): Promise<PaginatedResponse<Tips>> => {
@@ -24,3 +29,20 @@ export const getTips = createAsyncThunk(
         )) as PaginatedResponse<Tips>;
     },
 );
+
+export const deleteTip = createAsyncThunk(
+    'tips/deleteTips',
+    async ({ params, tipsId }: TipsDelete, { dispatch }): Promise<void> => {
+        return (await handleErrors(
+            async () => {
+                return await (params.gatewayInterface as TipsGatewayInterface).deleteTip(tipsId);
+            },
+            params,
+            dispatch,
+        )) as Promise<void>;
+    },
+);
+
+export const resetError = () => ({
+    type: 'tips/resetError',
+});
