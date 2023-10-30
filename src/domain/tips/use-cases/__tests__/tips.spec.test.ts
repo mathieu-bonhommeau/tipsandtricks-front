@@ -4,7 +4,7 @@ import { Tips } from '../../models/tips.model';
 import TipsTestBuilder from './tipsTestBuilder';
 import { TipsGatewayInMemory } from '../../../../server-side/tips/tips-gateway.inMemory';
 import { setupStore } from '../../../store';
-import { getTips } from '../tips.actions';
+import { getTips, deleteTip } from '../tips.actions';
 import { Params } from '../../../core/handlers/handle.errors.ts';
 import { faker } from '@faker-js/faker';
 
@@ -59,6 +59,26 @@ describe('when a user is on the tips bank page', () => {
         expect(store.getState().tipsReducer.data).toEqual(expectedTipsPage3);
     });
 });
+
+describe('when a user want to deleted a tips', () => {
+    test('when the request to delete a tips is successful', async () => {
+        await store.dispatch(deleteTip({ params, tipsId: 1 }));
+
+        // Update Tips reducer
+        await store.dispatch(getTips({ params, page: 1, length: 6 }));
+
+        expect(store.getState().tipsReducer.totalTips).toEqual(5);
+    });
+
+    test('when there is a server error, it is reflected in the state', async () => {
+        tipsGatewayInMemory.simulateServerError();
+
+        await store.dispatch(deleteTip({ params, tipsId: 1 }));
+
+        expect(store.getState().tipsReducer.error).toBe(true);
+    });
+});
+
 
 class SUT {
     private _tipsTestBuilder: TipsTestBuilder;

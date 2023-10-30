@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTips } from './tips.actions.ts';
-import { TipsState } from '../models/tips.model.ts';
+import { Tips } from '../models/tips.model.ts';
+import {deleteTip, getTips} from './tips.actions.ts';
+
+export interface TipsState {
+    data: Tips[];
+    error: boolean;
+    totalTips: number;
+    loading: boolean;
+}
 
 const initialState: TipsState = {
     data: [],
@@ -18,19 +25,29 @@ export const tipsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(getTips.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(getTips.fulfilled, (state, action) => {
-                state.loading = false;
-                state.data = action.payload?.data || [];
-                state.totalTips = action.payload?.total || 0;
-            })
-            .addCase(getTips.rejected, (state) => {
-                state.loading = false;
-                state.error = true;
-            });
+            builder
+                .addCase(getTips.pending, (state) => {
+                    state.loading = true;
+                })
+                .addCase(getTips.fulfilled, (state, action) => {
+                    state.loading = false;
+                    state.data = action.payload?.data || [];
+                    state.totalTips = action.payload?.total || 0;
+                })
+                .addCase(getTips.rejected, (state) => {
+                    state.loading = false;
+                    state.error = true;
+                })
+                .addCase(deleteTip.pending, (state) => {
+                    state.loading = true;
+                })
+                .addCase(deleteTip.fulfilled, (state) => {
+                    state.loading = false;
+                })
+                .addCase(deleteTip.rejected, (state) => {
+                    state.loading = false;
+                    state.error = true;
+                });
     },
 });
 

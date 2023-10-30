@@ -4,4 +4,5 @@ import { PaginatedResponse } from '../../core/models/paginatedResponse.ts';
 
 export interface TipsGatewayInterface extends GatewayInterface {
     getTips(page: number, length: number): Promise<PaginatedResponse<Tips>>;
+    deleteTip(tipsId: number): Promise<void>;
 }
