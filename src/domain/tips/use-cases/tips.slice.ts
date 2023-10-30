@@ -25,19 +25,19 @@ export const tipsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-            builder
-                .addCase(getTips.pending, (state) => {
-                    state.loading = true;
-                })
-                .addCase(getTips.fulfilled, (state, action) => {
-                    state.loading = false;
-                    state.data = action.payload?.data || [];
-                    state.totalTips = action.payload?.total || 0;
-                })
-                .addCase(getTips.rejected, (state) => {
-                    state.loading = false;
-                    state.error = true;
-                });
+        builder
+            .addCase(getTips.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getTips.fulfilled, (state, action) => {
+                state.loading = false;
+                state.data = action.payload?.data || [];
+                state.totalTips = action.payload?.total || 0;
+            })
+            .addCase(getTips.rejected, (state) => {
+                state.loading = false;
+                state.error = true;
+            });
 
             builder
                 .addCase(deleteTip.pending, (state) => {
