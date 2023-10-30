@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getTips } from './tips.actions.ts';
-import {TipsState} from "../models/tips.model.ts";
+import { TipsState } from '../models/tips.model.ts';
 
 const initialState: TipsState = {
     data: [],

@@ -6,7 +6,7 @@ import { TipsGatewayInMemory } from '../../../../server-side/tips/tips-gateway.i
 import { setupStore } from '../../../store';
 import { getTips } from '../tips.actions';
 import { Params } from '../../../core/handlers/handle.errors.ts';
-import {faker} from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
 
 let store: ToolkitStore;
 let sut: SUT;
@@ -75,7 +75,8 @@ class SUT {
                     .setTitle(faker.lorem.words(3))
                     .setCommand(faker.lorem.sentence())
                     .setDescription(faker.lorem.paragraph())
-                    .buildTips());
+                    .buildTips(),
+            );
         }
         return tipsArray;
     }

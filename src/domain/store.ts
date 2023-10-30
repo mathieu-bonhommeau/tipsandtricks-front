@@ -3,7 +3,7 @@ import { registrationReducer } from './user/use-cases/registration.slice.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { tipsReducer } from './tips/use-cases/tips.slice.ts';
 import { authenticationReducer } from './user/use-cases/authentication.slice.ts';
-import {postReducer} from "./posts/use-cases/post.slice.ts";
+import { postReducer } from './posts/use-cases/post.slice.ts';
 
 export const setupStore = (): ToolkitStore => {
     return configureStore({

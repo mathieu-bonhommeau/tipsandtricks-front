@@ -1,7 +1,7 @@
-import {Card, CardContent, CardHeader, IconButton, Box} from '@mui/material';
+import { Card, CardContent, CardHeader, IconButton, Box } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import { Tips } from '../../domain/tips/models/tips.model';
-import {TipsContent} from "./TipsContent.tsx";
+import { TipsContent } from './TipsContent.tsx';
 
 function TipsCard(tipsCardProps: TipsCardProps) {
     return (
@@ -15,12 +15,15 @@ function TipsCard(tipsCardProps: TipsCardProps) {
                 }
             />
             <CardContent>
-                <Box sx={{ p: 2, border: '1px solid grey', bgcolor: "primary.light" }}>
-                    <TipsContent tipsDetails={{
-                        command: tipsCardProps.oneTips.command,
-                        description: tipsCardProps.oneTips.description,
-                        tags: tipsCardProps.oneTips.tags
-                    }} {...tipsCardProps} />
+                <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
+                    <TipsContent
+                        tipsDetails={{
+                            command: tipsCardProps.oneTips.command,
+                            description: tipsCardProps.oneTips.description,
+                            tags: tipsCardProps.oneTips.tags,
+                        }}
+                        {...tipsCardProps}
+                    />
                 </Box>
             </CardContent>
         </Card>

@@ -1,13 +1,12 @@
-import {PostState} from "../models/post.model.ts";
-import {getPosts} from "./post.actions.ts";
-import {createSlice} from "@reduxjs/toolkit";
+import { PostState } from '../models/post.model.ts';
+import { getPosts } from './post.actions.ts';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: PostState = {
     data: [],
     error: false,
-    totalReceived: 0,
     loading: false,
-}
+};
 
 export const postSlice = createSlice({
     name: 'posts',
@@ -24,8 +23,8 @@ export const postSlice = createSlice({
             })
             .addCase(getPosts.fulfilled, (state, action) => {
                 state.loading = false;
-                state.data = [...state.data, ...action.payload?.data] || [];
-                state.totalReceived = state.totalReceived + action.payload?.length || 0
+                const newPosts = action.payload?.data || [];
+                state.data = [...state.data, ...newPosts];
             })
             .addCase(getPosts.rejected, (state) => {
                 state.loading = false;

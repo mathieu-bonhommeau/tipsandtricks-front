@@ -1,5 +1,5 @@
 import { Tag } from '../../../tags/models/tag.model';
-import {Post} from "../../models/post.model.ts";
+import { Post } from '../../models/post.model.ts';
 
 export default class PostsTestBuilder {
     private _id: number | null = 1;

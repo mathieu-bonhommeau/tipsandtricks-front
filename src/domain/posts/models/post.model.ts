@@ -1,4 +1,4 @@
-import {Tag} from "../../tags/models/tag.model.ts";
+import { Tag } from '../../tags/models/tag.model.ts';
 
 export type Post = {
     id: number;
@@ -13,11 +13,10 @@ export type Post = {
     tags: Tag[];
     user_id: number;
     username: string;
-}
+};
 
 export interface PostState {
     data: Post[];
     error: boolean;
-    totalReceived: number;
     loading: boolean;
 }

@@ -1,8 +1,8 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {handleErrors, Params} from "../../core/handlers/handle.errors.ts";
-import {PostGatewayInterface} from "../port/post-gateway-interface.ts";
-import {InfiniteResponse} from "../../core/models/infiniteResponse.ts";
-import {Post} from "../models/post.model.ts";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
+import { PostGatewayInterface } from '../port/post-gateway-interface.ts';
+import { InfiniteResponse } from '../../core/models/infiniteResponse.ts';
+import { Post } from '../models/post.model.ts';
 
 export type PostsParams = {
     params: Params;
@@ -22,7 +22,3 @@ export const getPosts = createAsyncThunk(
         )) as InfiniteResponse<Post>;
     },
 );
-
-export const resetError = () => ({
-    type: 'posts/resetError',
-});

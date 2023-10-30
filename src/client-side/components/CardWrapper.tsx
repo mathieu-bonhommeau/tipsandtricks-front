@@ -1,7 +1,7 @@
 import { handleCopyToClipboard } from '../utils/copyToClipBoard';
-import React, {ReactElement, useState} from 'react';
+import React, { ReactElement, useState } from 'react';
 
-function CardWrapper({children}: { children: ReactElement }) {
+function CardWrapper({ children }: { children: ReactElement }) {
     const [textCopied, setTextCopied] = useState(false);
     const [failCopied, setFailCopied] = useState(false);
 
@@ -20,21 +20,17 @@ function CardWrapper({children}: { children: ReactElement }) {
         }
     };
 
-    children =  React.cloneElement(children, {
-            textCopied: textCopied,
-            failCopied: failCopied,
-            handleCopy: handleCopy,
-        });
+    children = React.cloneElement(children, {
+        textCopied: textCopied,
+        failCopied: failCopied,
+        handleCopy: handleCopy,
+    });
 
     if (!React.isValidElement(children)) {
-        return <></>
+        return <></>;
     }
 
-    return (
-        <>
-            {children}
-        </>
-    );
+    return <>{children}</>;
 }
 
 export default CardWrapper;

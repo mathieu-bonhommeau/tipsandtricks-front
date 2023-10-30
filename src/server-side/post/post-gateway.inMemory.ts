@@ -1,6 +1,6 @@
-import {PostGatewayInterface} from "../../domain/posts/port/post-gateway-interface.ts";
-import {Post} from "../../domain/posts/models/post.model.ts";
-import {InfiniteResponse} from "../../domain/core/models/infiniteResponse.ts";
+import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
+import { Post } from '../../domain/posts/models/post.model.ts';
+import { InfiniteResponse } from '../../domain/core/models/infiniteResponse.ts';
 
 export default class PostGatewayInMemory implements PostGatewayInterface {
     public posts: Post[] | [] = [];
@@ -20,7 +20,7 @@ export default class PostGatewayInMemory implements PostGatewayInterface {
             start: start,
             length: length,
             data: postsInPage,
-        }
+        };
         return Promise.resolve(response);
     }
 

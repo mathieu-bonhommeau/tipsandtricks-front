@@ -4,7 +4,7 @@ import { Tips } from '../models/tips.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
 import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
-import {PaginatedResponse} from "../../core/models/paginatedResponse.ts";
+import { PaginatedResponse } from '../../core/models/paginatedResponse.ts';
 
 export type TipsParams = {
     params: Params;
@@ -24,7 +24,3 @@ export const getTips = createAsyncThunk(
         )) as PaginatedResponse<Tips>;
     },
 );
-
-export const resetError = () => ({
-    type: 'tips/resetError',
-});

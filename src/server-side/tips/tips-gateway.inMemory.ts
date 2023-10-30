@@ -1,6 +1,6 @@
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface';
 import { Tips } from '../../domain/tips/models/tips.model';
-import {PaginatedResponse} from "../../domain/core/models/paginatedResponse.ts";
+import { PaginatedResponse } from '../../domain/core/models/paginatedResponse.ts';
 
 export class TipsGatewayInMemory implements TipsGatewayInterface {
     public tips: Tips[] | [] = [];

@@ -1,6 +1,6 @@
 import { Tag } from '../../../tags/models/tag.model';
 import { Tips } from '../../models/tips.model';
-import {faker} from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
 
 export default class TipsTestBuilder {
     private _id: number = 1;

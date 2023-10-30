@@ -1,17 +1,22 @@
-import {Alert, Chip, IconButton, InputAdornment, TextField} from "@mui/material";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import {Tag} from "../../domain/tags/models/tag.model.ts";
+import { Alert, Chip, IconButton, InputAdornment, TextField } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Tag } from '../../domain/tags/models/tag.model.ts';
 
 export function TipsContent(tipsContentProps: TipsContentProps) {
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <TextField sx={{bgcolor: "primary.contrastText"}}
+                <TextField
+                    sx={{ bgcolor: 'primary.contrastText' }}
                     variant="outlined"
                     fullWidth
-                    value={tipsContentProps.tipsDetails.command.length > 37 ? `${tipsContentProps.tipsDetails.command.substring(0, 34)}...` : tipsContentProps.tipsDetails.command}
+                    value={
+                        tipsContentProps.tipsDetails.command.length > 37
+                            ? `${tipsContentProps.tipsDetails.command.substring(0, 34)}...`
+                            : tipsContentProps.tipsDetails.command
+                    }
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -22,7 +27,11 @@ export function TipsContent(tipsContentProps: TipsContentProps) {
                                 ) : tipsContentProps.failCopied ? (
                                     <Alert severity="error">Echec de la copie !</Alert>
                                 ) : (
-                                    <IconButton onClick={() => tipsContentProps.handleCopy!(tipsContentProps.tipsDetails.command)}>
+                                    <IconButton
+                                        onClick={() =>
+                                            tipsContentProps.handleCopy!(tipsContentProps.tipsDetails.command)
+                                        }
+                                    >
                                         <ContentCopyIcon />
                                     </IconButton>
                                 )}
@@ -58,16 +67,16 @@ export function TipsContent(tipsContentProps: TipsContentProps) {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 type TipsContentProps = {
     tipsDetails: {
-        command: string,
-        description: string,
-        tags: Tag[]
-    },
-    textCopied?: boolean,
-    failCopied?: boolean,
-    handleCopy?: (command: string) => void,
-}
+        command: string;
+        description: string;
+        tags: Tag[];
+    };
+    textCopied?: boolean;
+    failCopied?: boolean;
+    handleCopy?: (command: string) => void;
+};

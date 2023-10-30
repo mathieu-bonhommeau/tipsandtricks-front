@@ -1,7 +1,7 @@
 import TipsCard from '../components/TipsCard.tsx';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import { useSelector } from 'react-redux';
-import { getTips, resetError } from '../../domain/tips/use-cases/tips.actions.ts';
+import { getTips } from '../../domain/tips/use-cases/tips.actions.ts';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
@@ -9,7 +9,8 @@ import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interf
 import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination } from '@mui/material';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
 import { useNavigate } from 'react-router-dom';
-import CardWrapper from "../components/CardWrapper.tsx";
+import CardWrapper from '../components/CardWrapper.tsx';
+import { resetError } from '../../domain/tips/use-cases/tips.slice.ts';
 
 function TipsBoard() {
     const dispatch = useAppDispatch();
