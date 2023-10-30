@@ -2,8 +2,27 @@ import { Card, CardContent, CardHeader, IconButton, Avatar, Typography, Box } fr
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import { TipsContent } from './TipsContent.tsx';
+import {useDispatch} from "react-redux";
+import {saveTips} from "../../domain/posts/use-cases/post.actions.ts";
+import dependencyContainer from "../../_dependencyContainer/dependencyContainer.ts";
+import {PostGatewayInterface} from "../../domain/posts/port/post-gateway-interface.ts";
+import {useNavigate} from "react-router-dom";
 
 function PostCard(postCardProps: PostCardProps) {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleSaveTips = async (post: Post) => {
+        await dispatch(
+            saveTips({
+                params: {
+                    gatewayInterface: dependencyContainer.get<PostGatewayInterface>('PostGateway'),
+                    navigate: navigate
+                },
+                post
+            })
+        )
+    }
+
     return (
         <Card raised elevation={3} sx={{ maxWidth: 1000, bgcolor: 'primary.paper' }}>
             <CardHeader
@@ -11,7 +30,7 @@ function PostCard(postCardProps: PostCardProps) {
                 title={postCardProps.onePost.username}
                 action={
                     <>
-                        <IconButton aria-label="share">
+                        <IconButton aria-label="share" onClick={() => handleSaveTips(postCardProps.onePost)}>
                             <AddCircleIcon />
                         </IconButton>
                     </>

@@ -3,6 +3,7 @@ import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
 import { PostGatewayInterface } from '../port/post-gateway-interface.ts';
 import { InfiniteResponse } from '../../core/models/infiniteResponse.ts';
 import { Post } from '../models/post.model.ts';
+import {Tips} from "../../tips/models/tips.model.ts";
 
 export type PostsParams = {
     params: Params;
@@ -20,5 +21,18 @@ export const getPosts = createAsyncThunk(
             params,
             dispatch,
         )) as InfiniteResponse<Post>;
+    },
+);
+
+export const saveTips = createAsyncThunk(
+    'post/saveTips',
+    async ({ params, post }: { params: Params; post: Post }, { dispatch }): Promise<Tips> => {
+        return (await handleErrors(
+            async () => {
+                return await (params.gatewayInterface as PostGatewayInterface).saveTips(post);
+            },
+            params,
+            dispatch,
+        )) as Tips;
     },
 );
