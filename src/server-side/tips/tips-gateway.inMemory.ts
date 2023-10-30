@@ -1,9 +1,10 @@
-import { PaginatedResponse, TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface';
+import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface';
 import { Tips } from '../../domain/tips/models/tips.model';
+import {PaginatedResponse} from "../../domain/core/models/paginatedResponse.ts";
 
 export class TipsGatewayInMemory implements TipsGatewayInterface {
-    private tips: Tips[] | [] = [];
-    private throwError = false;
+    public tips: Tips[] | [] = [];
+    public throwError = false;
 
     simulateServerError() {
         this.throwError = true;

@@ -1,8 +1,9 @@
-import { PaginatedResponse, TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface';
+import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface';
 import { Tips } from '../../domain/tips/models/tips.model';
 import { AxiosError } from 'axios';
 import { ApiError, UnauthorizedError } from '../../domain/core/models/errors/globalError.ts';
 import axiosInstance from '../core/axios.instance.ts';
+import {PaginatedResponse} from "../../domain/core/models/paginatedResponse.ts";
 
 export class TipsGatewayApi implements TipsGatewayInterface {
     async getTips(page: number, length: number): Promise<PaginatedResponse<Tips>> {

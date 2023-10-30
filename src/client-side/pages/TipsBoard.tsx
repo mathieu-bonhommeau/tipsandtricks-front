@@ -9,6 +9,7 @@ import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interf
 import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination } from '@mui/material';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
 import { useNavigate } from 'react-router-dom';
+import CardWrapper from "../components/CardWrapper.tsx";
 
 function TipsBoard() {
     const dispatch = useAppDispatch();
@@ -49,7 +50,9 @@ function TipsBoard() {
             <Grid container spacing={4} alignItems="stretch">
                 {tips.map((oneTips: Tips) => (
                     <Grid item xs={12} sm={6} key={oneTips.id}>
-                        <TipsCard oneTips={oneTips} />
+                        <CardWrapper>
+                            <TipsCard oneTips={oneTips} />
+                        </CardWrapper>
                     </Grid>
                 ))}
             </Grid>
@@ -67,8 +70,8 @@ function TipsBoard() {
 
     return (
         <Container maxWidth="md">
-            <Grid container direction="column" style={{ minHeight: '100vh' }}>
-                <Box flex="1" display="flex" flexDirection="column" justifyContent="center">
+            <Grid container direction="column">
+                <Box flex="1" display="flex" flexDirection="column">
                     {loading ? (
                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                             <CircularProgress />

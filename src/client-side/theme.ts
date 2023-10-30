@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import { indigo, orange } from '@mui/material/colors';
 
 /*const light = {
     main: "#FFFFFF",
@@ -19,8 +18,20 @@ import { indigo, orange } from '@mui/material/colors';
 
 export const theme = createTheme({
     palette: {
-        primary: indigo,
-        secondary: orange,
+        background: {
+            paper: '#F3F4FD',
+            default: '#202CA8',
+        },
+        text: {
+            primary: '#000000',
+            secondary: '#4970CC',
+        },
+        primary: {
+            main: '#4970CC',
+            light: '#ECECF3',
+            dark: '#3853A9',
+            contrastText: '#FFFFFF',
+        },
     },
     typography: {
         fontFamily: 'IBM Plex Sans, sans-serif',
