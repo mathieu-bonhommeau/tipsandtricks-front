@@ -37,12 +37,17 @@ export const tipsSlice = createSlice({
                 .addCase(getTips.rejected, (state) => {
                     state.loading = false;
                     state.error = true;
-                })
+                });
+
+            builder
                 .addCase(deleteTip.pending, (state) => {
                     state.loading = true;
                 })
-                .addCase(deleteTip.fulfilled, (state) => {
+                .addCase(deleteTip.fulfilled, (state, action) => {
                     state.loading = false;
+                    state.data = state.data.filter(tips => {
+                        return tips.id !== action.payload;
+                    })
                 })
                 .addCase(deleteTip.rejected, (state) => {
                     state.loading = false;

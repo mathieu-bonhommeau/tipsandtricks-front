@@ -32,14 +32,14 @@ export const getTips = createAsyncThunk(
 
 export const deleteTip = createAsyncThunk(
     'tips/deleteTips',
-    async ({ params, tipsId }: TipsDelete, { dispatch }): Promise<void> => {
+    async ({ params, tipsId }: TipsDelete, { dispatch }): Promise<number> => {
         return (await handleErrors(
             async () => {
                 return await (params.gatewayInterface as TipsGatewayInterface).deleteTip(tipsId);
             },
             params,
             dispatch,
-        )) as Promise<void>;
+        )) as number;
     },
 );
 

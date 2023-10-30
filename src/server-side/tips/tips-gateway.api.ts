@@ -25,18 +25,19 @@ export class TipsGatewayApi implements TipsGatewayInterface {
         }
     }
 
-    async deleteTip(tipsId: number): Promise<void> {
+    async deleteTip(tipsId: number): Promise<number> {
         try {
-            const response = await axiosInstance({
+            await axiosInstance({
                 method: 'DELETE',
                 url: `tips/${tipsId}`,
             });
 
-            return response.data;
+            return tipsId;
         } catch (error) {
             if (error instanceof AxiosError) {
                 if (error.response?.status === 401) throw new UnauthorizedError();
                 throw new ApiError('Failed to delete tips from API');
+
             }
 
             throw new Error('UNKNOWN_ERROR');
