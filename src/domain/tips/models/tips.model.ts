@@ -11,3 +11,10 @@ export type Tips = {
     user_id: number;
     tags: Tag[];
 };
+
+export interface TipsState {
+    data: Tips[];
+    error: boolean;
+    totalTips: number;
+    loading: boolean;
+}

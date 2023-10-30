@@ -6,6 +6,7 @@ import { TipsGatewayInMemory } from '../../../../server-side/tips/tips-gateway.i
 import { setupStore } from '../../../store';
 import { getTips } from '../tips.actions';
 import { Params } from '../../../core/handlers/handle.errors.ts';
+import { faker } from '@faker-js/faker';
 
 let store: ToolkitStore;
 let sut: SUT;
@@ -27,8 +28,7 @@ beforeEach(() => {
 
 describe('when a user is on the tips bank page', () => {
     test('when the request to retrieve their tips is successful his tips are retrived', async () => {
-        const expectedTips = sut.generateArrayOfTips(2);
-
+        const expectedTips = tipsGatewayInMemory.tips.slice(0, 2);
         await store.dispatch(getTips({ params, page: 1, length: 2 }));
 
         expect(store.getState().tipsReducer.data).toEqual(expectedTips);
@@ -44,7 +44,7 @@ describe('when a user is on the tips bank page', () => {
     });
 
     test('it retrieves the correct tips for the second page', async () => {
-        const expectedTipsPage2 = sut.generateArrayOfTips(4).slice(2, 4);
+        const expectedTipsPage2 = tipsGatewayInMemory.tips.slice(2, 4);
 
         await store.dispatch(getTips({ params, page: 2, length: 2 }));
 
@@ -52,7 +52,7 @@ describe('when a user is on the tips bank page', () => {
     });
 
     test('it retrieves the correct tips for the third page', async () => {
-        const expectedTipsPage3 = sut.generateArrayOfTips(6).slice(4, 6);
+        const expectedTipsPage3 = tipsGatewayInMemory.tips.slice(4, 6);
 
         await store.dispatch(getTips({ params, page: 3, length: 2 }));
 
@@ -69,7 +69,14 @@ class SUT {
     generateArrayOfTips(size: number): Tips[] {
         const tipsArray: Tips[] = [];
         for (let i = 0; i < size; i++) {
-            tipsArray.push(this._tipsTestBuilder.buildTips());
+            tipsArray.push(
+                this._tipsTestBuilder
+                    .setId(i)
+                    .setTitle(faker.lorem.words(3))
+                    .setCommand(faker.lorem.sentence())
+                    .setDescription(faker.lorem.paragraph())
+                    .buildTips(),
+            );
         }
         return tipsArray;
     }
