@@ -6,16 +6,19 @@ import { useEffect, useState } from 'react';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
-import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination } from '@mui/material';
+import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination, Fab } from '@mui/material';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
 import { useNavigate } from 'react-router-dom';
 import CardWrapper from '../components/CardWrapper.tsx';
 import { resetError } from '../../domain/tips/use-cases/tips.slice.ts';
+import AddIcon from '@mui/icons-material/Add';
+import TipsModal from '../components/TipsModal.tsx';
 
 function TipsBoard() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const [openModale, setOpenModale] = useState(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const lengthPerPage = 14;
 
@@ -23,17 +26,25 @@ function TipsBoard() {
         setCurrentPage(value);
     };
 
+    const handleOpenModal = () => {
+        setOpenModale(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModale(false);
+    };
+
     const tips = useSelector((state: RootState) => state.tipsReducer.data);
     const totalTips = useSelector((state: RootState) => state.tipsReducer.totalTips);
     const error = useSelector((state: RootState) => state.tipsReducer.error);
     const loading = useSelector((state: RootState) => state.tipsReducer.loading);
 
+
     useEffect(() => {
         dispatch(
             getTips({
                 params: {
-                    gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway'),
-                    navigate: navigate,
+                    gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway')
                 },
                 page: currentPage,
                 length: lengthPerPage,
@@ -71,6 +82,12 @@ function TipsBoard() {
 
     return (
         <Container maxWidth="md">
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+                <Fab color="primary" aria-label="add" onClick={handleOpenModal}>
+                    <AddIcon />
+                </Fab>
+            </Box>
+
             <Grid container direction="column">
                 <Box flex="1" display="flex" flexDirection="column">
                     {loading ? (
@@ -81,7 +98,7 @@ function TipsBoard() {
                         content
                     )}
                 </Box>
-
+                <TipsModal open={openModale} handleClose={handleCloseModal} />
                 {totalTips > lengthPerPage && (
                     <Box display="flex" justifyContent="center" mt={4} mb={4}>
                         <Pagination

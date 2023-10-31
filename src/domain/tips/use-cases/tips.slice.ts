@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TipsState } from '../models/tips.model.ts';
 import { Tips } from '../models/tips.model.ts';
-import { deleteTip, getTips, shareTip } from './tips.actions.ts';
+import { createTips, deleteTip, getTips, shareTip } from './tips.actions.ts';
 import { Post } from '../../posts/models/post.model.ts';
 
 export interface TipsState {
@@ -17,6 +18,7 @@ const initialState: TipsState = {
     error: false,
     totalTips: 0,
     loading: false,
+    createTipsError: false,
 };
 
 export const tipsSlice = createSlice({
@@ -40,6 +42,17 @@ export const tipsSlice = createSlice({
             .addCase(getTips.rejected, (state) => {
                 state.loading = false;
                 state.error = true;
+            })
+            .addCase(createTips.fulfilled, (state, action) => {
+                state.loading = false;
+                state.data.push(action.payload);
+            })
+            .addCase(createTips.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createTips.rejected, (state) => {
+                state.loading = false;
+                state.createTipsError = true;
             })
             .addCase(deleteTip.pending, (state) => {
                 state.loading = true;

@@ -1,4 +1,3 @@
-import { Tag } from '../../tags/models/tag.model';
 
 export type Tips = {
     id: number;
@@ -9,7 +8,12 @@ export type Tips = {
     created_at: string;
     updated_at: string | null;
     user_id: number;
-    tags: Tag[];
+};
+
+export type TipsInput = {
+    title: string;
+    command: string;
+    description: string | null;
 };
 
 export interface TipsState {
@@ -17,4 +21,5 @@ export interface TipsState {
     error: boolean;
     totalTips: number;
     loading: boolean;
+    createTipsError: boolean;
 }
