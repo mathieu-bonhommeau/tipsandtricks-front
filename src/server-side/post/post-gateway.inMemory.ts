@@ -1,6 +1,7 @@
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import { InfiniteResponse } from '../../domain/core/models/infiniteResponse.ts';
+import {Tips} from "../../domain/tips/models/tips.model.ts";
 
 export default class PostGatewayInMemory implements PostGatewayInterface {
     public posts: Post[] | [] = [];
@@ -26,5 +27,22 @@ export default class PostGatewayInMemory implements PostGatewayInterface {
 
     setTips(posts: Post[]): void {
         this.posts = posts;
+    }
+
+    async saveTips(post: Post): Promise<Tips> {
+        if (this.throwError) {
+            throw new Error('Internal Server Error');
+        }
+        return {
+            id: post.id,
+            user_id: post.user_id,
+            title: post.title,
+            command: post.command,
+            description: post.description,
+            published_at: post.published_at,
+            created_at: post.created_at,
+            updated_at: post.updated_at,
+            tags: post.tags || []
+        }
     }
 }

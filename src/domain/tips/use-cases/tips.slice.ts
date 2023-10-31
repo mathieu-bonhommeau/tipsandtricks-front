@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTips } from './tips.actions.ts';
+import {getTips} from './tips.actions.ts';
 import { TipsState } from '../models/tips.model.ts';
 
 const initialState: TipsState = {
@@ -30,7 +30,7 @@ export const tipsSlice = createSlice({
             .addCase(getTips.rejected, (state) => {
                 state.loading = false;
                 state.error = true;
-            });
+            })
     },
 });
 
