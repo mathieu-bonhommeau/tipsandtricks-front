@@ -55,7 +55,7 @@ describe('when a user is on the feed page', () => {
             await store.dispatch(getPosts({ params, length: 2 }));
             expect(store.getState().postsReducer.error).toBe(true);
         });
-    });
+    })
 
     describe('add tips in tips board', () => {
         test('should save a tips in personal tips board from a post', async () => {

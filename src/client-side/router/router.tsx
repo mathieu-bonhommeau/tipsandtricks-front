@@ -6,7 +6,7 @@ import Feed from '../pages/Feed.tsx';
 import AppWrapper from '../components/AppWrapper.tsx';
 import TipsBoard from '../pages/TipsBoard.tsx';
 import PrivateRoute from '../wrappers/privateRoute.tsx';
-import PostDetails from "../pages/PostDetails.tsx";
+import PostDetails from '../pages/PostDetails.tsx';
 
 export enum routes {
     homepage = '/',
