@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, Mock, test } from 'vitest';
 import { UserGatewayInMemory } from '../../../../server-side/user/user-gateway.inMemory.ts';
-import TestBuilder from './testBuilder.ts';
+import UserTestBuilder from './testBuilder.ts';
 import { RegistrationUserInput } from '../../models/registration.model.ts';
 import { User } from '../../models/user.model.ts';
 import { setupStore } from '../../../store.ts';
@@ -267,9 +267,9 @@ describe('When the registration form is submitted', () => {
 });
 
 class SUT {
-    private _registrationTestBuilder: TestBuilder;
+    private _registrationTestBuilder: UserTestBuilder;
     constructor() {
-        this._registrationTestBuilder = new TestBuilder();
+        this._registrationTestBuilder = new UserTestBuilder();
     }
     givenAUserInput(): RegistrationUserInput {
         return this._registrationTestBuilder.buildRegistrationUserInput();

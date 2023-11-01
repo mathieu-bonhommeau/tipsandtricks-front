@@ -30,6 +30,10 @@ export default class PostsTestBuilder {
             updated_at: this._updated_at,
             user_id: this._user_id,
             username: this._username,
+            reactions: {
+                like: 10,
+                dislike: 10,
+            },
             tags: this._tags,
         } as Post;
     }

@@ -13,13 +13,13 @@ import CardWrapper from '../components/CardWrapper.tsx';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
 
 function Feed() {
-    const length = 2;
+    const length = 10;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const posts = useSelector((state: RootState) => state.postReducer.data);
-    const error = useSelector((state: RootState) => state.postReducer.error);
-    const loading = useSelector((state: RootState) => state.postReducer.loading);
+    const posts = useSelector((state: RootState) => state.postsReducer.data);
+    const error = useSelector((state: RootState) => state.postsReducer.error);
+    const loading = useSelector((state: RootState) => state.postsReducer.loading);
 
     const [start, setStart] = useState<number>(0);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
