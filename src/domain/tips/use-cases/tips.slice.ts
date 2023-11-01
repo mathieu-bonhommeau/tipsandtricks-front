@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTips } from './tips.actions.ts';
-import { TipsState } from '../models/tips.model.ts';
+import { Tips } from '../models/tips.model.ts';
+import { deleteTip, getTips } from './tips.actions.ts';
+
+export interface TipsState {
+    data: Tips[];
+    error: boolean;
+    totalTips: number;
+    loading: boolean;
+}
 
 const initialState: TipsState = {
     data: [],
@@ -31,6 +38,21 @@ export const tipsSlice = createSlice({
                 state.loading = false;
                 state.error = true;
             });
+
+            builder
+                .addCase(deleteTip.pending, (state) => {
+                    state.loading = true;
+                })
+                .addCase(deleteTip.fulfilled, (state, action) => {
+                    state.loading = false;
+                    state.data = state.data.filter(tips => {
+                        return tips.id !== action.payload;
+                    })
+                })
+                .addCase(deleteTip.rejected, (state) => {
+                    state.loading = false;
+                    state.error = true;
+                });
     },
 });
 

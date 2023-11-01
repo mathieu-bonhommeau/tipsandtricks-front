@@ -1,7 +1,5 @@
-import { Alert, Chip, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Alert, IconButton, InputAdornment, TextField } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { Tag } from '../../domain/tags/models/tag.model.ts';
 
 export function TipsContent(tipsContentProps: TipsContentProps) {
@@ -51,21 +49,6 @@ export function TipsContent(tipsContentProps: TipsContentProps) {
             >
                 {tipsContentProps.tipsDetails.description}
             </p>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                    <Chip label="tag 1" style={{ marginRight: '5px' }} />
-                    <Chip label="tag 2" style={{ marginRight: '5px' }} />
-                    <Chip label="tag 3" style={{ marginRight: '5px' }} />
-                </div>
-                <div>
-                    <IconButton aria-label="edit">
-                        <EditIcon />
-                    </IconButton>
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </div>
-            </div>
         </>
     );
 }
