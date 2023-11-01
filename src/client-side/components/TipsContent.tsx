@@ -1,5 +1,7 @@
 import { Alert, IconButton, InputAdornment, TextField } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Tag } from '../../domain/tags/models/tag.model.ts';
 
 type TipsContentProps = {

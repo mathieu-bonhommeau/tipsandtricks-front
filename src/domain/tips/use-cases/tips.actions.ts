@@ -42,7 +42,6 @@ export const getTips = createAsyncThunk(
     },
 );
 
-
 export const createTips = createAsyncThunk(
     'tips/createTip',
     async ({ params, tips }: CreateTipParams, { dispatch }): Promise<Tips> => {

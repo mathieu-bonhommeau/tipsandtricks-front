@@ -14,7 +14,6 @@ interface Props {
 }
 
 const TipsModal: FC<Props> = ({ open, handleClose }) => {
-
     const dispatch = useAppDispatch();
 
     const [title, setTitle] = useState<string>('');
@@ -27,23 +26,27 @@ const TipsModal: FC<Props> = ({ open, handleClose }) => {
         setTitleError(null);
         setCommandError(null);
 
-        if (title === "") {
-            setTitleError("Le titre est obligatoire.");
+        if (title === '') {
+            setTitleError('Le titre est obligatoire.');
         }
 
-        if (command === "") {
-            setCommandError("La commande est obligatoire.");
+        if (command === '') {
+            setCommandError('La commande est obligatoire.');
         }
 
-        if (title != "" && command != "") {
+        if (title != '' && command != '') {
             const tipsData = {
                 title: title,
                 command: command,
                 description: description,
-
             };
 
-            dispatch(createTips({ params: { gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway') }, tips: tipsData }));
+            dispatch(
+                createTips({
+                    params: { gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway') },
+                    tips: tipsData,
+                }),
+            );
             setTitle('');
             setCommand('');
             setDescription('');
@@ -51,26 +54,28 @@ const TipsModal: FC<Props> = ({ open, handleClose }) => {
         }
     };
 
-
     const body = (
-        <Box sx={{
-            width: '80vw',
-            maxWidth: '400px',
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            p: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            mx: 'auto',
-            my: '20vh',
-            borderRadius: 2,
-        }}>
+        <Box
+            sx={{
+                width: '80vw',
+                maxWidth: '400px',
+                bgcolor: 'background.paper',
+                boxShadow: 24,
+                p: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+                mx: 'auto',
+                my: '20vh',
+                borderRadius: 2,
+            }}
+        >
             <TextField
                 label="Titre du Tips"
                 variant="outlined"
                 required
-                fullWidth value={title}
+                fullWidth
+                value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 error={!!titleError}
                 helperText={titleError}
@@ -79,7 +84,9 @@ const TipsModal: FC<Props> = ({ open, handleClose }) => {
                 label="Commande"
                 variant="outlined"
                 required
-                fullWidth multiline rows={4}
+                fullWidth
+                multiline
+                rows={4}
                 value={command}
                 onChange={(e) => setCommand(e.target.value)}
                 error={!!commandError}
@@ -88,7 +95,9 @@ const TipsModal: FC<Props> = ({ open, handleClose }) => {
             <TextField
                 label="Description (optionel)"
                 variant="outlined"
-                fullWidth multiline rows={6}
+                fullWidth
+                multiline
+                rows={6}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
             />
@@ -108,6 +117,6 @@ const TipsModal: FC<Props> = ({ open, handleClose }) => {
             {body}
         </Modal>
     );
-}
+};
 
 export default TipsModal;

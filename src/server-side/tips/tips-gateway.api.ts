@@ -62,13 +62,12 @@ export class TipsGatewayApi implements TipsGatewayInterface {
         }
     }
 
-
     async createTips(tips: TipsInput): Promise<Tips> {
         try {
             const response = await axiosInstance({
                 method: 'POST',
                 url: `tips`,
-                data: tips
+                data: tips,
             });
 
             return response.data.data;
@@ -80,5 +79,4 @@ export class TipsGatewayApi implements TipsGatewayInterface {
             throw new Error('UNKNOWN_ERROR');
         }
     }
-
 }

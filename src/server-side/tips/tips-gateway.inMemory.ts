@@ -29,7 +29,6 @@ export class TipsGatewayInMemory implements TipsGatewayInterface {
         return Promise.resolve(response);
     }
 
-
     async createTips(tips: Tips): Promise<Tips> {
         if (this.throwError) {
             throw new Error('Internal Server Error');

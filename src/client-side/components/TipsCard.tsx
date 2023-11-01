@@ -50,3 +50,4 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
 }
 
 export default TipsCard;
+

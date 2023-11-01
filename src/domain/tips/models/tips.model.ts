@@ -1,4 +1,3 @@
-
 export type Tips = {
     id: number;
     title: string;

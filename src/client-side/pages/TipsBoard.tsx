@@ -39,12 +39,11 @@ function TipsBoard() {
     const error = useSelector((state: RootState) => state.tipsReducer.error);
     const loading = useSelector((state: RootState) => state.tipsReducer.loading);
 
-
     useEffect(() => {
         dispatch(
             getTips({
                 params: {
-                    gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway')
+                    gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway'),
                 },
                 page: currentPage,
                 length: lengthPerPage,
