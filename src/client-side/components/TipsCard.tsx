@@ -59,7 +59,7 @@ function TipsCard(tipsCardProps: TipsCardProps) {
                         {...tipsCardProps}
                     />
                 </Box>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box sx={{ pt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                         <Chip label="tag 1" style={{ marginRight: '5px' }} />
                         <Chip label="tag 2" style={{ marginRight: '5px' }} />
@@ -95,7 +95,7 @@ function TipsCard(tipsCardProps: TipsCardProps) {
                             </Box>
                         </Modal>
                     </div>
-                </div>
+                </Box>
             </CardContent>
         </Card>
     );

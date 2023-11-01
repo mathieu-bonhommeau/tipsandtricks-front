@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardContent, CardHeader, IconButton, Modal, Typography } from '@mui/material';
+import {Avatar, Box, Card, CardContent, CardHeader, Chip, IconButton, Modal, Typography} from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import { TipsContent } from './TipsContent.tsx';
@@ -136,45 +136,51 @@ function PostCard(postCardProps: PostCardProps) {
                             {...postCardProps}
                         />
                     </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'flex-end',
-                            gap: 3,
-                            pt: 2,
-                            color: theme.palette.primary.main,
-                        }}
-                    >
-                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                            <IconButton
-                                aria-label="share"
-                                onClick={() => handleReaction(ReactionType.like)}
-                                disabled={!user}
-                                sx={{ color: 'inherit' }}
-                            >
-                                {likeIcon()}
-                            </IconButton>
-                            <Typography variant="body2" component="div">
-                                {user
-                                    ? reactions[postCardProps.onePost.id]?.likes
-                                    : postCardProps.onePost.reactions.like}
-                            </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box sx={{ pt: 3 }}>
+                            <Chip label="tag 1" style={{ marginRight: '5px' }} />
+                            <Chip label="tag 2" style={{ marginRight: '5px' }} />
+                            <Chip label="tag 3" style={{ marginRight: '5px' }} />
                         </Box>
-                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                            <IconButton
-                                aria-label="share"
-                                onClick={() => handleReaction(ReactionType.dislike)}
-                                disabled={!user}
-                                sx={{ color: 'inherit' }}
-                            >
-                                {dislikeIcon()}
-                            </IconButton>
-                            <Typography variant="body2" component="div">
-                                {user
-                                    ? reactions[postCardProps.onePost.id]?.dislikes
-                                    : postCardProps.onePost.reactions.dislike}
-                            </Typography>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'flex-end',
+                                gap: 3,
+                                color: theme.palette.primary.main,
+                            }}
+                        >
+                            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                <IconButton
+                                    aria-label="share"
+                                    onClick={() => handleReaction(ReactionType.like)}
+                                    disabled={!user}
+                                    sx={{ color: 'inherit' }}
+                                >
+                                    {likeIcon()}
+                                </IconButton>
+                                <Typography variant="body2" component="div">
+                                    {user
+                                        ? reactions[postCardProps.onePost.id]?.likes
+                                        : postCardProps.onePost.reactions.like}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                <IconButton
+                                    aria-label="share"
+                                    onClick={() => handleReaction(ReactionType.dislike)}
+                                    disabled={!user}
+                                    sx={{ color: 'inherit' }}
+                                >
+                                    {dislikeIcon()}
+                                </IconButton>
+                                <Typography variant="body2" component="div">
+                                    {user
+                                        ? reactions[postCardProps.onePost.id]?.dislikes
+                                        : postCardProps.onePost.reactions.dislike}
+                                </Typography>
+                            </Box>
                         </Box>
                     </Box>
                 </CardContent>
