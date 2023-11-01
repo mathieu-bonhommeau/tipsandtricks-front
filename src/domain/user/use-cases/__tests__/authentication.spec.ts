@@ -1,5 +1,5 @@
 import { Mock, vi, expect, beforeEach, describe, test } from 'vitest';
-import TestBuilder from './testBuilder.ts';
+import UserTestBuilder from './testBuilder.ts';
 import { User } from '../../models/user.model.ts';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { setupStore } from '../../../store.ts';
@@ -76,7 +76,7 @@ describe('Login: when a user submits the register form', () => {
         expect(store.getState().authentication.unknownServerLoginError).toEqual(true);
         expect(mockNavigate).not.toBeCalled();
     });
-    test('if the form was submitted and an error arised, it is removed when the reset error event is called', async () => {
+    test('if the form was submitted and an error aried, it is removed when the reset error event is called', async () => {
         const userInput = sut.givenAUserInput();
         userGatewayInMemory.setLoginUnknownError(true);
 
@@ -148,10 +148,10 @@ describe('Reconnect : if a user is connected (via cookies) but lost his data int
 });
 
 class SUT {
-    private _registrationTestBuilder: TestBuilder;
+    private _registrationTestBuilder: UserTestBuilder;
 
     constructor() {
-        this._registrationTestBuilder = new TestBuilder();
+        this._registrationTestBuilder = new UserTestBuilder();
     }
 
     givenAUserInput(): LoginUserInput {

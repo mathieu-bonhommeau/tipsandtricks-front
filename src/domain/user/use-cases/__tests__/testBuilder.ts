@@ -2,7 +2,7 @@ import { Roles, User } from '../../models/user.model.ts';
 import { RegistrationUserInput } from '../../models/registration.model.ts';
 import { LoginUserInput } from '../../models/authentication.model.ts';
 
-export default class TestBuilder {
+export default class UserTestBuilder {
     private readonly _id: number | null = 1;
     private _email: string = 'email@email.com';
     private _username: string = 'usertest';
@@ -39,22 +39,22 @@ export default class TestBuilder {
         };
     }
 
-    withEmail(email: string): TestBuilder {
+    withEmail(email: string): UserTestBuilder {
         this._email = email;
         return this;
     }
 
-    withUsername(username: string): TestBuilder {
+    withUsername(username: string): UserTestBuilder {
         this._username = username;
         return this;
     }
 
-    withPassword(password: string): TestBuilder {
+    withPassword(password: string): UserTestBuilder {
         this._password = password;
         return this;
     }
 
-    withConfirmationPassword(password: string): TestBuilder {
+    withConfirmationPassword(password: string): UserTestBuilder {
         this._confirmationPassword = password;
         return this;
     }

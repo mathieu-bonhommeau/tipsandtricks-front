@@ -14,7 +14,7 @@ function AppHeader() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href={routes.homepage}
+                        href={routes.feed}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -27,7 +27,13 @@ function AppHeader() {
                     >
                         TIPS & TRICKS
                     </Typography>
-                    {user && <UserMenu username={user.username} />}
+                    {user ? (
+                        <UserMenu username={user.username} />
+                    ) : (
+                        <Typography href={routes.login} component="a" sx={{ color: 'inherit', textDecoration: 'none' }}>
+                            Se connecter
+                        </Typography>
+                    )}
                 </Toolbar>
             </Container>
         </AppBar>

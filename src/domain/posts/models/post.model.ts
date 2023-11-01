@@ -1,5 +1,5 @@
 import { Tag } from '../../tags/models/tag.model.ts';
-import {Tips} from "../../tips/models/tips.model.ts";
+import { Tips } from '../../tips/models/tips.model.ts';
 
 export type Post = {
     id: number;
@@ -14,11 +14,15 @@ export type Post = {
     tags: Tag[];
     user_id: number;
     username: string;
+    reactions: {
+        like: number;
+        dislike: number;
+    };
 };
 
 export interface PostState {
-    data: Post[]
-    savedTips: Tips | null,
+    data: Post[];
+    savedTips: Tips | null;
     error: boolean;
     loading: boolean;
 }
