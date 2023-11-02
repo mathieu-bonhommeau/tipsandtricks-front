@@ -120,12 +120,15 @@ const ShareTipsModal = ({ oneTips, ...props }: ShareTipsModalProps) => {
 export default ShareTipsModal;
 
 const boxStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper', // Change to whatever color you want
-    border: '2px solid #000',
+    width: '80vw',
+    maxWidth: '400px',
+    bgcolor: 'background.paper',
     boxShadow: 24,
-    p: 3,
+    p: 4,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+    mx: 'auto',
+    my: '20vh',
+    borderRadius: 2,
 };

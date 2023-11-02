@@ -44,17 +44,21 @@ const ConfirmDeleteTipsModal = ({ tipsId }: ConfirmDeleteTipsModalProps) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={boxStyle}>
-                    <Typography id="modal-modal-title" sx={{ m: 2 }} variant="h6" component="h2">
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
                         Supprimer un tips
                     </Typography>
 
-                    <Typography id="modal-modal-description" sx={{ m: 3 }}>
+                    <Typography id="modal-modal-description" sx={{ my: 3 }}>
                         Êtes-vous sûr de vouloir supprimer ce tips ?
                     </Typography>
 
-                    <div style={{ textAlign: 'center' }}>
-                        <Button onClick={handleCloseDeleteModal}>Annuler</Button>
-                        <Button onClick={() => handleDeleteTips(tipsId)}>Ok</Button>
+                    <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+                        <Button variant="contained" onClick={handleCloseDeleteModal}>
+                            Annuler
+                        </Button>
+                        <Button variant="contained" onClick={() => handleDeleteTips(tipsId)}>
+                            Ok
+                        </Button>
                     </div>
                 </Box>
             </Modal>
@@ -65,12 +69,16 @@ const ConfirmDeleteTipsModal = ({ tipsId }: ConfirmDeleteTipsModalProps) => {
 export default ConfirmDeleteTipsModal;
 
 const boxStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper', // Change to whatever color you want
-    border: '2px solid #000',
+    width: '80vw',
+    maxWidth: '400px',
+    bgcolor: 'background.paper',
     boxShadow: 24,
-    p: 3,
+    p: 4,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+    mx: 'auto',
+    my: '20vh',
+    borderRadius: 2,
+    textAlign: 'center',
 };

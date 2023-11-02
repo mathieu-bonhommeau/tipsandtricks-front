@@ -1,5 +1,5 @@
 import { Post } from '../../domain/posts/models/post.model.ts';
-import { Box, IconButton, Modal, Typography } from '@mui/material';
+import { Box, Button, IconButton, Modal, Typography } from '@mui/material';
 import { saveTips } from '../../domain/posts/use-cases/post.actions.ts';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
@@ -46,15 +46,18 @@ const ConfirmSaveTipsModal = ({ post }: ConfirmSaveTipsModalProps) => {
             >
                 <Box sx={styleModal}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Voulez vous vraiment enregistrer ce tips ?
+                        Voulez-vous enregistrer ce tips ?
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <Typography id="modal-modal-description" sx={{ mb: 2 }}>
                         {post.title}
                     </Typography>
-                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }} />
-                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-                        <button onClick={() => setConfirmModalOpen(false)}>Annuler</button>
-                        <button onClick={() => handleSaveTips(post)}>Enregistrer</button>
+                    <Box style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+                        <Button variant="contained" onClick={() => setConfirmModalOpen(false)}>
+                            Annuler
+                        </Button>
+                        <Button variant="contained" onClick={() => handleSaveTips(post)}>
+                            Enregistrer
+                        </Button>
                     </Box>
                 </Box>
             </Modal>
@@ -65,13 +68,16 @@ const ConfirmSaveTipsModal = ({ post }: ConfirmSaveTipsModalProps) => {
 export default ConfirmSaveTipsModal;
 
 const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
+    width: '80vw',
+    maxWidth: '400px',
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+    mx: 'auto',
+    my: '20vh',
+    borderRadius: 2,
+    textAlign: 'center',
 };
