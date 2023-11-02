@@ -89,6 +89,7 @@ const ShareTipsModal = ({ oneTips, ...props }: ShareTipsModalProps) => {
                         <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
                             <TipsContent
                                 tipsDetails={{
+                                    title: postTitle,
                                     command: command,
                                     description: description,
                                     tags: tags,

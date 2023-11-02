@@ -4,7 +4,7 @@ import { TipsContent } from './TipsContent.tsx';
 import EditIcon from '@mui/icons-material/Edit';
 import ShareTipsModal from './ShareTipsModal.tsx';
 import ConfirmDeleteTipsModal from './ConfirmDeleteTipsModal.tsx';
-import React from "react";
+import React from 'react';
 
 type TipsCardProps = {
     oneTips: Tips;
@@ -29,7 +29,6 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
                 <CardContent>
                     <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
                         <TipsContent
-                            handleEdit={handleEdit}
                             tipsDetails={{
                                 title: title,
                                 command: command,
@@ -46,7 +45,7 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
                             <Chip label="tag 3" style={{ marginRight: '5px' }} />
                         </div>
                         <div>
-                            <IconButton aria-label="edit">
+                            <IconButton aria-label="edit" onClick={handleEdit}>
                                 <EditIcon />
                             </IconButton>
                             <ConfirmDeleteTipsModal tipsId={id} />
@@ -59,4 +58,3 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
 }
 
 export default TipsCard;
-

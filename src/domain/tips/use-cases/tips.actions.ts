@@ -23,7 +23,6 @@ export type UpdateTipParams = {
     tips: TipsUpdateInput;
 };
 
-
 export type TipsDelete = {
     params: Params;
     tipsId: number;

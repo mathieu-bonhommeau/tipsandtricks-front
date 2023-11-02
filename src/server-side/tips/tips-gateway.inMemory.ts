@@ -4,7 +4,7 @@ import { PaginatedResponse } from '../../domain/core/models/paginatedResponse.ts
 import { InputCreatePost, Post } from '../../domain/posts/models/post.model.ts';
 
 export class TipsGatewayInMemory implements TipsGatewayInterface {
-    public tips: Tips[] | [] = [];
+    public tips: Tips[] = [];
     public throwError = false;
 
     simulateServerError() {
@@ -53,7 +53,6 @@ export class TipsGatewayInMemory implements TipsGatewayInterface {
 
         return Promise.resolve(this.tips[index]);
     }
-
 
     async deleteTip(tipsId: number): Promise<number> {
         if (this.throwError) {

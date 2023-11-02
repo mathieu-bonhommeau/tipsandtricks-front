@@ -9,8 +9,8 @@ export interface TipsState {
     error: boolean;
     totalTips: number;
     loading: boolean;
-    createTipsError: boolean,
-    updateTipsError: boolean,
+    createTipsError: boolean;
+    updateTipsError: boolean;
 }
 
 const initialState: TipsState = {

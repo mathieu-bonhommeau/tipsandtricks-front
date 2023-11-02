@@ -1,13 +1,10 @@
 import { Alert, IconButton, InputAdornment, TextField } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { TipsInput } from '../../domain/tips/models/tips.model';
 import { Tag } from '../../domain/tags/models/tag.model.ts';
 
 type TipsContentProps = {
     tipsDetails: {
-        title: string,
+        title: string;
         command: string;
         description: string;
         tags: Tag[];
@@ -15,10 +12,9 @@ type TipsContentProps = {
     textCopied?: boolean;
     failCopied?: boolean;
     handleCopy?: (command: string) => void;
-    handleEdit?: (tips: TipsInput) => void;
 };
 
-export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy, handleEdit }: TipsContentProps) {
+export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy }: TipsContentProps) {
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
