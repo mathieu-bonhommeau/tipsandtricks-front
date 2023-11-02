@@ -9,21 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../domain/store.ts';
 
-const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
-interface ConfirmSaveTipsModalProps {
+type ConfirmSaveTipsModalProps = {
     post: Post;
-}
+};
 
 const ConfirmSaveTipsModal = ({ post }: ConfirmSaveTipsModalProps) => {
     const [confirmModalOpen, setConfirmModalOpen] = React.useState(false);
@@ -75,3 +63,15 @@ const ConfirmSaveTipsModal = ({ post }: ConfirmSaveTipsModalProps) => {
 };
 
 export default ConfirmSaveTipsModal;
+
+const styleModal = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 500,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};

@@ -5,23 +5,25 @@ import ConfirmSaveTipsModal from './ConfirmSaveTipsModal.tsx';
 import Reactions from './Reactions.tsx';
 
 type PostCardProps = {
-    onePost: Post;
+    post: Post;
     handleCopy?: (command: string) => void;
     textCopied?: boolean;
     failCopied?: boolean;
 };
 
-function PostCard(postCardProps: PostCardProps) {
+function PostCard({ post, ...props }: PostCardProps) {
+    const { username, title, message } = post;
+
     return (
         <Card raised elevation={3} sx={{ maxWidth: 1000, bgcolor: 'primary.paper' }}>
             <CardHeader
                 avatar={<Avatar sx={{ width: 24, height: 24 }} />}
-                title={postCardProps.onePost.username}
-                action={<ConfirmSaveTipsModal post={postCardProps.onePost} />}
+                title={username}
+                action={<ConfirmSaveTipsModal post={post} />}
             />
             <CardContent>
                 <Typography variant="h5" component="div">
-                    {postCardProps.onePost.title}
+                    {title}
                 </Typography>
                 <p
                     style={{
@@ -32,16 +34,16 @@ function PostCard(postCardProps: PostCardProps) {
                         overflow: 'hidden',
                     }}
                 >
-                    {postCardProps.onePost.message}
+                    {message}
                 </p>
                 <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
                     <TipsContent
                         tipsDetails={{
-                            command: postCardProps.onePost.command,
-                            description: postCardProps.onePost.description,
-                            tags: postCardProps.onePost.tags,
+                            command: post.command,
+                            description: post.description,
+                            tags: post.tags,
                         }}
-                        {...postCardProps}
+                        {...props}
                     />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -50,7 +52,7 @@ function PostCard(postCardProps: PostCardProps) {
                         <Chip label="tag 2" style={{ marginRight: '5px' }} />
                         <Chip label="tag 3" style={{ marginRight: '5px' }} />
                     </Box>
-                    <Reactions post={postCardProps.onePost} />
+                    <Reactions post={post} />
                 </Box>
             </CardContent>
         </Card>

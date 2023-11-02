@@ -14,9 +14,9 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Post } from '../../domain/posts/models/post.model.ts';
 
-interface ReactionsProps {
+type ReactionsProps = {
     post: Post;
-}
+};
 
 const Reactions = ({ post }: ReactionsProps) => {
     const reactions = useSelector((state: RootState) => state.reactionReducer.reactions);
