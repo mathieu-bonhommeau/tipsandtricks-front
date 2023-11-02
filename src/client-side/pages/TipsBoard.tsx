@@ -86,7 +86,7 @@ function TipsBoard() {
 
     return (
         <Container maxWidth="md">
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
                 <Fab color="primary" aria-label="add" onClick={handleOpenModal}>
                     <AddIcon />
                 </Fab>
