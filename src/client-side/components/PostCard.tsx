@@ -1,4 +1,4 @@
-import {Avatar, Box, Card, CardContent, CardHeader, Chip, IconButton, Modal, Typography} from '@mui/material';
+import { Avatar, Box, Card, CardContent, CardHeader, Chip, IconButton, Modal, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import { TipsContent } from './TipsContent.tsx';

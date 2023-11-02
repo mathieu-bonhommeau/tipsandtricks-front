@@ -1,5 +1,5 @@
 import { PostState } from '../models/post.model.ts';
-import { saveTips, getPosts } from './post.actions.ts';
+import { saveTips, getPosts, getMorePosts } from './post.actions.ts';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: PostState = {
@@ -24,10 +24,21 @@ export const postSlice = createSlice({
             })
             .addCase(getPosts.fulfilled, (state, action) => {
                 state.loading = false;
+                state.data = action.payload?.data || [];
+            })
+            .addCase(getPosts.rejected, (state) => {
+                state.loading = false;
+                state.error = true;
+            })
+            .addCase(getMorePosts.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getMorePosts.fulfilled, (state, action) => {
+                state.loading = false;
                 const newPosts = action.payload?.data || [];
                 state.data = [...state.data, ...newPosts];
             })
-            .addCase(getPosts.rejected, (state) => {
+            .addCase(getMorePosts.rejected, (state) => {
                 state.loading = false;
                 state.error = true;
             })

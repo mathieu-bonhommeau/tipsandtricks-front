@@ -5,7 +5,7 @@ import { setupStore } from '../../../store.ts';
 import PostGatewayInMemory from '../../../../server-side/post/post-gateway.inMemory.ts';
 import PostsTestBuilder from './postsTestBuilder.ts';
 import { Post } from '../../models/post.model.ts';
-import { saveTips, getPosts } from '../post.actions.ts';
+import { saveTips, getPosts, getMorePosts } from '../post.actions.ts';
 import { faker } from '@faker-js/faker';
 import { Tips } from '../../../tips/models/tips.model.ts';
 
@@ -31,7 +31,7 @@ describe('when a user is on the feed page', () => {
     describe('retrieve posts', () => {
         test('should retrieve the posts', async () => {
             const expectedPosts = postGatewayInMemory.posts.slice(0, 2);
-            await store.dispatch(getPosts({ params, start: 0, length: 2 }));
+            await store.dispatch(getPosts({ params, length: 2 }));
 
             expect(store.getState().postsReducer.data).toEqual(expectedPosts);
             expect(store.getState().postsReducer.data.length).toEqual(2);
@@ -39,20 +39,20 @@ describe('when a user is on the feed page', () => {
 
         test('should retrieve more posts when the user asks more n posts', async () => {
             let expectedAddingPosts = postGatewayInMemory.posts.slice(0, 4);
-            await store.dispatch(getPosts({ params, start: 0, length: 2 }));
-            await store.dispatch(getPosts({ params, start: 2, length: 2 }));
+            await store.dispatch(getMorePosts({ params, start: 0, length: 2 }));
+            await store.dispatch(getMorePosts({ params, start: 2, length: 2 }));
             expect(store.getState().postsReducer.data).toEqual(expectedAddingPosts);
             expect(store.getState().postsReducer.data.length).toEqual(4);
 
             expectedAddingPosts = postGatewayInMemory.posts.slice(0, 6);
-            await store.dispatch(getPosts({ params, start: 4, length: 2 }));
+            await store.dispatch(getMorePosts({ params, start: 4, length: 2 }));
             expect(store.getState().postsReducer.data).toEqual(expectedAddingPosts);
             expect(store.getState().postsReducer.data.length).toEqual(6);
         });
 
         test('when there is a server error, it is reflected in the state', async () => {
             postGatewayInMemory.simulateServerError();
-            await store.dispatch(getPosts({ params, start: 0, length: 2 }));
+            await store.dispatch(getPosts({ params, length: 2 }));
             expect(store.getState().postsReducer.error).toBe(true);
         });
     });
