@@ -1,8 +1,10 @@
-import { Avatar, Box, Card, CardContent, CardHeader, Chip, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardContent, CardHeader, Chip, IconButton, Typography } from '@mui/material';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import { TipsContent } from './TipsContent.tsx';
 import ConfirmSaveTipsModal from './ConfirmSaveTipsModal.tsx';
 import Reactions from './Reactions.tsx';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useNavigate } from 'react-router-dom';
 
 type PostCardProps = {
     post: Post;
@@ -12,6 +14,7 @@ type PostCardProps = {
 };
 
 function PostCard({ post, ...props }: PostCardProps) {
+    const navigate = useNavigate();
     const { username, title, message } = post;
 
     return (
@@ -22,8 +25,18 @@ function PostCard({ post, ...props }: PostCardProps) {
                 action={<ConfirmSaveTipsModal post={post} />}
             />
             <CardContent>
-                <Typography variant="h5" component="div">
+                <Typography
+                    variant="h5"
+                    component="div"
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => {
+                        return navigate('/flux/' + post.id + '-' + post.slug);
+                    }}
+                >
                     {title}
+                    <IconButton aria-label="share">
+                        <OpenInNewIcon />
+                    </IconButton>
                 </Typography>
                 <p
                     style={{

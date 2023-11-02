@@ -55,7 +55,8 @@ export const shareTip = createAsyncThunk(
         return (await handleErrors(
             async () => {
                 const response = await (params.gatewayInterface as TipsGatewayInterface).shareTips(tipsToShare);
-                params.navigate!('/flux', { replace: true });
+                console.log(response);
+                params.navigate!(`/flux/${response.id}-${response.slug}`);
                 return response;
             },
             params,

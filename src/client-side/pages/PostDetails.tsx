@@ -56,7 +56,7 @@ function PostDetails() {
                 </Box>
 
                 <CardWrapper>
-                    <PostCardDetails onePost={post} />
+                    <PostCardDetails post={post} />
                 </CardWrapper>
             </Stack>
         );

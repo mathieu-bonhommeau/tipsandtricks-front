@@ -1,109 +1,24 @@
-import { Card, CardContent, CardHeader, IconButton, Avatar, Typography, Box, Chip, Modal } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Card, CardContent, CardHeader, Avatar, Typography, Box, Chip } from '@mui/material';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import { PostContent } from './PostContent.tsx';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { saveTips } from '../../domain/posts/use-cases/post.actions.ts';
-import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
-import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import { ReactionType } from '../../domain/reactions/models/reaction.ts';
-import { addReaction, getReactionForLoggedUser } from '../../domain/reactions/uses_case/reaction.actions.ts';
-import ReactionGatewayInterface from '../../domain/reactions/port/reaction-gateway-interface.ts';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../domain/store.ts';
-import { useAppDispatch } from '../utils/dispatch.ts';
-import { useNavigate } from 'react-router-dom';
-import { theme } from '../theme.ts';
-import React, { useEffect } from 'react';
+import ConfirmSaveTipsModal from './ConfirmSaveTipsModal.tsx';
+import Reactions from './Reactions.tsx';
 
-function PostCard(postCardProps: PostCardProps) {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+type PostCardProps = {
+    post: Post;
+    handleCopy?: (command: string) => void;
+    textCopied?: boolean;
+    failCopied?: boolean;
+};
 
-    const [confirmModalOpen, setConfirmModalOpen] = React.useState(false);
-    const reactions = useSelector((state: RootState) => state.reactionReducer.reactions);
-    const user = useSelector((state: RootState) => state.authentication.user);
-    const handleSaveTips = async (post: Post) => {
-        await dispatch(
-            saveTips({
-                params: {
-                    gatewayInterface: dependencyContainer.get<PostGatewayInterface>('PostGateway'),
-                    navigate: navigate,
-                },
-                post,
-            }),
-        );
-    };
-    const handleReaction = (reactionType: ReactionType) => {
-        dispatch(
-            addReaction({
-                params: {
-                    gatewayInterface: dependencyContainer.get<ReactionGatewayInterface>('ReactionGateway'),
-                    navigate: navigate,
-                },
-                postId: postCardProps.onePost.id,
-                reactionType: reactionType,
-            }),
-        );
-    };
-
-    useEffect(() => {
-        if (!user) return;
-        dispatch(
-            getReactionForLoggedUser({
-                params: {
-                    gatewayInterface: dependencyContainer.get<ReactionGatewayInterface>('ReactionGateway'),
-                    navigate: navigate,
-                },
-                postId: postCardProps.onePost.id,
-            }),
-        );
-    }, [user, dispatch, navigate, postCardProps.onePost.id]);
-
-    const confirmSaveTipsModal = (post: Post) => (
-        <Modal
-            open={confirmModalOpen}
-            onClose={() => setConfirmModalOpen(false)}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={styleModal}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Voulez vous vraiment enregistrer ce tips ?
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    {post.title}
-                </Typography>
-                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }} />
-                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-                    <button onClick={() => setConfirmModalOpen(false)}>Annuler</button>
-                    <button onClick={() => handleSaveTips(post)}>Enregistrer</button>
-                </Box>
-            </Box>
-        </Modal>
-    );
-
-    const likeIcon = () => {
-        const postReaction = reactions[postCardProps.onePost.id];
-        if (user && postReaction?.postReaction === 'like') return <ThumbUpIcon />;
-        return <ThumbUpOutlinedIcon />;
-    };
-
-    const dislikeIcon = () => {
-        const postReaction = reactions[postCardProps.onePost.id];
-        if (user && postReaction?.postReaction === 'dislike') return <ThumbDownIcon />;
-        return <ThumbDownAltOutlinedIcon />;
-    };
-
+function PostCardDetails({ post, ...props }: PostCardProps) {
+    const { username, title, message } = post;
     return (
         <>
             <Card raised elevation={3} sx={{ maxWidth: 1000, bgcolor: 'primary.paper', p: 4, pb: 0 }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Typography variant="h5" sx={{ px: 2 }} component="div">
-                        {postCardProps.onePost.title}
+                        {title}
                     </Typography>
 
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -113,14 +28,12 @@ function PostCard(postCardProps: PostCardProps) {
                             <Chip label="tag 3" style={{ marginRight: '25px' }} />
                         </div>
                         <div>
-                            <IconButton aria-label="share" onClick={() => setConfirmModalOpen(true)} disabled={!user}>
-                                <AddCircleIcon />
-                            </IconButton>
+                            <ConfirmSaveTipsModal post={post} />
                         </div>
                     </div>
                 </Box>
 
-                <CardHeader avatar={<Avatar sx={{ width: 24, height: 24 }} />} title={postCardProps.onePost.username} />
+                <CardHeader avatar={<Avatar sx={{ width: 24, height: 24 }} />} title={username} />
                 <CardContent>
                     <p
                         style={{
@@ -131,83 +44,24 @@ function PostCard(postCardProps: PostCardProps) {
                             overflow: 'hidden',
                         }}
                     >
-                        {postCardProps.onePost.message}
+                        {message}
                     </p>
                     <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
                         <PostContent
                             postDetails={{
-                                command: postCardProps.onePost.command,
-                                description: postCardProps.onePost.description,
-                                tags: postCardProps.onePost.tags,
+                                command: post.command,
+                                description: post.description,
+                                tags: post.tags,
                             }}
-                            {...postCardProps}
+                            {...props}
                         />
                     </Box>
 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'flex-end',
-                            gap: 3,
-                            color: theme.palette.primary.main,
-                        }}
-                    >
-                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                            <IconButton
-                                aria-label="share"
-                                onClick={() => handleReaction(ReactionType.like)}
-                                disabled={!user}
-                                sx={{ color: 'inherit' }}
-                            >
-                                {likeIcon()}
-                            </IconButton>
-                            <Typography variant="body2" component="div">
-                                {user
-                                    ? reactions[postCardProps.onePost.id]?.likes
-                                    : postCardProps.onePost.reactions.like}
-                            </Typography>
-                        </Box>
-                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                            <IconButton
-                                aria-label="share"
-                                onClick={() => handleReaction(ReactionType.dislike)}
-                                disabled={!user}
-                                sx={{ color: 'inherit' }}
-                            >
-                                {dislikeIcon()}
-                            </IconButton>
-                            <Typography variant="body2" component="div">
-                                {user
-                                    ? reactions[postCardProps.onePost.id]?.dislikes
-                                    : postCardProps.onePost.reactions.dislike}
-                            </Typography>
-                        </Box>
-                    </Box>
+                    <Reactions post={post} />
                 </CardContent>
             </Card>
-            {confirmSaveTipsModal(postCardProps.onePost)}
         </>
     );
 }
 
-export default PostCard;
-
-type PostCardProps = {
-    onePost: Post;
-    handleCopy?: (command: string) => void;
-    textCopied?: boolean;
-    failCopied?: boolean;
-};
-
-const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+export default PostCardDetails;
