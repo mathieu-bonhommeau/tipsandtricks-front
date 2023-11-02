@@ -66,7 +66,7 @@ function Feed() {
             <Stack spacing={2}>
                 {posts.map((onePost: Post) => (
                     <CardWrapper key={onePost.id}>
-                        <PostCard onePost={onePost} />
+                        <PostCard post={onePost} />
                     </CardWrapper>
                 ))}
             </Stack>
