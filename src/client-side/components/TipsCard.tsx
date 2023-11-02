@@ -1,20 +1,7 @@
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    IconButton,
-    Chip,
-    Modal,
-    Box,
-    Typography,
-    Button,
-    TextField,
-    TextareaAutosize,
-} from '@mui/material';
-import ShareIcon from '@mui/icons-material/Share';
+import { Card, CardContent, CardHeader, IconButton, Chip, Modal, Box, Typography, Button } from '@mui/material';
 import { Tips } from '../../domain/tips/models/tips.model';
 import { TipsContent } from './TipsContent.tsx';
-import { deleteTip, shareTip } from '../../domain/tips/use-cases/tips.actions.ts';
+import { deleteTip } from '../../domain/tips/use-cases/tips.actions.ts';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
@@ -22,18 +9,22 @@ import { useAppDispatch } from '../utils/dispatch.ts';
 import { useNavigate } from 'react-router-dom';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
+import ShareTipsModal from './ShareTipsModal.tsx';
+
+type TipsCardProps = {
+    oneTips: Tips;
+    handleCopy?: (command: string) => void;
+    textCopied?: boolean;
+    failCopied?: boolean;
+};
 
 function TipsCard(tipsCardProps: TipsCardProps) {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const [openShareModal, setOpenShareModal] = useState(false);
-    const [title, setTitle] = useState(tipsCardProps.oneTips.title);
-    const [message, setMessage] = useState('');
     const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-    const handleOpenShareModal = () => setOpenShareModal(true);
     const handleCloseDeleteModal = () => setOpenDeleteModal(false);
-    const handleCloseShareModal = () => setOpenShareModal(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
     const handleDeleteTips = async (tipsId: number) => {
         await dispatch(
             deleteTip({
@@ -45,22 +36,6 @@ function TipsCard(tipsCardProps: TipsCardProps) {
             }),
         );
         handleCloseDeleteModal();
-    };
-
-    const onShareTipsHandler = async () => {
-        await dispatch(
-            shareTip({
-                params: {
-                    gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway'),
-                    navigate: navigate,
-                },
-                tipsToShare: {
-                    ...tipsCardProps.oneTips,
-                    title: title,
-                    message: message,
-                },
-            }),
-        );
     };
 
     const tipsContent = () => {
@@ -78,75 +53,10 @@ function TipsCard(tipsCardProps: TipsCardProps) {
         );
     };
 
-    const shareTipsModalContent = () => {
-        return (
-            <Modal
-                open={openShareModal}
-                onClose={handleCloseShareModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={boxStyle}>
-                    <Typography id="modal-modal-title" sx={{ m: 2 }} variant="h6" component="h2">
-                        Partager un tips
-                    </Typography>
-                    <form
-                        onSubmit={onShareTipsHandler}
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '10px',
-                            alignItems: 'center',
-                            margin: '20px 0',
-                        }}
-                    >
-                        <TextField
-                            label="Titre du tips"
-                            variant="outlined"
-                            type="text"
-                            required
-                            value={title}
-                            sx={{ width: '100%' }}
-                            onChange={(event) => setTitle(event.target.value)}
-                        />
-                        <TextareaAutosize
-                            style={{ width: '100%', padding: '5px', margin: '5px' }}
-                            maxRows={4}
-                            aria-label="mAjouter un message pour partager votre tips"
-                            placeholder="Votre message..."
-                            onChange={(event) => setMessage(event.target.value)}
-                        />
-                        {tipsContent()}
-                        <Box sx={{ width: '100%' }}>
-                            <Chip label="tag 1" style={{ marginRight: '5px' }} />
-                            <Chip label="tag 2" style={{ marginRight: '5px' }} />
-                            <Chip label="tag 3" style={{ marginRight: '5px' }} />
-                        </Box>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            style={{ width: '100%', alignItems: 'right' }}
-                            color="primary"
-                        >
-                            Partager votre tips
-                        </Button>
-                    </form>
-                </Box>
-            </Modal>
-        );
-    };
-
     return (
         <>
             <Card raised elevation={3} sx={{ maxWidth: 500 }}>
-                <CardHeader
-                    title={tipsCardProps.oneTips.title}
-                    action={
-                        <IconButton aria-label="share" onClick={handleOpenShareModal}>
-                            <ShareIcon />
-                        </IconButton>
-                    }
-                />
+                <CardHeader title={tipsCardProps.oneTips.title} action={<ShareTipsModal {...tipsCardProps} />} />
                 <CardContent>
                     {tipsContent()}
                     <Box sx={{ pt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -188,7 +98,6 @@ function TipsCard(tipsCardProps: TipsCardProps) {
                     </Box>
                 </CardContent>
             </Card>
-            {shareTipsModalContent()}
         </>
     );
 }
@@ -204,11 +113,4 @@ const boxStyle = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 3,
-};
-
-type TipsCardProps = {
-    oneTips: Tips;
-    handleCopy?: (command: string) => void;
-    textCopied?: boolean;
-    failCopied?: boolean;
 };
