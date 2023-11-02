@@ -63,7 +63,7 @@ function Feed() {
 
     if (posts.length > 0) {
         content = (
-            <Stack spacing={2}>
+            <Stack spacing={5}>
                 {posts.map((onePost: Post) => (
                     <CardWrapper key={onePost.id}>
                         <PostCard post={onePost} />

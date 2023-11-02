@@ -74,7 +74,7 @@ function UserMenu({ username }: UserMenuProps) {
             >
                 {links.map((link) => (
                     <Link key={link.label} to={link.path}>
-                        <MenuItem key={link.label} onClick={handleCloseUserMenu}>
+                        <MenuItem onClick={handleCloseUserMenu}>
                             <Typography textAlign="center">{link.label}</Typography>
                         </MenuItem>
                     </Link>

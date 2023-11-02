@@ -13,8 +13,9 @@ interface Props {
     open: boolean;
     handleClose: () => void;
     tipsToEdit?: Tips;
+    setSelectedTips: React.Dispatch<React.SetStateAction<Tips | undefined>>;
 }
-const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit }) => {
+const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }) => {
     const dispatch = useAppDispatch();
 
     const [title, setTitle] = useState<string>('');
@@ -23,6 +24,7 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit }) => {
     const [titleError, setTitleError] = useState<string | null>(null);
     const [commandError, setCommandError] = useState<string | null>(null);
 
+
     useEffect(() => {
         if (tipsToEdit) {
             setTitle(tipsToEdit.title || '');
@@ -30,6 +32,16 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit }) => {
             setDescription(tipsToEdit.description || '');
         }
     }, [tipsToEdit]);
+
+    const onCloseModal = () => {
+        setTitle('');
+        setCommand('');
+        setDescription('');
+        setSelectedTips(undefined);
+        handleClose();
+    }
+
+    console.log(tipsToEdit);
 
     const handleSubmit = () => {
         setTitleError(null);
@@ -134,7 +146,7 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit }) => {
     return (
         <Modal
             open={open}
-            onClose={handleClose}
+            onClose={onCloseModal}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
         >

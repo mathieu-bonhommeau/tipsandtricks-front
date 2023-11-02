@@ -102,7 +102,7 @@ function TipsBoard() {
                         content
                     )}
                 </Box>
-                <TipsModal open={openModale} handleClose={handleCloseModal} tipsToEdit={selectedTip} />
+                <TipsModal open={openModale} handleClose={handleCloseModal} setSelectedTips={setSelectedTip} tipsToEdit={selectedTip} />
                 {totalTips > lengthPerPage && (
                     <Box display="flex" justifyContent="center" mt={4} mb={4}>
                         <Pagination

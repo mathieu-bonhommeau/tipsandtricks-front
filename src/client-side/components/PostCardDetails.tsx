@@ -35,7 +35,7 @@ function PostCardDetails({ post, ...props }: PostCardProps) {
 
                 <CardHeader avatar={<Avatar sx={{ width: 24, height: 24 }} />} title={username} />
                 <CardContent>
-                    <p
+                    <Typography
                         style={{
                             margin: '15px 0',
                             display: '-webkit-box',
@@ -45,7 +45,7 @@ function PostCardDetails({ post, ...props }: PostCardProps) {
                         }}
                     >
                         {message}
-                    </p>
+                    </Typography>
                     <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
                         <PostContent
                             postDetails={{
