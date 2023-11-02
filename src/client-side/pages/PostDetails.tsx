@@ -6,7 +6,9 @@ import { useEffect } from 'react';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { getPost } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Stack } from '@mui/material';
+import {Alert, AlertTitle, Box, CircularProgress, Container, Grid, IconButton, Stack} from '@mui/material';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+
 import CardWrapper from '../components/CardWrapper.tsx';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
 import PostCardDetails from '../components/PostCardDetails.tsx';
@@ -15,7 +17,7 @@ function PostDetails() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const post = useSelector((state: RootState) => state.postReducer.data);
+    const post = useSelector((state: RootState) => state.postReducer.postDetails);
     const error = useSelector((state: RootState) => state.postReducer.error);
     const loading = useSelector((state: RootState) => state.postReducer.loading);
     const { id } = useParams();
@@ -38,11 +40,21 @@ function PostDetails() {
 
     let content;
 
-    if (post[0]) {
+    if (post) {
         content = (
-            <Stack spacing={2}>
+            <Stack spacing={2} sx={{ flexDirection: 'row'}}>
+                <Box style={{ marginRight: '25px' }}>
+                    <IconButton aria-label="share"  onClick={() => {
+                        return navigate(
+                            '/flux/',
+                        );
+                    }}>
+                        <ArrowBackRoundedIcon sx={{ scale: '1.8' }} />
+                    </IconButton>
+                </Box>
+
                 <CardWrapper>
-                    <PostCardDetails onePost={post[0]} />
+                    <PostCardDetails onePost={post} />
                 </CardWrapper>
             </Stack>
         );

@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: PostState = {
     data: [],
+    postDetails: null,
     savedTips: null,
     error: false,
     loading: false,
@@ -57,10 +58,8 @@ export const postSlice = createSlice({
                 state.loading = true;
             })
             .addCase(getPost.fulfilled, (state, action) => {
-                console.log(action.payload);
                 state.loading = false;
-                const newPost = action.payload;
-                state.data = [newPost];
+                state.postDetails = action.payload;
             })
             .addCase(getPost.rejected, (state) => {
                 state.loading = false;

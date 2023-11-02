@@ -30,6 +30,7 @@ export type InputCreatePost = {
 
 export interface PostState {
     data: Post[];
+    postDetails: Post | null;
     savedTips: Tips | null;
     error: boolean;
     loading: boolean;
