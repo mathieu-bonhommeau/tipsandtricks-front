@@ -1,13 +1,20 @@
-import { Alert, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Alert, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Tag } from '../../domain/tags/models/tag.model.ts';
+
+const textFieldStyle = {
+    bgcolor: 'primary.contrastText',
+    '& input': {
+        fontFamily: 'Roboto mono, sans-serif',
+    },
+};
 
 export function PostContent(postContentProps: PostContentProps) {
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <TextField
-                    sx={{ bgcolor: 'primary.contrastText' }}
+                    sx={textFieldStyle}
                     variant="outlined"
                     fullWidth
                     value={
@@ -38,7 +45,7 @@ export function PostContent(postContentProps: PostContentProps) {
                     }}
                 />
             </div>
-            <p
+            <Typography
                 style={{
                     margin: '15px',
                     display: '-webkit-box',
@@ -48,7 +55,7 @@ export function PostContent(postContentProps: PostContentProps) {
                 }}
             >
                 {postContentProps.postDetails.description}
-            </p>
+            </Typography>
         </>
     );
 }

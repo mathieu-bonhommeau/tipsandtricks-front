@@ -38,7 +38,7 @@ function PostCard({ post, ...props }: PostCardProps) {
                         <OpenInNewIcon />
                     </IconButton>
                 </Typography>
-                <p
+                <Typography
                     style={{
                         margin: '15px 0',
                         display: '-webkit-box',
@@ -48,7 +48,7 @@ function PostCard({ post, ...props }: PostCardProps) {
                     }}
                 >
                     {message}
-                </p>
+                </Typography>
                 <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
                     <TipsContent
                         tipsDetails={{

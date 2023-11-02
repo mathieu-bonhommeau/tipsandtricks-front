@@ -1,4 +1,4 @@
-import { Alert, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Alert, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Tag } from '../../domain/tags/models/tag.model.ts';
 
@@ -14,12 +14,19 @@ type TipsContentProps = {
     handleCopy?: (command: string) => void;
 };
 
+const textFieldStyle = {
+    bgcolor: 'primary.contrastText',
+    '& input': {
+        fontFamily: 'Roboto mono, sans-serif',
+    },
+};
+
 export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy }: TipsContentProps) {
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <TextField
-                    sx={{ bgcolor: 'primary.contrastText' }}
+                    sx={textFieldStyle}
                     variant="outlined"
                     fullWidth
                     value={
@@ -46,7 +53,7 @@ export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy }:
                     }}
                 />
             </div>
-            <p
+            <Typography
                 style={{
                     margin: '15px',
                     display: '-webkit-box',
@@ -56,7 +63,7 @@ export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy }:
                 }}
             >
                 {tipsDetails.description}
-            </p>
+            </Typography>
         </>
     );
 }
