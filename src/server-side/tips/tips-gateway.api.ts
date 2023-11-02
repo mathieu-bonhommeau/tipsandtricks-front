@@ -79,4 +79,22 @@ export class TipsGatewayApi implements TipsGatewayInterface {
             throw new Error('UNKNOWN_ERROR');
         }
     }
+
+    async updateTips(tips: Tips): Promise<Tips> {
+        try {
+            const response = await axiosInstance({
+                method: 'PUT',
+                url: `tips/${tips.id}`,
+                data: tips,
+            });
+
+            return response.data.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 401) throw new UnauthorizedError();
+                throw new ApiError('Update tips failed !');
+            }
+            throw new Error('UNKNOWN_ERROR');
+        }
+    }
 }

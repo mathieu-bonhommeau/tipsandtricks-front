@@ -21,4 +21,12 @@ export interface TipsState {
     totalTips: number;
     loading: boolean;
     createTipsError: boolean;
+    updateTipsError: boolean;
 }
+
+export type TipsUpdateInput = {
+    id: number;
+    title?: string;
+    command?: string;
+    description?: string | null;
+};

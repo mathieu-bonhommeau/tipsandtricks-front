@@ -20,6 +20,7 @@ function TipsBoard() {
 
     const [openModale, setOpenModale] = useState(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [selectedTip, setSelectedTip] = useState<Tips | undefined>(undefined);
     const lengthPerPage = 14;
 
     const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
@@ -62,7 +63,11 @@ function TipsBoard() {
                 {tips.map((oneTips: Tips) => (
                     <Grid item xs={12} sm={6} key={oneTips.id}>
                         <CardWrapper>
-                            <TipsCard oneTips={oneTips} />
+                            <TipsCard
+                                handleOpenModal={handleOpenModal}
+                                setSelectedTips={setSelectedTip}
+                                oneTips={oneTips}
+                            />
                         </CardWrapper>
                     </Grid>
                 ))}
@@ -97,7 +102,7 @@ function TipsBoard() {
                         content
                     )}
                 </Box>
-                <TipsModal open={openModale} handleClose={handleCloseModal} />
+                <TipsModal open={openModale} handleClose={handleCloseModal} tipsToEdit={selectedTip} />
                 {totalTips > lengthPerPage && (
                     <Box display="flex" justifyContent="center" mt={4} mb={4}>
                         <Pagination

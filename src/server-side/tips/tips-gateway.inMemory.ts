@@ -41,6 +41,19 @@ export class TipsGatewayInMemory implements TipsGatewayInterface {
         return Promise.resolve(tips);
     }
 
+    async updateTips(tips: Tips): Promise<Tips> {
+        if (this.throwError) {
+            throw new Error('Internal Server Error');
+        }
+
+        const index = this.tips.findIndex((t) => t.id === tips.id);
+        if (index !== -1) {
+            this.tips[index] = { ...this.tips[index], ...tips };
+        }
+
+        return Promise.resolve(this.tips[index]);
+    }
+
 
     async deleteTip(tipsId: number): Promise<number> {
         if (this.throwError) {

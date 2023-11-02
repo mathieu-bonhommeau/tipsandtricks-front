@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TipsGatewayInterface } from '../port/tips-gateway.interface.ts';
-import { Tips, TipsInput } from '../models/tips.model.ts';
+import { Tips, TipsInput, TipsUpdateInput } from '../models/tips.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
 import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
@@ -16,6 +16,11 @@ export type TipsParams = {
 export type CreateTipParams = {
     params: Params;
     tips: TipsInput;
+};
+
+export type UpdateTipParams = {
+    params: Params;
+    tips: TipsUpdateInput;
 };
 
 
@@ -85,3 +90,16 @@ export const shareTip = createAsyncThunk(
 export const resetError = () => ({
     type: 'tips/resetError',
 });
+
+export const updateTips = createAsyncThunk(
+    'tips/updateTip',
+    async ({ params, tips }: UpdateTipParams, { dispatch }): Promise<Tips> => {
+        return (await handleErrors(
+            async () => {
+                return await (params.gatewayInterface as TipsGatewayInterface).updateTips(tips);
+            },
+            params,
+            dispatch,
+        )) as Tips;
+    },
+);
