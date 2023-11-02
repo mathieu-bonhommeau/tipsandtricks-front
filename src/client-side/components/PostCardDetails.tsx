@@ -1,9 +1,9 @@
-import {Card, CardContent, CardHeader, IconButton, Avatar, Typography, Box, Chip} from '@mui/material';
+import { Card, CardContent, CardHeader, IconButton, Avatar, Typography, Box, Chip } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Post } from '../../domain/posts/models/post.model.ts';
-import {PostContent} from "./PostContent.tsx";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { PostContent } from './PostContent.tsx';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 function PostCard(postCardProps: PostCardProps) {
     return (

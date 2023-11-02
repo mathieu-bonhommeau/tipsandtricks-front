@@ -6,18 +6,10 @@ import { useEffect } from 'react';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { getPost } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import {
-    Alert,
-    AlertTitle,
-    Box,
-    CircularProgress,
-    Container,
-    Grid,
-    Stack,
-} from '@mui/material';
+import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Stack } from '@mui/material';
 import CardWrapper from '../components/CardWrapper.tsx';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
-import PostCardDetails from "../components/PostCardDetails.tsx";
+import PostCardDetails from '../components/PostCardDetails.tsx';
 
 function PostDetails() {
     const dispatch = useAppDispatch();
@@ -83,4 +75,3 @@ function PostDetails() {
 }
 
 export default PostDetails;
-
