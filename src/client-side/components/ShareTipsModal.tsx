@@ -44,21 +44,6 @@ const ShareTipsModal = ({ oneTips, ...props }: ShareTipsModalProps) => {
         );
     };
 
-    const tipsContent = () => {
-        return (
-            <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
-                <TipsContent
-                    tipsDetails={{
-                        command: command,
-                        description: description,
-                        tags: tags,
-                    }}
-                    {...props}
-                />
-            </Box>
-        );
-    };
-
     return (
         <>
             <IconButton aria-label="share" onClick={handleOpenShareModal}>
@@ -101,7 +86,16 @@ const ShareTipsModal = ({ oneTips, ...props }: ShareTipsModalProps) => {
                             placeholder="Votre message..."
                             onChange={(event) => setMessage(event.target.value)}
                         />
-                        {tipsContent()}
+                        <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
+                            <TipsContent
+                                tipsDetails={{
+                                    command: command,
+                                    description: description,
+                                    tags: tags,
+                                }}
+                                {...props}
+                            />
+                        </Box>
                         <Box sx={{ width: '100%' }}>
                             <Chip label="tag 1" style={{ marginRight: '5px' }} />
                             <Chip label="tag 2" style={{ marginRight: '5px' }} />

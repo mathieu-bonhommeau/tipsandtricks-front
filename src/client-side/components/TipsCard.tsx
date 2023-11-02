@@ -12,28 +12,24 @@ type TipsCardProps = {
     failCopied?: boolean;
 };
 
-function TipsCard(tipsCardProps: TipsCardProps) {
-    const tipsContent = () => {
-        return (
-            <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
-                <TipsContent
-                    tipsDetails={{
-                        command: tipsCardProps.oneTips.command,
-                        description: tipsCardProps.oneTips.description,
-                        tags: tipsCardProps.oneTips.tags,
-                    }}
-                    {...tipsCardProps}
-                />
-            </Box>
-        );
-    };
+function TipsCard({ oneTips, ...props }: TipsCardProps) {
+    const { id, title, command, description, tags } = oneTips;
 
     return (
         <>
             <Card raised elevation={3} sx={{ maxWidth: 500 }}>
-                <CardHeader title={tipsCardProps.oneTips.title} action={<ShareTipsModal {...tipsCardProps} />} />
+                <CardHeader title={title} action={<ShareTipsModal oneTips={oneTips} {...props} />} />
                 <CardContent>
-                    {tipsContent()}
+                    <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
+                        <TipsContent
+                            tipsDetails={{
+                                command: command,
+                                description: description,
+                                tags: tags,
+                            }}
+                            {...props}
+                        />
+                    </Box>
                     <Box sx={{ pt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div>
                             <Chip label="tag 1" style={{ marginRight: '5px' }} />
@@ -44,7 +40,7 @@ function TipsCard(tipsCardProps: TipsCardProps) {
                             <IconButton aria-label="edit">
                                 <EditIcon />
                             </IconButton>
-                            <ConfirmDeleteTipsModal tipsId={tipsCardProps.oneTips.id} />
+                            <ConfirmDeleteTipsModal tipsId={id} />
                         </div>
                     </Box>
                 </CardContent>
