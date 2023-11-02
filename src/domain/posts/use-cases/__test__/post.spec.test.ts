@@ -5,7 +5,7 @@ import { setupStore } from '../../../store.ts';
 import PostGatewayInMemory from '../../../../server-side/post/post-gateway.inMemory.ts';
 import PostsTestBuilder from './postsTestBuilder.ts';
 import { Post } from '../../models/post.model.ts';
-import { saveTips, getPosts, getMorePosts } from '../post.actions.ts';
+import { saveTips, getPosts, getMorePosts, getPost } from '../post.actions.ts';
 import { faker } from '@faker-js/faker';
 import { Tips } from '../../../tips/models/tips.model.ts';
 
@@ -69,6 +69,21 @@ describe('when a user is on the feed page', () => {
             postGatewayInMemory.simulateServerError();
             const postToTips = postGatewayInMemory.posts[0];
             await store.dispatch(saveTips({ params, post: postToTips }));
+            expect(store.getState().postsReducer.error).toBe(true);
+        });
+    });
+
+    describe('retrieve one post', () => {
+        test('should retrieve a post', async () => {
+            const expectedPost = postGatewayInMemory.posts[0];
+            await store.dispatch(getPost({ params, postId: 1 }));
+
+            expect(store.getState().postsReducer.postDetails).toEqual(expectedPost);
+        });
+
+        test('when there is a server error, it is reflected in the state', async () => {
+            postGatewayInMemory.simulateServerError();
+            await store.dispatch(getPost({ params, postId: 1 }));
             expect(store.getState().postsReducer.error).toBe(true);
         });
     });

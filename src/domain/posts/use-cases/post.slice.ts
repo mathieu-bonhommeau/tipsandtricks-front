@@ -1,9 +1,10 @@
 import { PostState } from '../models/post.model.ts';
-import { saveTips, getPosts, getMorePosts } from './post.actions.ts';
+import { getPost, getPosts, saveTips, getMorePosts } from './post.actions.ts';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: PostState = {
     data: [],
+    postDetails: null,
     savedTips: null,
     error: false,
     loading: false,
@@ -50,6 +51,17 @@ export const postSlice = createSlice({
                 state.savedTips = action.payload;
             })
             .addCase(saveTips.rejected, (state) => {
+                state.loading = false;
+                state.error = true;
+            })
+            .addCase(getPost.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getPost.fulfilled, (state, action) => {
+                state.loading = false;
+                state.postDetails = action.payload;
+            })
+            .addCase(getPost.rejected, (state) => {
                 state.loading = false;
                 state.error = true;
             });

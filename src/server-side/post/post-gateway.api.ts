@@ -24,6 +24,23 @@ export class PostGatewayApi implements PostGatewayInterface {
         }
     }
 
+    async getPost(postId: number): Promise<Post> {
+        try {
+            const response = await axiosInstance({
+                method: 'GET',
+                url: `post/${postId}`,
+            });
+
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 401) throw new UnauthorizedError();
+                throw new ApiError('Failed to fetch post from API');
+            }
+            throw new Error('UNKNOWN_ERROR');
+        }
+    }
+
     async saveTips(post: Post): Promise<Tips> {
         try {
             const response = await axiosInstance({
