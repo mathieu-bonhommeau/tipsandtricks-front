@@ -55,7 +55,7 @@ describe('when a user is on the feed page', () => {
             await store.dispatch(getPosts({ params, length: 2 }));
             expect(store.getState().postsReducer.error).toBe(true);
         });
-    })
+    });
 
     describe('add tips in tips board', () => {
         test('should save a tips in personal tips board from a post', async () => {
@@ -75,16 +75,16 @@ describe('when a user is on the feed page', () => {
 
     describe('retrieve one post', () => {
         test('should retrieve a post', async () => {
-            const expectedPost = postGatewayInMemory.posts.slice(0, 1);
+            const expectedPost = postGatewayInMemory.posts[0];
             await store.dispatch(getPost({ params, postId: 1 }));
 
-            expect(store.getState().postReducer.data).toEqual(expectedPost);
+            expect(store.getState().postsReducer.postDetails).toEqual(expectedPost);
         });
 
         test('when there is a server error, it is reflected in the state', async () => {
             postGatewayInMemory.simulateServerError();
             await store.dispatch(getPost({ params, postId: 1 }));
-            expect(store.getState().postReducer.error).toBe(true);
+            expect(store.getState().postsReducer.error).toBe(true);
         });
     });
 });

@@ -28,7 +28,7 @@ export class PostGatewayApi implements PostGatewayInterface {
         try {
             const response = await axiosInstance({
                 method: 'GET',
-                url: `posts/${postId}`,
+                url: `post/${postId}`,
             });
 
             return response.data;

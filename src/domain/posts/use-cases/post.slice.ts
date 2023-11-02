@@ -1,5 +1,5 @@
 import { PostState } from '../models/post.model.ts';
-import {getPost, getPosts, saveTips, getMorePosts} from './post.actions.ts';
+import { getPost, getPosts, saveTips, getMorePosts } from './post.actions.ts';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: PostState = {
@@ -64,9 +64,9 @@ export const postSlice = createSlice({
             .addCase(getPost.rejected, (state) => {
                 state.loading = false;
                 state.error = true;
-            })
+            });
     },
 });
 
 export const { resetError } = postSlice.actions;
-export const postReducer = postSlice.reducer;
+export const postsReducer = postSlice.reducer;

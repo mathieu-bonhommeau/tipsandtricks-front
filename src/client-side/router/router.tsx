@@ -13,7 +13,7 @@ export enum routes {
     register = '/inscription',
     login = '/connexion',
     feed = '/flux',
-    postDetails = '/flux/:id/:slug/',
+    postDetails = '/flux/:id',
     tipsBoard = '/mes-tips',
 }
 
