@@ -5,5 +5,6 @@ import { Tips } from '../../tips/models/tips.model.ts';
 
 export interface PostGatewayInterface extends GatewayInterface {
     getPosts(start: number, length: number): Promise<InfiniteResponse<Post>>;
+    getPost(postId: number): Promise<Post>;
     saveTips(post: Post): Promise<Tips>;
 }

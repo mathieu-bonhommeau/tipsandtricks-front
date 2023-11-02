@@ -25,6 +25,16 @@ export default class PostGatewayInMemory implements PostGatewayInterface {
         return Promise.resolve(response);
     }
 
+    getPost(postId: number): Promise<Post> {
+        if (this.throwError) {
+            throw new Error('Internal Server Error');
+        }
+
+        const post = this.posts[postId - 1];
+
+        return Promise.resolve(post);
+    }
+
     setPosts(posts: Post[]): void {
         this.posts = posts;
     }

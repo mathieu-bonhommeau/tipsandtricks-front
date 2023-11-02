@@ -16,6 +16,11 @@ export type PostsMoreParams = {
     length: number;
 };
 
+export type PostParams = {
+    params: Params;
+    postId: number;
+};
+
 export const getPosts = createAsyncThunk(
     'post/getPosts',
     async ({ params, length }: PostsParams, { dispatch }): Promise<InfiniteResponse<Post>> => {
@@ -39,6 +44,19 @@ export const getMorePosts = createAsyncThunk(
             params,
             dispatch,
         )) as InfiniteResponse<Post>;
+    },
+);
+
+export const getPost = createAsyncThunk(
+    'post/getPost',
+    async ({ params, postId }: PostParams, { dispatch }): Promise<Post> => {
+        return (await handleErrors(
+            async () => {
+                return await (params.gatewayInterface as PostGatewayInterface).getPost(postId);
+            },
+            params,
+            dispatch,
+        )) as Post;
     },
 );
 
