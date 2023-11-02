@@ -11,3 +11,25 @@ export type Tips = {
     user_id: number;
     tags: Tag[];
 };
+
+export type TipsInput = {
+    title: string;
+    command: string;
+    description: string | null;
+};
+
+export interface TipsState {
+    data: Tips[];
+    error: boolean;
+    totalTips: number;
+    loading: boolean;
+    createTipsError: boolean;
+    updateTipsError: boolean;
+}
+
+export type TipsUpdateInput = {
+    id: number;
+    title?: string;
+    command?: string;
+    description?: string | null;
+};

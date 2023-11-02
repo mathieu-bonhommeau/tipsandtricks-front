@@ -1,24 +1,38 @@
 import TipsCard from '../components/TipsCard.tsx';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import { useSelector } from 'react-redux';
-import { getTips, resetError } from '../../domain/tips/use-cases/tips.actions.ts';
+import { getTips } from '../../domain/tips/use-cases/tips.actions.ts';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
-import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination } from '@mui/material';
+import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination, Fab } from '@mui/material';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
 import { useNavigate } from 'react-router-dom';
+import CardWrapper from '../components/CardWrapper.tsx';
+import { resetError } from '../../domain/tips/use-cases/tips.slice.ts';
+import AddIcon from '@mui/icons-material/Add';
+import TipsModal from '../components/TipsModal.tsx';
 
 function TipsBoard() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const [openModale, setOpenModale] = useState(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [selectedTip, setSelectedTip] = useState<Tips | undefined>(undefined);
     const lengthPerPage = 14;
 
     const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
+    };
+
+    const handleOpenModal = () => {
+        setOpenModale(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModale(false);
     };
 
     const tips = useSelector((state: RootState) => state.tipsReducer.data);
@@ -31,7 +45,6 @@ function TipsBoard() {
             getTips({
                 params: {
                     gatewayInterface: dependencyContainer.get<TipsGatewayInterface>('TipsGateway'),
-                    navigate: navigate,
                 },
                 page: currentPage,
                 length: lengthPerPage,
@@ -49,7 +62,13 @@ function TipsBoard() {
             <Grid container spacing={4} alignItems="stretch">
                 {tips.map((oneTips: Tips) => (
                     <Grid item xs={12} sm={6} key={oneTips.id}>
-                        <TipsCard oneTips={oneTips} />
+                        <CardWrapper>
+                            <TipsCard
+                                handleOpenModal={handleOpenModal}
+                                setSelectedTips={setSelectedTip}
+                                oneTips={oneTips}
+                            />
+                        </CardWrapper>
                     </Grid>
                 ))}
             </Grid>
@@ -67,8 +86,14 @@ function TipsBoard() {
 
     return (
         <Container maxWidth="md">
-            <Grid container direction="column" style={{ minHeight: '100vh' }}>
-                <Box flex="1" display="flex" flexDirection="column" justifyContent="center">
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                <Fab color="primary" aria-label="add" onClick={handleOpenModal}>
+                    <AddIcon />
+                </Fab>
+            </Box>
+
+            <Grid container direction="column">
+                <Box flex="1" display="flex" flexDirection="column">
                     {loading ? (
                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                             <CircularProgress />
@@ -77,7 +102,7 @@ function TipsBoard() {
                         content
                     )}
                 </Box>
-
+                <TipsModal open={openModale} handleClose={handleCloseModal} setSelectedTips={setSelectedTip} tipsToEdit={selectedTip} />
                 {totalTips > lengthPerPage && (
                     <Box display="flex" justifyContent="center" mt={4} mb={4}>
                         <Pagination

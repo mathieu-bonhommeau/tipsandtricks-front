@@ -1,11 +1,12 @@
 import { Tag } from '../../../tags/models/tag.model';
 import { Tips } from '../../models/tips.model';
+import { faker } from '@faker-js/faker';
 
 export default class TipsTestBuilder {
-    private readonly _id: number | null = 1;
-    private _title: string = 'Tips Title';
-    private _command: string = 'Tips Command';
-    private _description: string = 'Tips description';
+    private _id: number = 1;
+    private _title: string = faker.lorem.words(3);
+    private _command: string = faker.lorem.sentence();
+    private _description: string = faker.lorem.paragraph();
     private _published_at: string = '2022-12-17T03:24:00';
     private readonly _created_at: string = '2022-12-17T03:24:00';
     private readonly _updated_at: string | null = null;
@@ -26,5 +27,25 @@ export default class TipsTestBuilder {
             user_id: this._user_id,
             tags: this._tags,
         } as Tips;
+    }
+
+    setId(id: number): TipsTestBuilder {
+        this._id = id;
+        return this;
+    }
+
+    setTitle(value: string) {
+        this._title = value;
+        return this;
+    }
+
+    setCommand(value: string) {
+        this._command = value;
+        return this;
+    }
+
+    setDescription(value: string) {
+        this._description = value;
+        return this;
     }
 }

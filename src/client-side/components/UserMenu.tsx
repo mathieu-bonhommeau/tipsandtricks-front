@@ -73,11 +73,11 @@ function UserMenu({ username }: UserMenuProps) {
                 onClose={handleCloseUserMenu}
             >
                 {links.map((link) => (
-                    <MenuItem key={link.label} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">
-                            <Link to={link.path}>{link.label}</Link>
-                        </Typography>
-                    </MenuItem>
+                    <Link key={link.label} to={link.path}>
+                        <MenuItem onClick={handleCloseUserMenu}>
+                            <Typography textAlign="center">{link.label}</Typography>
+                        </MenuItem>
+                    </Link>
                 ))}
                 <MenuItem onClick={handleLogoutUser}>
                     <Typography textAlign="center">Déconnexion</Typography>
