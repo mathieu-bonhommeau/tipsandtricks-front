@@ -23,7 +23,7 @@ function Feed() {
 
     const [start, setStart] = useState<number>(0);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
-    console.log('posts', posts);
+
     const handleGetMorePosts = () => {
         const newStart = start + length;
         setScrollPosition(window.scrollY);

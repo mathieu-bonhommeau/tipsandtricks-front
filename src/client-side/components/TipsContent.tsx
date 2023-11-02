@@ -4,6 +4,7 @@ import { Tag } from '../../domain/tags/models/tag.model.ts';
 
 type TipsContentProps = {
     tipsDetails: {
+        title: string;
         command: string;
         description: string;
         tags: Tag[];

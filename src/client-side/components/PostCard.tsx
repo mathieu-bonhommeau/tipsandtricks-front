@@ -52,6 +52,7 @@ function PostCard({ post, ...props }: PostCardProps) {
                 <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
                     <TipsContent
                         tipsDetails={{
+                            title: post.title,
                             command: post.command,
                             description: post.description,
                             tags: post.tags,

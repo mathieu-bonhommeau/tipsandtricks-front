@@ -4,16 +4,23 @@ import { TipsContent } from './TipsContent.tsx';
 import EditIcon from '@mui/icons-material/Edit';
 import ShareTipsModal from './ShareTipsModal.tsx';
 import ConfirmDeleteTipsModal from './ConfirmDeleteTipsModal.tsx';
+import React from 'react';
 
 type TipsCardProps = {
     oneTips: Tips;
     handleCopy?: (command: string) => void;
     textCopied?: boolean;
     failCopied?: boolean;
+    setSelectedTips: React.Dispatch<React.SetStateAction<Tips | undefined>>;
+    handleOpenModal: () => void;
 };
 
 function TipsCard({ oneTips, ...props }: TipsCardProps) {
     const { id, title, command, description, tags } = oneTips;
+    const handleEdit = () => {
+        props.setSelectedTips(oneTips);
+        props.handleOpenModal();
+    };
 
     return (
         <>
@@ -23,6 +30,7 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
                     <Box sx={{ p: 2, border: '1px solid grey', bgcolor: 'primary.light' }}>
                         <TipsContent
                             tipsDetails={{
+                                title: title,
                                 command: command,
                                 description: description,
                                 tags: tags,
@@ -37,7 +45,7 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
                             <Chip label="tag 3" style={{ marginRight: '5px' }} />
                         </div>
                         <div>
-                            <IconButton aria-label="edit">
+                            <IconButton aria-label="edit" onClick={handleEdit}>
                                 <EditIcon />
                             </IconButton>
                             <ConfirmDeleteTipsModal tipsId={id} />

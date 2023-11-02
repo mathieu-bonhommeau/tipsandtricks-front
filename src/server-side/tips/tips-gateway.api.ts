@@ -1,5 +1,5 @@
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface';
-import { Tips } from '../../domain/tips/models/tips.model';
+import { Tips, TipsInput } from '../../domain/tips/models/tips.model';
 import { AxiosError } from 'axios';
 import { ApiError, UnauthorizedError } from '../../domain/core/models/errors/globalError.ts';
 import axiosInstance from '../core/axios.instance.ts';
@@ -58,6 +58,42 @@ export class TipsGatewayApi implements TipsGatewayInterface {
                 throw new ApiError('Failed to delete tips from API');
             }
 
+            throw new Error('UNKNOWN_ERROR');
+        }
+    }
+
+    async createTips(tips: TipsInput): Promise<Tips> {
+        try {
+            const response = await axiosInstance({
+                method: 'POST',
+                url: `tips`,
+                data: tips,
+            });
+
+            return response.data.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 401) throw new UnauthorizedError();
+                throw new ApiError('Create tips failed !');
+            }
+            throw new Error('UNKNOWN_ERROR');
+        }
+    }
+
+    async updateTips(tips: Tips): Promise<Tips> {
+        try {
+            const response = await axiosInstance({
+                method: 'PUT',
+                url: `tips/${tips.id}`,
+                data: tips,
+            });
+
+            return response.data.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 401) throw new UnauthorizedError();
+                throw new ApiError('Update tips failed !');
+            }
             throw new Error('UNKNOWN_ERROR');
         }
     }

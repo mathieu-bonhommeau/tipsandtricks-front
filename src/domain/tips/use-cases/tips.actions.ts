@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TipsGatewayInterface } from '../port/tips-gateway.interface.ts';
-import { Tips } from '../models/tips.model.ts';
+import { Tips, TipsInput, TipsUpdateInput } from '../models/tips.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
 import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
@@ -11,6 +11,16 @@ export type TipsParams = {
     params: Params;
     page: number;
     length: number;
+};
+
+export type CreateTipParams = {
+    params: Params;
+    tips: TipsInput;
+};
+
+export type UpdateTipParams = {
+    params: Params;
+    tips: TipsUpdateInput;
 };
 
 export type TipsDelete = {
@@ -36,6 +46,18 @@ export const getTips = createAsyncThunk(
     },
 );
 
+export const createTips = createAsyncThunk(
+    'tips/createTip',
+    async ({ params, tips }: CreateTipParams, { dispatch }): Promise<Tips> => {
+        return (await handleErrors(
+            async () => {
+                return await (params.gatewayInterface as TipsGatewayInterface).createTips(tips);
+            },
+            params,
+            dispatch,
+        )) as Tips;
+    },
+);
 export const deleteTip = createAsyncThunk(
     'tips/deleteTips',
     async ({ params, tipsId }: TipsDelete, { dispatch }): Promise<number> => {
@@ -55,7 +77,6 @@ export const shareTip = createAsyncThunk(
         return (await handleErrors(
             async () => {
                 const response = await (params.gatewayInterface as TipsGatewayInterface).shareTips(tipsToShare);
-                console.log(response);
                 params.navigate!(`/flux/${response.id}-${response.slug}`);
                 return response;
             },
@@ -68,3 +89,16 @@ export const shareTip = createAsyncThunk(
 export const resetError = () => ({
     type: 'tips/resetError',
 });
+
+export const updateTips = createAsyncThunk(
+    'tips/updateTip',
+    async ({ params, tips }: UpdateTipParams, { dispatch }): Promise<Tips> => {
+        return (await handleErrors(
+            async () => {
+                return await (params.gatewayInterface as TipsGatewayInterface).updateTips(tips);
+            },
+            params,
+            dispatch,
+        )) as Tips;
+    },
+);
