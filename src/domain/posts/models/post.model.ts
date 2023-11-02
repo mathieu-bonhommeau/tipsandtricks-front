@@ -20,6 +20,14 @@ export type Post = {
     };
 };
 
+export type InputCreatePost = {
+    title: string;
+    command: string;
+    description: string;
+    message: string;
+    tags: Tag[];
+};
+
 export interface PostState {
     data: Post[];
     savedTips: Tips | null;

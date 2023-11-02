@@ -3,7 +3,8 @@ import { Tips } from '../../domain/tips/models/tips.model';
 import { AxiosError } from 'axios';
 import { ApiError, UnauthorizedError } from '../../domain/core/models/errors/globalError.ts';
 import axiosInstance from '../core/axios.instance.ts';
-import {PaginatedResponse} from "../../domain/core/models/paginatedResponse.ts";
+import { PaginatedResponse } from '../../domain/core/models/paginatedResponse.ts';
+import { InputCreatePost, Post } from '../../domain/posts/models/post.model.ts';
 
 export class TipsGatewayApi implements TipsGatewayInterface {
     async getTips(page: number, length: number): Promise<PaginatedResponse<Tips>> {
@@ -32,6 +33,25 @@ export class TipsGatewayApi implements TipsGatewayInterface {
             });
 
             return tipsId;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                if (error.response?.status === 401) throw new UnauthorizedError();
+                throw new ApiError('Failed to delete tips from API');
+            }
+
+            throw new Error('UNKNOWN_ERROR');
+        }
+    }
+
+    async shareTips(tipsToShare: InputCreatePost): Promise<Post> {
+        try {
+            const response = await axiosInstance({
+                method: 'POST',
+                url: `post`,
+                data: tipsToShare,
+            });
+
+            return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
                 if (error.response?.status === 401) throw new UnauthorizedError();

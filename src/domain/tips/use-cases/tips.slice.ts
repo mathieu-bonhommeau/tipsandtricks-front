@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Tips } from '../models/tips.model.ts';
-import { deleteTip, getTips } from './tips.actions.ts';
+import { deleteTip, getTips, shareTip } from './tips.actions.ts';
+import { Post } from '../../posts/models/post.model.ts';
 
 export interface TipsState {
     data: Tips[];
+    shareTips: Post | null;
     error: boolean;
     totalTips: number;
     loading: boolean;
@@ -11,6 +13,7 @@ export interface TipsState {
 
 const initialState: TipsState = {
     data: [],
+    shareTips: null,
     error: false,
     totalTips: 0,
     loading: false,
@@ -37,22 +40,31 @@ export const tipsSlice = createSlice({
             .addCase(getTips.rejected, (state) => {
                 state.loading = false;
                 state.error = true;
-            });
-
-            builder
-                .addCase(deleteTip.pending, (state) => {
-                    state.loading = true;
-                })
-                .addCase(deleteTip.fulfilled, (state, action) => {
-                    state.loading = false;
-                    state.data = state.data.filter(tips => {
-                        return tips.id !== action.payload;
-                    })
-                })
-                .addCase(deleteTip.rejected, (state) => {
-                    state.loading = false;
-                    state.error = true;
+            })
+            .addCase(deleteTip.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(deleteTip.fulfilled, (state, action) => {
+                state.loading = false;
+                state.data = state.data.filter((tips) => {
+                    return tips.id !== action.payload;
                 });
+            })
+            .addCase(deleteTip.rejected, (state) => {
+                state.loading = false;
+                state.error = true;
+            })
+            .addCase(shareTip.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(shareTip.fulfilled, (state, action) => {
+                state.loading = false;
+                state.shareTips = action.payload;
+            })
+            .addCase(shareTip.rejected, (state) => {
+                state.loading = false;
+                state.error = true;
+            });
     },
 });
 

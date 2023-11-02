@@ -4,9 +4,10 @@ import { Tips } from '../../models/tips.model';
 import TipsTestBuilder from './tipsTestBuilder';
 import { TipsGatewayInMemory } from '../../../../server-side/tips/tips-gateway.inMemory';
 import { setupStore } from '../../../store';
-import { getTips, deleteTip } from '../tips.actions';
+import { getTips, deleteTip, shareTip } from '../tips.actions';
 import { Params } from '../../../core/handlers/handle.errors.ts';
 import { faker } from '@faker-js/faker';
+import { InputCreatePost, Post } from '../../../posts/models/post.model.ts';
 
 let store: ToolkitStore;
 let sut: SUT;
@@ -79,10 +80,68 @@ describe('when a user want to deleted a tips', () => {
     });
 });
 
+describe('when a user want to share a tips', () => {
+    test('when the request to share a tips is successful', async () => {
+        const tipsToShare = sut.givenATipsToShare();
+        const expectedPost = sut.givenPostFromTips(tipsToShare);
+        await store.dispatch(shareTip({ params, tipsToShare }));
+        const newPost = await store.getState().tipsReducer.shareTips;
+        expect(newPost).toEqual(
+            expect.objectContaining({
+                id: expectedPost.id,
+                title: expectedPost.title,
+                slug: expectedPost.slug,
+                command: expectedPost.command,
+                description: expectedPost.description,
+                message: expectedPost.message,
+                tags: expectedPost.tags,
+                reactions: expectedPost.reactions,
+            }),
+        );
+    });
+
+    test('when there is a server error, it is reflected in the state', async () => {
+        tipsGatewayInMemory.simulateServerError();
+
+        await store.dispatch(shareTip({ params, tipsToShare: sut.givenATipsToShare() }));
+
+        expect(store.getState().tipsReducer.error).toBe(true);
+    });
+});
+
 class SUT {
     private _tipsTestBuilder: TipsTestBuilder;
+
     constructor() {
         this._tipsTestBuilder = new TipsTestBuilder();
+    }
+
+    givenATipsToShare(): InputCreatePost {
+        return {
+            ...tipsGatewayInMemory.tips[0],
+            message: faker.lorem.paragraph(),
+        };
+    }
+
+    givenPostFromTips(input: InputCreatePost): Post {
+        return {
+            id: 1,
+            title: input.title,
+            slug: 'post-slug',
+            command: input.command,
+            description: input.description,
+            message: input.message,
+            created_at: new Date().toISOString(),
+            updated_at: null,
+            published_at: new Date().toISOString(),
+            tags: [],
+            user_id: 1,
+            username: 'username',
+            reactions: {
+                like: 0,
+                dislike: 0,
+            },
+        };
     }
 
     generateArrayOfTips(size: number): Tips[] {

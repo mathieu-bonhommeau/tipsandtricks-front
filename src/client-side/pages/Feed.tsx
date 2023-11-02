@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import { useEffect, useState } from 'react';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
-import { getPosts } from '../../domain/posts/use-cases/post.actions.ts';
+import { getMorePosts, getPosts } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
 import { Alert, AlertTitle, Box, Button, CircularProgress, Container, Grid, Stack } from '@mui/material';
 import PostCard from '../components/PostCard.tsx';
@@ -23,6 +23,22 @@ function Feed() {
 
     const [start, setStart] = useState<number>(0);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
+    console.log('posts', posts);
+    const handleGetMorePosts = () => {
+        const newStart = start + length;
+        setScrollPosition(window.scrollY);
+        setStart(newStart);
+        dispatch(
+            getMorePosts({
+                params: {
+                    gatewayInterface: dependencyContainer.get<PostGatewayInterface>('PostGateway'),
+                    navigate: navigate,
+                },
+                start: newStart,
+                length,
+            }),
+        );
+    };
 
     useEffect(() => {
         dispatch(
@@ -31,14 +47,13 @@ function Feed() {
                     gatewayInterface: dependencyContainer.get<PostGatewayInterface>('PostGateway'),
                     navigate: navigate,
                 },
-                start,
                 length,
             }),
         );
         return () => {
             dispatch(resetError());
         };
-    }, [dispatch, start, length, navigate]);
+    }, [dispatch, length, navigate]);
 
     useEffect(() => {
         window.scrollTo(0, scrollPosition);
@@ -85,8 +100,7 @@ function Feed() {
                         variant="contained"
                         sx={{ bgcolor: 'primary.main' }}
                         onClick={() => {
-                            setScrollPosition(window.scrollY);
-                            setStart(start + length);
+                            handleGetMorePosts();
                         }}
                     >
                         Voir plus

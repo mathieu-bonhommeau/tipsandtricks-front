@@ -7,13 +7,31 @@ import { Tips } from '../../tips/models/tips.model.ts';
 
 export type PostsParams = {
     params: Params;
+    length: number;
+};
+
+export type PostsMoreParams = {
+    params: Params;
     start: number;
     length: number;
 };
 
 export const getPosts = createAsyncThunk(
     'post/getPosts',
-    async ({ params, start, length }: PostsParams, { dispatch }): Promise<InfiniteResponse<Post>> => {
+    async ({ params, length }: PostsParams, { dispatch }): Promise<InfiniteResponse<Post>> => {
+        return (await handleErrors(
+            async () => {
+                return await (params.gatewayInterface as PostGatewayInterface).getPosts(0, length);
+            },
+            params,
+            dispatch,
+        )) as InfiniteResponse<Post>;
+    },
+);
+
+export const getMorePosts = createAsyncThunk(
+    'post/getMorePosts',
+    async ({ params, start, length }: PostsMoreParams, { dispatch }): Promise<InfiniteResponse<Post>> => {
         return (await handleErrors(
             async () => {
                 return await (params.gatewayInterface as PostGatewayInterface).getPosts(start, length);

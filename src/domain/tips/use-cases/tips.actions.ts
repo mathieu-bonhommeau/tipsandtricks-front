@@ -5,6 +5,7 @@ import { Tips } from '../models/tips.model.ts';
 import type {} from 'redux-thunk/extend-redux';
 import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
 import { PaginatedResponse } from '../../core/models/paginatedResponse.ts';
+import { InputCreatePost, Post } from '../../posts/models/post.model.ts';
 
 export type TipsParams = {
     params: Params;
@@ -15,6 +16,11 @@ export type TipsParams = {
 export type TipsDelete = {
     params: Params;
     tipsId: number;
+};
+
+export type TipsShare = {
+    params: Params;
+    tipsToShare: InputCreatePost;
 };
 
 export const getTips = createAsyncThunk(
@@ -40,6 +46,21 @@ export const deleteTip = createAsyncThunk(
             params,
             dispatch,
         )) as number;
+    },
+);
+
+export const shareTip = createAsyncThunk(
+    'tips/shareTips',
+    async ({ params, tipsToShare }: TipsShare, { dispatch }): Promise<Post> => {
+        return (await handleErrors(
+            async () => {
+                const response = await (params.gatewayInterface as TipsGatewayInterface).shareTips(tipsToShare);
+                params.navigate!('/flux', { replace: true });
+                return response;
+            },
+            params,
+            dispatch,
+        )) as Post;
     },
 );
 
