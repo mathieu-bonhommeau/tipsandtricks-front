@@ -69,7 +69,7 @@ const Reactions = ({ post }: ReactionsProps) => {
                 flexDirection: 'row',
                 justifyContent: 'flex-end',
                 gap: 3,
-                color: theme.palette.primary.main,
+                color: '#fff',
             }}
         >
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>

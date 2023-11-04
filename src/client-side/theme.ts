@@ -1,38 +1,45 @@
-import { createTheme } from '@mui/material';
+import {createTheme, PaletteMode} from '@mui/material';
 
-/*const light = {
-    main: "#FFFFFF",
-    light: "#202CA8",
-    dark: "#4970CC",
-    //secondary: "#ECECF3",
-    contrastText: "#4970CC",
-};*/
+const getDesignTokens = (mode: PaletteMode) => {
+    if (mode === 'light') {
+        return {
+            background: {
+                paper: '#F3F4FD',
+                default: '#202CA8',
+            },
+            text: {
+                primary: '#000000',
+                secondary: '#4970CC',
+            },
+            primary: {
+                main: '#4970CC',
+                light: '#ECECF3',
+                dark: '#3853A9',
+                contrastText: '#FFFFFF',
+            }
+        }
+    } else if (mode === 'dark') {
+        return {
+            background: {
+                paper: '#0F1019',
+                default: '#0F1019',
+            },
+            text: {
+                primary: '#FFFFFF',
+                secondary: '#211046',
+            },
+            primary: {
+                main: '#161722',
+                light: '#363946',
+                dark: '#3853A9',
+                contrastText: '#FFFFFF',
+            }
+        }
+    }
+}
 
-/*const dark = {
-    main: '#211046',
-    light: '#190B37',
-    dark: '#3853A9',
-    //secondary: "#2D2458",
-    contrastText: '#92DBFE',
-};*/
-
-export const theme = createTheme({
-    palette: {
-        background: {
-            paper: '#F3F4FD',
-            default: '#202CA8',
-        },
-        text: {
-            primary: '#000000',
-            secondary: '#4970CC',
-        },
-        primary: {
-            main: '#4970CC',
-            light: '#ECECF3',
-            dark: '#3853A9',
-            contrastText: '#FFFFFF',
-        },
-    },
+export const theme = (mode: PaletteMode) => createTheme({
+    palette: getDesignTokens(mode),
     typography: {
         fontFamily: 'IBM Plex Sans, sans-serif',
         fontWeightBold: 700,

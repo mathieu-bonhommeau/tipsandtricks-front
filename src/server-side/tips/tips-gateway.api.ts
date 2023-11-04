@@ -55,7 +55,7 @@ export class TipsGatewayApi implements TipsGatewayInterface {
         } catch (error) {
             if (error instanceof AxiosError) {
                 if (error.response?.status === 401) throw new UnauthorizedError();
-                throw new ApiError('Failed to delete tips from API');
+                throw new ApiError('Failed to share tips from API');
             }
 
             throw new Error('UNKNOWN_ERROR');
