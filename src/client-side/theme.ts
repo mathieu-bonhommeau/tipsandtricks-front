@@ -1,4 +1,4 @@
-import {createTheme, PaletteMode} from '@mui/material';
+import { createTheme, PaletteMode } from '@mui/material';
 
 const getDesignTokens = (mode: PaletteMode) => {
     if (mode === 'light') {
@@ -21,19 +21,30 @@ const getDesignTokens = (mode: PaletteMode) => {
     } else if (mode === 'dark') {
         return {
             background: {
-                paper: '#0F1019',
-                default: '#0F1019',
+                paper: '#24282C',
+                default: 'linear-gradient(-220deg, #30363C, #111316)'
             },
             text: {
                 primary: '#FFFFFF',
                 secondary: '#211046',
             },
             primary: {
-                main: '#161722',
-                light: '#363946',
-                dark: '#3853A9',
+                main: '#ffffff',
+                light: '#5E5D62',
+                lightLess: '#4A4B4D',
+                dark: '#7F0404',
                 contrastText: '#FFFFFF',
-            }
+            },
+            secondary: {
+                main: 'linear-gradient(-220deg, #111316, #1C1F22, #1C1F22)',
+                light: '#5E5D62',
+                lightLess: '#4A4B4D',
+                dark: '#E51A1A',
+                contrastText: '#FFFFFF',
+            },
+            error: {
+                main: '#E82F21',
+            },
         }
     }
 }
@@ -51,7 +62,6 @@ export const theme = (mode: PaletteMode) => createTheme({
             lineHeight: 1.5,
         },
         h1: {
-            color: '#211046',
             fontFamily: 'Roboto mono, sans-serif',
             fontSize: 32,
             fontWeight: 700,

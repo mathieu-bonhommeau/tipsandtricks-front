@@ -4,6 +4,7 @@ import { registerUserAsync } from './registration.actions.ts';
 
 const initialState: RegistrationState = {
     user: null,
+    emailValidity: true,
     passwordValidity: true,
     passwordsEquality: true,
     usernameValidity: true,
@@ -16,28 +17,31 @@ export const registrationSlice = createSlice({
     name: 'registration',
     initialState,
     reducers: {
-        passwordValidity: (state, action: PayloadAction<boolean>) => {
+        emailValidity: (state: RegistrationState, action: PayloadAction<boolean>) => {
+            state.emailValidity = action.payload;
+        },
+        passwordValidity: (state: RegistrationState, action: PayloadAction<boolean>) => {
             state.passwordValidity = action.payload;
         },
-        passwordsEquality: (state, action: PayloadAction<boolean>) => {
+        passwordsEquality: (state: RegistrationState, action: PayloadAction<boolean>) => {
             state.passwordsEquality = action.payload;
         },
-        usernameValidity: (state, action: PayloadAction<boolean>) => {
+        usernameValidity: (state: RegistrationState, action: PayloadAction<boolean>) => {
             state.usernameValidity = action.payload;
         },
-        resetUsernameAlreadyUsedError: (state) => {
+        resetUsernameAlreadyUsedError: (state: RegistrationState) => {
             state.usernameAlreadyUsedError = false;
         },
-        resetEmailAlreadyUsedError: (state) => {
+        resetEmailAlreadyUsedError: (state: RegistrationState) => {
             state.emailAlreadyUsedError = false;
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(registerUserAsync.fulfilled, (state, action) => {
+        builder.addCase(registerUserAsync.fulfilled, (state: RegistrationState, action) => {
             state.user = action.payload;
             state.unknownServerError = false;
         });
-        builder.addCase(registerUserAsync.rejected, (state, action) => {
+        builder.addCase(registerUserAsync.rejected, (state: RegistrationState, action) => {
             switch (action.error.code) {
                 case 'USERNAME_ALREADY_USED':
                     state.usernameAlreadyUsedError = true;
@@ -58,6 +62,7 @@ export const registrationSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
+    emailValidity,
     passwordValidity,
     passwordsEquality,
     usernameValidity,

@@ -9,9 +9,9 @@ import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-inter
 import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, IconButton, Stack } from '@mui/material';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
-import CardWrapper from '../components/CardWrapper.tsx';
+import CardWrapper from '../modules/CardWrapper.tsx';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
-import PostCardDetails from '../components/PostCardDetails.tsx';
+import PostCardDetails from '../modules/PostCardDetails.tsx';
 
 function PostDetails() {
     const dispatch = useAppDispatch();

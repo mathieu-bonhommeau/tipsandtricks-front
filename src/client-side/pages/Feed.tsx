@@ -7,9 +7,9 @@ import dependencyContainer from '../../_dependencyContainer/dependencyContainer.
 import { getMorePosts, getPosts } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
 import { Alert, AlertTitle, Box, Button, CircularProgress, Container, Grid, Stack } from '@mui/material';
-import PostCard from '../components/PostCard.tsx';
+import PostCard from '../modules/PostCard.tsx';
 import { Post } from '../../domain/posts/models/post.model.ts';
-import CardWrapper from '../components/CardWrapper.tsx';
+import CardWrapper from '../modules/CardWrapper.tsx';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
 
 function Feed() {

@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import HomePage from '../pages/Home.tsx';
-import Register from '../pages/Register.tsx';
+import Register from '../modules/Register.tsx';
 import Login from '../pages/Login.tsx';
 import Feed from '../pages/Feed.tsx';
-import AppWrapper from '../components/AppWrapper.tsx';
+import AppWrapper from '../modules/AppWrapper.tsx';
 import TipsBoard from '../pages/TipsBoard.tsx';
 import PrivateRoute from '../wrappers/privateRoute.tsx';
 import PostDetails from '../pages/PostDetails.tsx';

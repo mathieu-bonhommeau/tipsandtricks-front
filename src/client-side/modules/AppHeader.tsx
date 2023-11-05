@@ -3,9 +3,9 @@ import UserMenu from './UserMenu.tsx';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import { routes } from '../router/router.tsx';
-import {Logo} from "./Logo.tsx";
 import Box from "@mui/material/Box";
 import LoginIcon from '@mui/icons-material/Login';
+import {Logo} from "./Logo.tsx";
 
 function AppHeader() {
     const user = useSelector((state: RootState) => state.authentication.user);
@@ -13,7 +13,7 @@ function AppHeader() {
 
     return (
         <AppBar position="static" elevation={0} sx={{
-            background: theme.palette.background.default,
+            background: 'transparent',
             mx: 'auto',
             width: '100%'
         }}>
@@ -39,13 +39,13 @@ function AppHeader() {
                             display: 'flex',
                             gap: 1,
                             alignItems: 'center',
-                            '&:hover .line': {
+                            '&:hover .login-line': {
                                 transform: 'scaleX(1.5)',
                             }
                         }}>
                             LOGIN
                             <LoginIcon />
-                            <Box className="line" sx={{
+                            <Box className="login-line" sx={{
                                 width: '100%',
                                 borderBottom: '1px solid',
                                 textAlign: 'right',

@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import {Container, useTheme} from '@mui/material';
 import AppHeader from './AppHeader.tsx';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -11,6 +11,7 @@ import AppFooter from "./AppFooter.tsx";
 function AppWrapper() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const theme = useTheme()
 
     useEffect(() => {
         dispatch(
@@ -22,13 +23,13 @@ function AppWrapper() {
     }, [dispatch, navigate]);
 
     return (
-        <>
+        <div style={{background: theme.palette.background.default, minHeight: '100vh', position: 'relative'}}>
             <AppHeader />
             <Container style={{ marginTop: '15px', margin: '0 auto' }} maxWidth={'xl'}>
                 <Outlet />
             </Container>
             <AppFooter />
-        </>
+        </div>
     );
 }
 
