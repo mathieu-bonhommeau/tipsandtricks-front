@@ -10,5 +10,7 @@ export const constants = {
     emailBadFormat: 'The email does not have the correct format.',
     usernameAlreadyUsed: 'This username is already taken, please choose another one.',
     emailAlreadyUsed: 'This email is already taken.',
-    unknownError: 'Unknown error, please try again later.'
+    unknownError: 'Unknown error, please try again later.',
+    badCredentials: 'Bad credentials !',
+    accountCreateSuccess: 'Your account has been successfully created ! Please log in.'
 }

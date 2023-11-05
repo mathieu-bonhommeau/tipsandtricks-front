@@ -17,7 +17,6 @@ export const handleErrors = async (asyncFunction: () => unknown, params: Params,
     try {
         return await asyncFunction();
     } catch (error: unknown) {
-        console.log('error', error);
         if (error instanceof UnauthorizedError) {
             try {
                 await dispatch(
@@ -33,6 +32,7 @@ export const handleErrors = async (asyncFunction: () => unknown, params: Params,
                 throw new UnauthorizedError();
             }
         }
+        console.log('error', error);
         throw error;
     }
 };

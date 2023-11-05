@@ -1,19 +1,28 @@
-import {Button, Container, Paper, Typography, useTheme} from '@mui/material';
-import { Link } from 'react-router-dom';
+import {Container, Paper, Typography, useTheme} from '@mui/material';
 import Box from "@mui/material/Box";
-import {routes} from "../router/router.tsx";
 import {constants} from "../../_config/constants/constants.ts";
 import Register from "../modules/Register.tsx";
 import {WriteAnimation} from "../modules/animations/WriteAnimation.tsx";
 import {BlinkAnimation} from "../modules/animations/BlinkAnimation.tsx";
-import {useState} from "react";
-import Login from "./Login.tsx";
+import {ReactElement, useEffect, useState} from "react";
+import Login from "../modules/Login.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../../domain/store.ts";
 
 export type FormType = 'register' | 'login'
+export type HomeProps = {
+    formType: FormType
+}
 
-function Home() {
+function Home({formType}: HomeProps) {
     const theme = useTheme()
     const [displayForm, setDisplayForm] = useState<FormType>('register')
+    const user = useSelector((state: RootState) => state.registration.user);
+
+    useEffect(() => {
+        setDisplayForm(formType)
+        user && setDisplayForm('login')
+    }, [user]);
 
     return (
         <Container maxWidth="xl" sx={{
@@ -70,7 +79,8 @@ function Home() {
                     }
                 }}>
                     <Box>
-                        <Typography variant="h1" sx={{marginBottom: '20px', }}>Join the community !</Typography>
+                        {displayForm == 'register' && <Typography variant="h1" sx={{marginBottom: '20px',}}>Join the community !</Typography>}
+                        {displayForm == 'login' && <Typography variant="h1" sx={{marginBottom: '20px',}}>Log in !</Typography>}
                         <Box className="form-title-line" sx={{
                             width: '20%',
                             borderBottom: '1px solid',
@@ -90,10 +100,7 @@ function Home() {
                         {displayForm === 'login' && <Login setDisplayForm={setDisplayForm}/>}
                     </Paper>
                 </Box>
-
             </Box>
-
-            {/* Le reste de votre code */}
         </Container>
     );
 }

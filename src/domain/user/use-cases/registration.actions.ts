@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {emailValidity, passwordsEquality, passwordValidity, usernameValidity} from './registration.slice.ts';
 import { AppDispatch, RootState } from '../../store.ts';
-import { User } from '../models/user.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
 import { RegistrationUserInput } from '../models/registration.model.ts';
 import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
 import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
+import {User} from "../models/user.model.ts";
 
 export type registerUserParams = {
     userInput: RegistrationUserInput;
@@ -106,15 +106,13 @@ export function registerUser({ params, userInput }: registerUserParams) {
 
 export const registerUserAsync = createAsyncThunk(
     'registration/registerUser',
-    async ({ params, userInput }: registerUserParams, { dispatch }): Promise<User | null> => {
+    async ({ params, userInput }: registerUserParams, { dispatch }) => {
         return (await handleErrors(
             async () => {
-                const result = await (params.gatewayInterface as UserGatewayInterface).registerUser(userInput);
-                params.navigate!('/connexion');
-                return result;
+                return await (params.gatewayInterface as UserGatewayInterface).registerUser(userInput);
             },
             params,
             dispatch,
-        )) as User | null;
+        ));
     },
 );

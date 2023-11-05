@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RegistrationState } from '../models/registration.model.ts';
 import { registerUserAsync } from './registration.actions.ts';
+import {User} from "../models/user.model.ts";
 
 const initialState: RegistrationState = {
     user: null,
@@ -37,11 +38,11 @@ export const registrationSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(registerUserAsync.fulfilled, (state: RegistrationState, action) => {
+        builder.addCase(registerUserAsync.fulfilled, (state: RegistrationState, action: PayloadAction<User | null>) => {
             state.user = action.payload;
             state.unknownServerError = false;
         });
-        builder.addCase(registerUserAsync.rejected, (state: RegistrationState, action) => {
+        builder.addCase(registerUserAsync.rejected, (state: RegistrationState, action: PayloadAction) => {
             switch (action.error.code) {
                 case 'USERNAME_ALREADY_USED':
                     state.usernameAlreadyUsedError = true;

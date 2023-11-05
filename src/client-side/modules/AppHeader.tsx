@@ -6,6 +6,7 @@ import { routes } from '../router/router.tsx';
 import Box from "@mui/material/Box";
 import LoginIcon from '@mui/icons-material/Login';
 import {Logo} from "./Logo.tsx";
+import {Link} from "react-router-dom";
 
 function AppHeader() {
     const user = useSelector((state: RootState) => state.authentication.user);
@@ -32,30 +33,31 @@ function AppHeader() {
                     {user ? (
                         <UserMenu username={user.username} />
                     ) : (
-                        <Typography href={routes.login} component="a" sx={{
-                            color: 'inherit',
-                            textDecoration: 'none',
-                            position: 'relative',
-                            display: 'flex',
-                            gap: 1,
-                            alignItems: 'center',
-                            '&:hover .login-line': {
-                                transform: 'scaleX(1.5)',
-                            }
-                        }}>
-                            LOGIN
-                            <LoginIcon />
-                            <Box className="login-line" sx={{
-                                width: '100%',
-                                borderBottom: '1px solid',
-                                textAlign: 'right',
-                                transformOrigin: 'right',
-                                transform: 'scaleX(0)',
-                                transition: 'transform 0.2s ease-in-out',
-                                position: 'absolute',
-                                bottom: -5,
-                            }}/>
-                        </Typography>
+                        <Link to={routes.login} sx={{width: '100%'}}>
+                            <Typography sx={{
+                                color: theme.palette.text.primary,
+                                position: 'relative',
+                                display: 'flex',
+                                gap: 1,
+                                alignItems: 'center',
+                                '&:hover .login-line': {
+                                    transform: 'scaleX(1.5)',
+                                }
+                            }}>
+                                    LOGIN
+                                    <LoginIcon />
+                                    <Box className="login-line" sx={{
+                                        width: '100%',
+                                        borderBottom: '1px solid',
+                                        textAlign: 'right',
+                                        transformOrigin: 'right',
+                                        transform: 'scaleX(0)',
+                                        transition: 'transform 0.2s ease-in-out',
+                                        position: 'absolute',
+                                        bottom: -5,
+                                    }}/>
+                            </Typography>
+                        </Link>
                     )}
                 </Toolbar>
             </Container>
