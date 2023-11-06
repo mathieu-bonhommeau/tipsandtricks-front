@@ -1,11 +1,11 @@
 import {ReactElement, useEffect, useState} from "react";
-import {Box, Typography, useTheme} from "@mui/material";
+import {Box, useTheme} from "@mui/material";
 
 export type BlinkAnimationProps = {
     delay?: number,
     speed?: number
 }
-export const BlinkAnimation = ({textToBlink, delay = 0, speed = 1000}: BlinkAnimationProps) => {
+export const BlinkAnimation = ({delay = 0, speed = 1000}: BlinkAnimationProps) => {
     const theme = useTheme()
     const [content, setContent] = useState<ReactElement>()
 

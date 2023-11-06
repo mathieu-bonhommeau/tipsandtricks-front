@@ -18,7 +18,10 @@ function PostCard({ post, ...props }: PostCardProps) {
     const { username, title, message } = post;
 
     return (
-        <Card raised elevation={3} sx={{ maxWidth: 1000, bgcolor: 'primary.paper' }}>
+        <Card raised elevation={3} sx={{
+            maxWidth: 1000,
+            bgcolor: 'primary.paper'
+        }}>
             <CardHeader
                 avatar={<Avatar sx={{ width: 24, height: 24 }} />}
                 title={username}

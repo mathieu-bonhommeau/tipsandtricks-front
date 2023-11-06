@@ -1,4 +1,4 @@
-import {Container, Snackbar, useTheme} from '@mui/material';
+import {Container, useTheme} from '@mui/material';
 import AppHeader from './AppHeader.tsx';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';

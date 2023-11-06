@@ -22,7 +22,7 @@ const getDesignTokens = (mode: PaletteMode) => {
         return {
             background: {
                 paper: '#24282C',
-                default: 'linear-gradient(-220deg, #30363C, #111316)'
+                default: 'linear-gradient(-220deg, #111316, #30363C)'
             },
             text: {
                 primary: '#FFFFFF',

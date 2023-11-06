@@ -4,11 +4,8 @@ import {constants} from "../../_config/constants/constants.ts";
 import Register from "../modules/Register.tsx";
 import {WriteAnimation} from "../modules/animations/WriteAnimation.tsx";
 import {BlinkAnimation} from "../modules/animations/BlinkAnimation.tsx";
-import {useEffect} from "react";
 import Login from "../modules/Login.tsx";
-import {useSelector} from "react-redux";
-import {RootState} from "../../domain/store.ts";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 export type FormType = 'register' | 'login'
 export type HomeProps = {
@@ -18,14 +15,6 @@ export type HomeProps = {
 function Home({formType}: HomeProps) {
     const theme = useTheme()
     const location = useLocation();
-    const navigate = useNavigate();
-
-    const user = useSelector((state: RootState) => state.registration.user);
-
-    useEffect(() => {
-        user && navigate('/flux')
-    }, [user]);
-
     return (
         <Container maxWidth="xl" sx={{
             display: 'flex',

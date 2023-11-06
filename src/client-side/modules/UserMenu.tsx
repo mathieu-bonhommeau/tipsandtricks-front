@@ -49,8 +49,13 @@ function UserMenu({ username }: UserMenuProps) {
     };
 
     return (
-        <Box sx={{ flexGrow: 0 }}>
-            <MenuItem onClick={handleOpenUserMenu}>
+        <Box sx={{ flexGrow: 0, width: '250px'}}>
+            <MenuItem onClick={handleOpenUserMenu} sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                '&:hover': {
+                    background: 'inherit'
+                }}}>
                 <Typography textAlign="center">{username}</Typography>
                 <IconButton sx={{ p: 0, marginLeft: '6px' }}>
                     <AccountCircleIcon sx={{ color: 'white' }} />
