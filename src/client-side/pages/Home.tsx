@@ -4,24 +4,26 @@ import {constants} from "../../_config/constants/constants.ts";
 import Register from "../modules/Register.tsx";
 import {WriteAnimation} from "../modules/animations/WriteAnimation.tsx";
 import {BlinkAnimation} from "../modules/animations/BlinkAnimation.tsx";
-import {ReactElement, useEffect, useState} from "react";
+import {useEffect} from "react";
 import Login from "../modules/Login.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "../../domain/store.ts";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export type FormType = 'register' | 'login'
 export type HomeProps = {
-    formType: FormType
+    formType: FormType,
 }
 
 function Home({formType}: HomeProps) {
     const theme = useTheme()
-    const [displayForm, setDisplayForm] = useState<FormType>('register')
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const user = useSelector((state: RootState) => state.registration.user);
 
     useEffect(() => {
-        setDisplayForm(formType)
-        user && setDisplayForm('login')
+        user && navigate('/flux')
     }, [user]);
 
     return (
@@ -57,15 +59,15 @@ function Home({formType}: HomeProps) {
                         flexDirection: 'column',
                         gap: 2
                     }}>
-                        <Typography variant="div" sx={{fontSize: '24px'}}>
-                            <WriteAnimation textToWrite={constants.catchPhrasePrimary} delay={3000} speed={80}/>
-                        </Typography>
-                        <Typography variant="div" sx={{fontSize: '24px'}}>
-                            <WriteAnimation textToWrite={constants.catchPhraseSecondary}  delay={6500} speed={80}/>
-                        </Typography>
-                        <Typography variant="div" sx={{fontSize: '48px', fontWeight: 'bold', my: 2}}>
-                            <BlinkAnimation delay={14500}/>
-                        </Typography>
+                        <Box sx={{fontSize: '24px'}}>
+                            <WriteAnimation textToWrite={constants.catchPhrasePrimary} delay={3000} speed={80} reload={location.state?.reload && true}/>
+                        </Box>
+                        <Box sx={{fontSize: '24px'}}>
+                            <WriteAnimation textToWrite={constants.catchPhraseSecondary}  delay={6500} speed={80} reload={location.state?.reload && true}/>
+                        </Box>
+                        <Box sx={{fontSize: '48px', fontWeight: 'bold', my: 2}}>
+                            <BlinkAnimation delay={location.state?.reload ? 14500 : 0}/>
+                        </Box>
                     </Box>
                 </Box>
                 <Box sx={{
@@ -79,8 +81,8 @@ function Home({formType}: HomeProps) {
                     }
                 }}>
                     <Box>
-                        {displayForm == 'register' && <Typography variant="h1" sx={{marginBottom: '20px',}}>Join the community !</Typography>}
-                        {displayForm == 'login' && <Typography variant="h1" sx={{marginBottom: '20px',}}>Log in !</Typography>}
+                        {formType == 'register' && <Typography variant="h1" sx={{marginBottom: '20px',}}>Join the community !</Typography>}
+                        {formType == 'login' && <Typography variant="h1" sx={{marginBottom: '20px',}}>Log in !</Typography>}
                         <Box className="form-title-line" sx={{
                             width: '20%',
                             borderBottom: '1px solid',
@@ -96,8 +98,8 @@ function Home({formType}: HomeProps) {
                         borderRadius: '10px',
                         borderColor: theme.palette.primary.light,
                     }}>
-                        {displayForm === 'register' && <Register setDisplayForm={setDisplayForm}/>}
-                        {displayForm === 'login' && <Login setDisplayForm={setDisplayForm}/>}
+                        {formType === 'register' && <Register />}
+                        {formType === 'login' && <Login />}
                     </Paper>
                 </Box>
             </Box>

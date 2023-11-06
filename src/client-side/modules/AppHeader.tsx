@@ -1,4 +1,4 @@
-import {AppBar, Container, Toolbar, Typography, useTheme} from '@mui/material';
+import {AppBar, Container, Toolbar, useTheme} from '@mui/material';
 import UserMenu from './UserMenu.tsx';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
@@ -33,8 +33,11 @@ function AppHeader() {
                     {user ? (
                         <UserMenu username={user.username} />
                     ) : (
-                        <Link to={routes.login} sx={{width: '100%'}}>
-                            <Typography sx={{
+                        <Link to={routes.login} style={{
+                            textDecoration: 'none',
+                            color: 'inherit'
+                        }}>
+                            <Box sx={{
                                 color: theme.palette.text.primary,
                                 position: 'relative',
                                 display: 'flex',
@@ -56,7 +59,7 @@ function AppHeader() {
                                         position: 'absolute',
                                         bottom: -5,
                                     }}/>
-                            </Typography>
+                            </Box>
                         </Link>
                     )}
                 </Toolbar>

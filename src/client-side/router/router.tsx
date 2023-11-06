@@ -1,7 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import HomePage from '../pages/Home.tsx';
-import Register from '../modules/Register.tsx';
-import Login from '../modules/Login.tsx';
+import Home from '../pages/Home.tsx';
 import Feed from '../pages/Feed.tsx';
 import AppWrapper from '../modules/AppWrapper.tsx';
 import TipsBoard from '../pages/TipsBoard.tsx';
@@ -24,11 +22,11 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <HomePage  formType={'register'}/>,
+                element: <Home formType={'register'} />,
             },
             {
                 path: routes.login,
-                element: <HomePage  formType={'login'}/>,
+                element: <Home formType={'login'} />,
             },
             {
                 path: routes.feed,

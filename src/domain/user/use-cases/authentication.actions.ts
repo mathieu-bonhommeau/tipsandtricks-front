@@ -30,7 +30,7 @@ export const logoutUser = createAsyncThunk(
         return await handleErrors(
             async () => {
                 await (params.gatewayInterface as UserGatewayInterface).logoutUser();
-                params.navigate!('/');
+                params.navigate!('/connexion', {state: {reload: false}})
             },
             params,
             dispatch,

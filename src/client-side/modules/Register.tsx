@@ -1,11 +1,8 @@
 import {
-    Alert, Box,
-    Button,
+    Alert,
     Container,
-    Typography,
-    useTheme
 } from '@mui/material';
-import {Dispatch, FormEvent, SetStateAction, useEffect, useState} from 'react';
+import {FormEvent, useEffect, useState} from 'react';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import {
     registerUser,
@@ -16,21 +13,14 @@ import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { UserGatewayInterface } from '../../domain/user/port/user-gateway.interface.ts';
 import { useNavigate } from 'react-router-dom';
 import { RegistrationUserInput } from '../../domain/user/models/registration.model.ts';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import {constants} from "../../_config/constants/constants.ts";
-import {buttonStyle} from "../style/buttonStyle.ts";
-import {FormType} from "../pages/Home.tsx";
 import {PasswordTextField} from "./components/PasswordTextField.tsx";
 import {EmailTextField} from "./components/EmailTextField.tsx";
 import {UsernameTextField} from "./components/UsernameTextField.tsx";
 import {ConfirmPasswordTextField} from "./components/ConfirmPasswordTextField.tsx";
 import {ButtonAuthForm} from "./components/ButtonAuthForm.tsx";
 
-export type RegisterProps = {
-    setDisplayForm: Dispatch<SetStateAction<FormType>>
-}
-
-function Register({setDisplayForm}: RegisterProps) {
+function Register() {
     const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -89,7 +79,7 @@ function Register({setDisplayForm}: RegisterProps) {
                 <PasswordTextField password={password} setPassword={setPassword}/>
                 <ConfirmPasswordTextField password={password} confirmationPassword={confirmationPassword} setConfirmationPassword={setConfirmationPassword} />
                 {serverErrorMessage && <Alert variant="filled" severity="error" sx={{width: '100%', boxShadow: `15px 15px 30px #000`,}}>{serverErrorMessage}</Alert>}
-                <ButtonAuthForm setDisplayForm={setDisplayForm} formType={"login"} />
+                <ButtonAuthForm formType={"login"} />
             </form>
         </Container>
     );

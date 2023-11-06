@@ -4,9 +4,10 @@ import {Typography} from "@mui/material";
 export type WriteAnimationProps = {
     textToWrite: string,
     delay?: number,
-    speed?: number
+    speed?: number,
+    reload?: boolean
 }
-export const WriteAnimation = ({textToWrite, delay = 0, speed = 150}: WriteAnimationProps) => {
+export const WriteAnimation = ({textToWrite, delay = 0, speed = 150, reload = true}: WriteAnimationProps) => {
     const textToWriteSplit = textToWrite.split('')
     const [text, setText] = useState<string>('')
     const [indexLetter, setIndexLetter] = useState<number>(0)
@@ -15,6 +16,9 @@ export const WriteAnimation = ({textToWrite, delay = 0, speed = 150}: WriteAnima
         if (indexLetter == 0 && delay != 0) speed += delay
         if (indexLetter === textToWriteSplit.length) {
             return
+        }
+        if (!reload) {
+            return setText(textToWrite)
         }
         setTimeout(() => {
             setIndexLetter(indexLetter + 1)

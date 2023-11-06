@@ -9,7 +9,7 @@ const initialState: AuthenticationState = {
     isReconnecting: true,
 };
 
-export const authenticationSlice = createSlice<AuthenticationState>({
+export const authenticationSlice = createSlice({
     name: 'authentication',
     initialState,
     reducers: {

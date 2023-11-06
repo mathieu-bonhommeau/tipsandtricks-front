@@ -1,5 +1,5 @@
-import {Alert, Container, Snackbar} from '@mui/material';
-import {Dispatch, FormEvent, SetStateAction, useEffect, useState} from 'react';
+import {Alert, Container} from '@mui/material';
+import {FormEvent, useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
@@ -12,15 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import {EmailTextField} from "./components/EmailTextField.tsx";
 import {PasswordTextField} from "./components/PasswordTextField.tsx";
 import {ButtonAuthForm} from "./components/ButtonAuthForm.tsx";
-import {FormType} from "../pages/Home.tsx";
 import {constants} from "../../_config/constants/constants.ts";
 import {SnackBarComponent} from "./components/SnackBarComponent.tsx";
 
-export type LoginProps = {
-    setDisplayForm: Dispatch<SetStateAction<FormType>>
-}
-
-function Login({setDisplayForm}: LoginProps) {
+function Login() {
     const isCredentialsError = useSelector((state: RootState) => state.authentication.credentialsError);
     const isUnknownError = useSelector((state: RootState) => state.authentication.unknownServerLoginError);
     const userNewlyRegistered = useSelector((state: RootState) => state.registration.user);
@@ -100,7 +95,7 @@ function Login({setDisplayForm}: LoginProps) {
                 }}>
                     {constants.unknownError}
                 </Alert>}
-                <ButtonAuthForm setDisplayForm={setDisplayForm} formType={'register'} />
+                <ButtonAuthForm formType={'register'} />
             </form>
         </Container>
     );
