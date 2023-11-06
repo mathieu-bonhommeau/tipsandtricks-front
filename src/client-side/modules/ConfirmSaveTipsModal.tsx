@@ -1,23 +1,26 @@
 import { Post } from '../../domain/posts/models/post.model.ts';
-import { Box, Button, IconButton, Modal, Typography } from '@mui/material';
+import {Box, Button, IconButton, Modal, Typography, useTheme} from '@mui/material';
 import { saveTips } from '../../domain/posts/use-cases/post.actions.ts';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import React from 'react';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../domain/store.ts';
+import {constants} from "../../_config/constants/constants.ts";
+import {useState} from "react";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import {buttonStyle, littleButtonStyle} from "../style/buttonStyle.ts";
 
 type ConfirmSaveTipsModalProps = {
     post: Post;
 };
 
 const ConfirmSaveTipsModal = ({ post }: ConfirmSaveTipsModalProps) => {
-    const [confirmModalOpen, setConfirmModalOpen] = React.useState(false);
+    const theme = useTheme()
+    const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
     const user = useSelector((state: RootState) => state.authentication.user);
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -35,9 +38,15 @@ const ConfirmSaveTipsModal = ({ post }: ConfirmSaveTipsModalProps) => {
 
     return (
         <>
-            <IconButton aria-label="share" onClick={() => setConfirmModalOpen(true)} disabled={!user}>
-                <AddCircleIcon />
-            </IconButton>
+            <Button
+                type="submit"
+                variant="contained"
+                disabled={!user}
+                sx={littleButtonStyle(theme)}
+                onClick={() => setConfirmModalOpen(true)}
+                >
+                +ADD
+            </Button>
             <Modal
                 open={confirmModalOpen}
                 onClose={() => setConfirmModalOpen(false)}
@@ -46,17 +55,17 @@ const ConfirmSaveTipsModal = ({ post }: ConfirmSaveTipsModalProps) => {
             >
                 <Box sx={styleModal}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Voulez-vous enregistrer ce tips ?
+                        {constants.copyTipsToTipsBoard}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mb: 2 }}>
                         {post.title}
                     </Typography>
                     <Box style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-                        <Button variant="contained" onClick={() => setConfirmModalOpen(false)}>
-                            Annuler
+                        <Button variant="contained" sx={littleButtonStyle(theme)} onClick={() => setConfirmModalOpen(false)}>
+                            Cancel
                         </Button>
-                        <Button variant="contained" onClick={() => handleSaveTips(post)}>
-                            Enregistrer
+                        <Button variant="contained" sx={littleButtonStyle(theme)} onClick={() => handleSaveTips(post)}>
+                            Add to Tips Board
                         </Button>
                     </Box>
                 </Box>

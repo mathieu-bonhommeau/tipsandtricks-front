@@ -18,8 +18,8 @@ export function ButtonAuthForm({formType}: ButtonAuthFormProps) {
                 variant="contained"
                 sx={buttonStyle(theme)}
             >
-                {formType === 'login' && "Log in !"}
-                {formType === 'register' && "Join us !"}
+                {formType === 'login' && "Join us !"}
+                {formType === 'register' && "Log in !"}
             </Button>
             <Box sx={{ color: theme.palette.primary.light }}>
                 <Typography component="p">

@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardContent, CardHeader, Chip, IconButton, Typography } from '@mui/material';
+import {Avatar, Box, Card, CardContent, CardHeader, Chip, IconButton, Typography, useTheme} from '@mui/material';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import { TipsContent } from './TipsContent.tsx';
 import ConfirmSaveTipsModal from './ConfirmSaveTipsModal.tsx';
@@ -14,19 +14,27 @@ type PostCardProps = {
 };
 
 function PostCard({ post, ...props }: PostCardProps) {
+    const theme = useTheme()
     const navigate = useNavigate();
     const { username, title, message } = post;
 
     return (
         <Card raised elevation={3} sx={{
             maxWidth: 1000,
-            bgcolor: 'primary.paper'
+            borderRadius: '10px',
+            p: 2,
         }}>
             <CardHeader
-                avatar={<Avatar sx={{ width: 24, height: 24 }} />}
+                avatar={<Avatar sx={{width: 32, height: 32,}}/>}
                 title={username}
                 action={<ConfirmSaveTipsModal post={post} />}
-            />
+                sx={{
+                    borderBottom: '1px solid',
+                    borderColor: theme.palette.primary.light,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+            }}/>
             <CardContent>
                 <Typography
                     variant="h5"

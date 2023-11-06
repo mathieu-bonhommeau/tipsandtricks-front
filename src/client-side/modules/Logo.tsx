@@ -13,8 +13,6 @@ export const Logo = () => {
             <Typography
                 variant="h6"
                 noWrap
-                component="a"
-                href={routes.feed}
                 fontWeight='fontWeightMedium'
                 sx={{
                     mr: 2,

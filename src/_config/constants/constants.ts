@@ -12,5 +12,6 @@ export const constants = {
     emailAlreadyUsed: 'This email is already taken.',
     unknownError: 'Unknown error, please try again later.',
     badCredentials: 'Bad credentials !',
-    accountCreateSuccess: 'Your account has been successfully created ! Please log in.'
+    accountCreateSuccess: 'Your account has been successfully created ! Please log in.',
+    copyTipsToTipsBoard: "Would you want to save this tips ?"
 }

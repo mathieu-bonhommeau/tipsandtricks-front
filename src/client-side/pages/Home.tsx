@@ -27,7 +27,7 @@ function Home({formType}: HomeProps) {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                my: 5,
+                my: 3,
             }}>
                 <Box sx={{
                     width: '45%',
@@ -55,7 +55,7 @@ function Home({formType}: HomeProps) {
                             <WriteAnimation textToWrite={constants.catchPhraseSecondary}  delay={6500} speed={80} reload={location.state?.reload && true}/>
                         </Box>
                         <Box sx={{fontSize: '48px', fontWeight: 'bold', my: 2}}>
-                            <BlinkAnimation delay={location.state?.reload ? 14500 : 0}/>
+                            <BlinkAnimation delay={14500} reload={location.state?.reload && true}/>
                         </Box>
                     </Box>
                 </Box>

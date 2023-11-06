@@ -25,7 +25,7 @@ function AppWrapper() {
     return (
         <div style={{background: theme.palette.background.default, minHeight: '100vh', position: 'relative'}}>
             <AppHeader />
-            <Container style={{ marginTop: '15px', margin: '0 auto' }} maxWidth={'xl'}>
+            <Container style={{ margin: '30px auto 15px' }} maxWidth={'xl'}>
                 <Outlet />
             </Container>
             <AppFooter />

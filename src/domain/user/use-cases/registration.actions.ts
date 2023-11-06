@@ -109,7 +109,9 @@ export const registerUserAsync = createAsyncThunk(
     async ({ params, userInput }: registerUserParams, { dispatch }) => {
         return (await handleErrors(
             async () => {
-                return await (params.gatewayInterface as UserGatewayInterface).registerUser(userInput);
+                const user = await (params.gatewayInterface as UserGatewayInterface).registerUser(userInput);
+                params.navigate!('/connexion', {state: {reload: false}});
+                return user
             },
             params,
             dispatch,
