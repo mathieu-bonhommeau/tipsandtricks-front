@@ -9,7 +9,7 @@ export type SnackBarComponentProps = {
 }
 
 export function SnackBarComponent({message, type, openSnackbar, setOpenSnackbar}: SnackBarComponentProps) {
-    const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (_event?: SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') return
         setOpenSnackbar(false);
     }
@@ -20,7 +20,7 @@ export function SnackBarComponent({message, type, openSnackbar, setOpenSnackbar}
             autoHideDuration={6000}
             onClose={handleClose}
         >
-            <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }} autoHideDuration={6000}>
+            <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
                 {message}
             </Alert>
         </Snackbar >

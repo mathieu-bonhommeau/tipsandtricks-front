@@ -21,7 +21,7 @@ export function ButtonAuthForm({formType}: ButtonAuthFormProps) {
                 {formType === 'login' && "Join us !"}
                 {formType === 'register' && "Log in !"}
             </Button>
-            <Box sx={{ color: theme.palette.primary.light }}>
+            <Box sx={{ color: theme.palette.secondary.light }}>
                 <Typography component="p">
                     {formType === 'login' && "You already have an account ?"}
                     {formType === 'register' && "You haven't an account ?"}

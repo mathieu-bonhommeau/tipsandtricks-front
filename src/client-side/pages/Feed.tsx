@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { getMorePosts, getPosts } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import { Alert, AlertTitle, Box, Button, CircularProgress, Container, Grid, Stack } from '@mui/material';
+import { Alert, AlertTitle, Box, Button, CircularProgress, Container, Stack } from '@mui/material';
 import PostCard from '../modules/PostCard.tsx';
 import { Post } from '../../domain/posts/models/post.model.ts';
-import CardWrapper from '../modules/CardWrapper.tsx';
+import CopyToClipboardWrapper from '../modules/CopyToClipboardWrapper.tsx';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
 
 function Feed() {
@@ -65,9 +65,9 @@ function Feed() {
         content = (
             <Stack spacing={5}>
                 {posts.map((onePost: Post) => (
-                    <CardWrapper key={onePost.id}>
-                        <PostCard post={onePost} />
-                    </CardWrapper>
+                    <CopyToClipboardWrapper key={onePost.id}>
+                        <PostCard post={onePost}/>
+                    </CopyToClipboardWrapper>
                 ))}
             </Stack>
         );
@@ -84,7 +84,6 @@ function Feed() {
 
     return (
         <Container maxWidth="md">
-            <Grid container direction="column">
                 <Box flex="1" display="flex" flexDirection="column">
                     {loading ? (
                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -106,7 +105,6 @@ function Feed() {
                         Voir plus
                     </Button>
                 </Box>
-            </Grid>
         </Container>
     );
 }

@@ -22,22 +22,21 @@ const getDesignTokens = (mode: PaletteMode) => {
         return {
             background: {
                 paper: '#24282C',
-                default: 'linear-gradient(-220deg, #111316, #30363C)'
+                default: '#111316'
             },
             text: {
                 primary: '#FFFFFF',
-                secondary: '#211046',
+                secondary: '#5E5D62',
             },
             primary: {
                 main: '#ffffff',
                 light: '#5E5D62',
-                lightLess: '#4A4B4D',
                 dark: '#7F0404',
                 contrastText: '#FFFFFF',
             },
             secondary: {
                 main: 'linear-gradient(-220deg, #111316, #1C1F22, #1C1F22)',
-                light: '#5E5D62',
+                light: '#7F7F7F',
                 lightLess: '#4A4B4D',
                 dark: '#E51A1A',
                 contrastText: '#FFFFFF',
@@ -69,3 +68,10 @@ export const theme = (mode: PaletteMode) => createTheme({
         },
     },
 });
+
+
+export const tagColors: { [key: string]: string } = {
+    'tag 1': '#F6D912',
+    'tag 2': '#E74645',
+    'tag 3': '#6592FD',
+}

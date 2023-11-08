@@ -24,3 +24,18 @@ export const littleButtonStyle = (theme: Theme, unable: boolean = true) => {
         }
     }
 }
+
+export const iconArrowStyle = (theme: Theme) => ({
+    color: theme.palette.primary.light,
+        fontSize: '2rem',
+        transition: 'transform 0.2s ease-in-out',
+        transform: 'scale(1)'
+})
+
+export const iconStyle = (theme: Theme) => ({
+    color: theme.palette.primary.light,
+    '&:hover': {
+        transform: 'scale(1.1)',
+        color: 'primary.main',
+    }
+})

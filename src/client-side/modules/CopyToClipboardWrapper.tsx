@@ -1,7 +1,7 @@
 import { handleCopyToClipboard } from '../utils/copyToClipBoard';
 import React, { ReactElement, useState } from 'react';
 
-function CardWrapper({ children }: { children: ReactElement }) {
+function CopyToClipboardWrapper({ children }: { children: ReactElement }) {
     const [textCopied, setTextCopied] = useState(false);
     const [failCopied, setFailCopied] = useState(false);
 
@@ -33,4 +33,4 @@ function CardWrapper({ children }: { children: ReactElement }) {
     return <>{children}</>;
 }
 
-export default CardWrapper;
+export default CopyToClipboardWrapper;

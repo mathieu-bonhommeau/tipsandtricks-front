@@ -3,9 +3,9 @@ import {Theme} from "@mui/material";
 export const textFieldStyle = (theme: Theme, error: boolean = false) => ({
     width: '100%',
     borderRadius: '10px',
-    color: theme.palette.primary.light,
+    color: theme.palette.secondary.light,
     '& .MuiFormLabel-root': {
-        color: theme.palette.primary.light,
+        color: theme.palette.secondary.light,
     },
     '& .MuiOutlinedInput-root': {
         '& input': {
@@ -30,15 +30,45 @@ export const textFieldStyle = (theme: Theme, error: boolean = false) => ({
     }
 });
 
+export const textTipsFieldStyle = (theme: Theme) => ({
+    width: '100%',
+    color: theme.palette.text.primary,
+    background: '#000',
+    p: '10px',
+    minHeight: '56px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    '& .MuiIconButton-root': {
+        background: 'none',
+    },
+    '& .MuiSvgIcon-root': {
+        width: '20px',
+        height: '20px',
+        color: theme.palette.secondary.light,
+        transform: 'scale(1)',
+        transition: 'transform 0.3s ease-in-out',
+        '&:hover': {
+            color: theme.palette.text.primary,
+            transform: 'scale(1.2)',
+        }
+    },
+});
+
+export const copyCommandResultStyle = (theme: Theme, error: boolean = false) => ({
+    fontSize: '12px',
+    color: error ? theme.palette.primary.dark : theme.palette.text.primary,
+})
+
 export const iconInTextFieldStyle = (theme: Theme) => ({
     zIndex: 1,
-    color: theme.palette.primary.light,
+    color: theme.palette.secondary.light,
     width: '20px',
     height: '20px',
     '& .MuiIconButton-root': {
         padding: '0px',
         color: 'inherit'
-    }
+    },
 })
 
 export const dividerInTextFieldStyle = (theme: Theme) => ({

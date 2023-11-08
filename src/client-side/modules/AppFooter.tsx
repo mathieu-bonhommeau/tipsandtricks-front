@@ -7,9 +7,9 @@ const theme = useTheme()
             background: 'transparent',
             width: '100%',
             mx: 'auto',
-            position: 'absolute',
             bottom: 15,
-            boxShadow: 'none'
+            boxShadow: 'none',
+            position: 'relative',
         }}>
             <Container maxWidth="xl" sx={{
                 border: '1px solid',

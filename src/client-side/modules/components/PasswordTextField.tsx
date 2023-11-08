@@ -23,7 +23,7 @@ export function PasswordTextField({password, setPassword}: PasswordTextFieldProp
     const theme = useTheme()
     const dispatch = useAppDispatch();
     const [viewPassword, setViewPassword] = useState(false);
-    const [anchorElPopover, setAnchorElPopover] = useState(null);
+    const [anchorElPopover, setAnchorElPopover] = useState<(EventTarget & HTMLButtonElement) | null>(null);
 
     const isPasswordValid = useSelector((state: RootState) => state.registration.passwordValidity);
 

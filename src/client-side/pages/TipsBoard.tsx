@@ -6,15 +6,27 @@ import { useEffect, useState } from 'react';
 import { RootState } from '../../domain/store.ts';
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
-import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, Pagination, Fab } from '@mui/material';
+import {
+    Alert,
+    AlertTitle,
+    Box,
+    CircularProgress,
+    Container,
+    Grid,
+    Pagination,
+    Typography,
+    useTheme, Button
+} from '@mui/material';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
 import { useNavigate } from 'react-router-dom';
-import CardWrapper from '../modules/CardWrapper.tsx';
 import { resetError } from '../../domain/tips/use-cases/tips.slice.ts';
 import AddIcon from '@mui/icons-material/Add';
 import TipsModal from '../modules/TipsModal.tsx';
+import CopyToClipboardWrapper from "../modules/CopyToClipboardWrapper.tsx";
+import {littleButtonStyle} from "../style/buttonStyle.ts";
 
 function TipsBoard() {
+    const theme = useTheme()
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -61,14 +73,14 @@ function TipsBoard() {
         content = (
             <Grid container spacing={4} alignItems="stretch">
                 {tips.map((oneTips: Tips) => (
-                    <Grid item xs={12} sm={6} key={oneTips.id}>
-                        <CardWrapper>
+                    <Grid item xs={12} sm={6} md={4} key={oneTips.id}>
+                        <CopyToClipboardWrapper>
                             <TipsCard
                                 handleOpenModal={handleOpenModal}
                                 setSelectedTips={setSelectedTip}
                                 oneTips={oneTips}
                             />
-                        </CardWrapper>
+                        </CopyToClipboardWrapper>
                     </Grid>
                 ))}
             </Grid>
@@ -85,11 +97,19 @@ function TipsBoard() {
     }
 
     return (
-        <Container maxWidth="md">
-            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                <Fab color="primary" aria-label="add" onClick={handleOpenModal}>
-                    <AddIcon />
-                </Fab>
+        <Container maxWidth="xl">
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 3 }}>
+                <Box>
+                    <Typography variant={'h1'}>
+                        My Tips Board
+                    </Typography>
+                    <Typography sx={{color: theme.palette.primary.light, my: 1}}>
+                        {totalTips} tips in your Tips Bank
+                    </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                    <Button sx={littleButtonStyle(theme)} onClick={handleOpenModal}><AddIcon sx={{fontSize: '2rem'}}/></Button>
+                </Box>
             </Box>
 
             <Grid container direction="column">
