@@ -1,17 +1,19 @@
-import {Box, Button, Chip, IconButton, Modal, TextareaAutosize, Typography, useTheme} from '@mui/material';
+import {Box, Button, Chip, IconButton, Modal, Typography, useTheme} from '@mui/material';
 import { shareTip } from '../../domain/tips/use-cases/tips.actions.ts';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ShareIcon from '@mui/icons-material/Share';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import { useNavigate } from 'react-router-dom';
 import { TipsContent } from './TipsContent.tsx';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
-import {iconStyle} from "../style/buttonStyle.ts";
-import { ClassicTextField } from './components/ClassicTextField.tsx';
-import {boxStyle} from "../style/modalStyle.ts";
+import {buttonStyle, iconStyle} from "../style/buttonStyle.ts";
+import {TitleTextField} from './components/TitleTextField.tsx';
+import {boxInModalStyle, boxStyle} from "../style/modalStyle.ts";
 import {tagStyle} from "../style/tagStyle.ts";
+import TextField from "@mui/material/TextField";
+import {textOutlineFieldStyle} from "../style/textFieldStyle.ts";
 
 type ShareTipsModalProps = {
     oneTips: Tips;
@@ -20,7 +22,7 @@ type ShareTipsModalProps = {
     failCopied?: boolean;
 };
 
-const ShareTipsModal = ({ oneTips, ...props }: ShareTipsModalProps) => {
+const ShareTipsModal = ({ oneTips }: ShareTipsModalProps) => {
     const theme = useTheme()
     const { title: tipsTitle, command, description, tags } = oneTips;
 
@@ -62,8 +64,10 @@ const ShareTipsModal = ({ oneTips, ...props }: ShareTipsModalProps) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                <Box sx={boxInModalStyle()}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{
+                        marginBottom: '1rem',
+                    }}>
                         Share a tips
                     </Typography>
                     <form
@@ -72,22 +76,27 @@ const ShareTipsModal = ({ oneTips, ...props }: ShareTipsModalProps) => {
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '10px',
+                            flex: '1',
                             alignItems: 'center',
-                            margin: '20px 0',
+                            justifyContent: 'space-between',
                         }}
                     >
-                        <ClassicTextField
+                        <TitleTextField
                             label="Titre du tips"
                             isRequired={true}
                             title={postTitle}
                             setTitle={setTitle}
                         />
-                        <TextareaAutosize
-                            style={{ width: '100%', padding: '5px', margin: '5px' }}
-                            maxRows={4}
-                            aria-label="mAjouter un message pour partager votre tips"
-                            placeholder="Votre message..."
-                            onChange={(event) => setMessage(event.target.value)}
+                        <TextField
+                            sx={textOutlineFieldStyle(theme)}
+                            label="Your message ..."
+                            variant="outlined"
+                            required
+                            fullWidth
+                            multiline
+                            rows={3}
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
                         />
                         <Box sx={{
                             width: '100%',
@@ -115,7 +124,10 @@ const ShareTipsModal = ({ oneTips, ...props }: ShareTipsModalProps) => {
                         <Button
                             type="submit"
                             variant="contained"
-                            style={{ width: '100%', alignItems: 'right' }}
+                            style={{
+                                ...buttonStyle(theme),
+                                width: '100%'
+                        }}
                             color="primary"
                         >
                             Partager votre tips

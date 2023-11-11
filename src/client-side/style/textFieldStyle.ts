@@ -30,6 +30,63 @@ export const textFieldStyle = (theme: Theme, error: boolean = false) => ({
     }
 });
 
+export const textOutlineFieldStyle = (theme: Theme, error: boolean = false) => ({
+    width: '100%',
+    borderRadius: '10px',
+    color: theme.palette.secondary.light,
+    '& .MuiFormLabel-root': {
+        color: theme.palette.secondary.light,
+    },
+    '& .MuiOutlinedInput-root': {
+        '& input': {
+            zIndex: 1,
+        },
+        '& fieldset': {
+            borderRadius: '10px',
+            borderColor: theme.palette.background.default,
+        },
+        '&:hover fieldset': {
+            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+        },
+    },
+    '& .MuiFormHelperText-root': {
+        zIndex: 1,
+        marginLeft: 0,
+    }
+});
+export const titleFieldStyle = (theme: Theme, error: boolean = false) => ({
+    width: '100%',
+    borderRadius: '10px',
+    color: theme.palette.secondary.light,
+    '& .MuiFormLabel-root': {
+        color: theme.palette.secondary.light,
+    },
+    '& .MuiOutlinedInput-root': {
+        fontSize: '28px',
+        '& input': {
+            zIndex: 1,
+        },
+        '& fieldset': {
+            background: 'transparent',
+            borderRadius: '10px',
+            borderColor: theme.palette.background.default,
+        },
+        '&:hover fieldset': {
+            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+        },
+    },
+    '& .MuiFormHelperText-root': {
+        zIndex: 1,
+        marginLeft: 0,
+    }
+});
+
 export const textTipsFieldStyle = (theme: Theme) => ({
     width: '100%',
     color: theme.palette.text.primary,

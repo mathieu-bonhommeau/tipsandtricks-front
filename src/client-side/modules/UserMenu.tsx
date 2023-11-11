@@ -85,7 +85,7 @@ function UserMenu({ username }: UserMenuProps) {
                     </Link>
                 ))}
                 <MenuItem onClick={handleLogoutUser}>
-                    <Typography textAlign="center">Déconnexion</Typography>
+                    <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
             </Menu>
         </Box>

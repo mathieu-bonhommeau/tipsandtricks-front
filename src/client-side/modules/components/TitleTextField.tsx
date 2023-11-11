@@ -1,14 +1,14 @@
 import {TextField, useTheme} from "@mui/material";
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
-import {textFieldStyle} from "../../style/textFieldStyle.ts";
+import {titleFieldStyle} from "../../style/textFieldStyle.ts";
 
-export type EmailTextFieldProps = {
+export type TitleTextFieldProps = {
     label: string,
     title: string,
     isRequired?: boolean,
     setTitle: Dispatch<SetStateAction<string>>
 }
-export function ClassicTextField ({label, title, setTitle, isRequired}: EmailTextFieldProps) {
+export function TitleTextField ({label, title, setTitle, isRequired}: TitleTextFieldProps) {
     const theme = useTheme()
 
     const onChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,7 @@ export function ClassicTextField ({label, title, setTitle, isRequired}: EmailTex
             required={isRequired}
             value={title}
             onChange={onChangeTitle}
-            sx={textFieldStyle(theme)}
+            sx={titleFieldStyle(theme)}
         />
     )
 }

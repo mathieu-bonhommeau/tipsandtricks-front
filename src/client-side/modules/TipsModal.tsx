@@ -8,6 +8,8 @@ import { createTips, updateTips } from '../../domain/tips/use-cases/tips.actions
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
+import {boxInModalStyle, boxStyle} from "../style/modalStyle.ts";
+import {Typography, useTheme} from "@mui/material";
 
 interface Props {
     open: boolean;
@@ -16,6 +18,7 @@ interface Props {
     setSelectedTips: React.Dispatch<React.SetStateAction<Tips | undefined>>;
 }
 const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }) => {
+    const theme = useTheme()
     const dispatch = useAppDispatch();
 
     const [title, setTitle] = useState<string>('');
@@ -92,20 +95,13 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }
 
     const body = (
         <Box
-            sx={{
-                width: '80vw',
-                maxWidth: '400px',
-                bgcolor: 'background.paper',
-                boxShadow: 24,
-                p: 4,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                mx: 'auto',
-                my: '20vh',
-                borderRadius: 2,
-            }}
+            sx={boxInModalStyle()}
         >
+            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{
+                marginBottom: '1rem',
+            }}>
+                {tipsToEdit ? 'Update a Tips' : 'Add a Tips'}
+            </Typography>
             <TextField
                 label="Titre du Tips"
                 variant="outlined"
@@ -145,6 +141,7 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }
 
     return (
         <Modal
+            sx={boxStyle(theme)}
             open={open}
             onClose={onCloseModal}
             aria-labelledby="simple-modal-title"
