@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import {FC, useEffect, useState} from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -9,15 +9,19 @@ import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
 import {boxInModalStyle, boxStyle} from "../style/modalStyle.ts";
-import {Typography, useTheme} from "@mui/material";
+import {IconButton, Typography, useTheme} from "@mui/material";
+import {buttonStyle, iconStyle} from "../style/buttonStyle.ts";
+import CloseIcon from "@mui/icons-material/Close";
+import {flexBetweenCenter} from "../style/globalStyle.ts";
+import {constants} from "../../_config/constants/constants.ts";
+import {textOutlineFieldStyle, titleFieldStyle} from "../style/textFieldStyle.ts";
 
 interface Props {
     open: boolean;
     handleClose: () => void;
     tipsToEdit?: Tips;
-    setSelectedTips: React.Dispatch<React.SetStateAction<Tips | undefined>>;
 }
-const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }) => {
+const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit}) => {
     const theme = useTheme()
     const dispatch = useAppDispatch();
 
@@ -27,20 +31,18 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }
     const [titleError, setTitleError] = useState<string | null>(null);
     const [commandError, setCommandError] = useState<string | null>(null);
 
-
     useEffect(() => {
         if (tipsToEdit) {
             setTitle(tipsToEdit.title || '');
             setCommand(tipsToEdit.command || '');
             setDescription(tipsToEdit.description || '');
         }
-    }, [tipsToEdit]);
+    }, [tipsToEdit])
 
     const onCloseModal = () => {
         setTitle('');
         setCommand('');
         setDescription('');
-        setSelectedTips(undefined);
         handleClose();
     }
 
@@ -51,11 +53,11 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }
         setCommandError(null);
 
         if (title === '') {
-            setTitleError('Le titre est obligatoire.');
+            setTitleError(constants.modalTitleRequired);
         }
 
         if (command === '') {
-            setCommandError('La commande est obligatoire.');
+            setCommandError(constants.modalCommandRequired);
         }
 
         if (title != '' && command != '') {
@@ -97,13 +99,18 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }
         <Box
             sx={boxInModalStyle()}
         >
-            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{
-                marginBottom: '1rem',
-            }}>
-                {tipsToEdit ? 'Update a Tips' : 'Add a Tips'}
-            </Typography>
+            <Box sx={{ ...flexBetweenCenter()}}>
+                <Typography id="modal-modal-title" variant="h6" component="h2" sx={{
+                    marginBottom: '1rem',
+                }}>
+                    {tipsToEdit ? 'Update a Tips' : 'Add a Tips'}
+                </Typography>
+                <IconButton aria-label="close" onClick={handleClose}>
+                    <CloseIcon sx={iconStyle(theme)}/>
+                </IconButton>
+            </Box>
             <TextField
-                label="Titre du Tips"
+                label="Tips title"
                 variant="outlined"
                 required
                 fullWidth
@@ -111,6 +118,7 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }
                 onChange={(e) => setTitle(e.target.value)}
                 error={!!titleError}
                 helperText={titleError}
+                sx={titleFieldStyle(theme)}
             />
             <TextField
                 label="Commande"
@@ -123,6 +131,7 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }
                 onChange={(e) => setCommand(e.target.value)}
                 error={!!commandError}
                 helperText={commandError}
+                sx={textOutlineFieldStyle(theme)}
             />
             <TextField
                 label="Description (optionel)"
@@ -132,9 +141,10 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit, setSelectedTips }
                 rows={6}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                sx={textOutlineFieldStyle(theme)}
             />
-            <Button onClick={handleSubmit} variant="contained" color="primary">
-                Ajouter / Modifier
+            <Button onClick={handleSubmit} variant="contained" sx={buttonStyle(theme)}>
+                {tipsToEdit ? 'Update' : 'Add'}
             </Button>
         </Box>
     );

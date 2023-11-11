@@ -20,9 +20,10 @@ type TipsContentProps = {
     handleCopy?: (command: string) => void;
     fullContent?: boolean;
     disableCopy?: boolean;
+    nbDescriptionLines?: number;
 };
 
-export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy, fullContent = false, disableCopy = false }: TipsContentProps) {
+export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy, fullContent = false, disableCopy = false, nbDescriptionLines = 3 }: TipsContentProps) {
     const theme = useTheme()
     const username = useSelector((state: RootState) => state.authentication.user)?.username || 'johnDoe';
 
@@ -61,7 +62,7 @@ export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy, f
                 </Box>
             </div>
             <Typography
-                sx={descriptionStyle(fullContent)}
+                sx={descriptionStyle(fullContent, nbDescriptionLines)}
             >
                 {tipsDetails.description}
             </Typography>
@@ -84,7 +85,7 @@ const commandStyle = (fullContent: boolean) => {
     }
 }
 
-const descriptionStyle = (fullContent: boolean) => {
+const descriptionStyle = (fullContent: boolean, nbLines: number = 3) => {
     const style = {
         marginTop: '15px',
         maxWidth: '90%',
@@ -95,7 +96,7 @@ const descriptionStyle = (fullContent: boolean) => {
     return {
         ...style,
         display: '-webkit-box',
-        WebkitLineClamp: '3',
+        WebkitLineClamp: nbLines,
         WebkitBoxOrient: 'vertical',
         overflow: 'hidden',
     }

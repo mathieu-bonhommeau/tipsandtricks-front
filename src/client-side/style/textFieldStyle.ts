@@ -7,85 +7,74 @@ export const textFieldStyle = (theme: Theme, error: boolean = false) => ({
     '& .MuiFormLabel-root': {
         color: theme.palette.secondary.light,
     },
-    '& .MuiOutlinedInput-root': {
-        '& input': {
-            zIndex: 1,
-        },
-        '& fieldset': {
-            background: theme.palette.secondary.main,
-            borderRadius: '10px',
-            boxShadow: '15px 15px 30px #000',
-            borderColor: 'transparent',
-        },
-        '&:hover fieldset': {
-            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
-        },
-    },
     '& .MuiFormHelperText-root': {
         zIndex: 1,
         marginLeft: 0,
-    }
-});
+    },
+    '& .MuiOutlinedInput-root': textInputStyle(theme, error),
+})
+
+export const textInputStyle = (theme: Theme, error: boolean = false) => ({
+    '& input': {
+        zIndex: 1,
+    },
+    '& fieldset': {
+        background: theme.palette.secondary.main,
+        borderRadius: '10px',
+        boxShadow: '15px 15px 30px #000',
+        borderColor: 'transparent',
+    },
+    '&:hover fieldset': {
+        borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+    },
+    '&.Mui-focused fieldset': {
+        borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+    },
+})
 
 export const textOutlineFieldStyle = (theme: Theme, error: boolean = false) => ({
-    width: '100%',
-    borderRadius: '10px',
-    color: theme.palette.secondary.light,
-    '& .MuiFormLabel-root': {
-        color: theme.palette.secondary.light,
-    },
-    '& .MuiOutlinedInput-root': {
-        '& input': {
-            zIndex: 1,
-        },
-        '& fieldset': {
-            borderRadius: '10px',
-            borderColor: theme.palette.background.default,
-        },
-        '&:hover fieldset': {
-            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
-        },
-    },
-    '& .MuiFormHelperText-root': {
-        zIndex: 1,
-        marginLeft: 0,
-    }
-});
+    ...textFieldStyle(theme, error),
+    '& .MuiOutlinedInput-root': textOutlineInputStyle(theme, error),
+})
+
 export const titleFieldStyle = (theme: Theme, error: boolean = false) => ({
-    width: '100%',
-    borderRadius: '10px',
-    color: theme.palette.secondary.light,
-    '& .MuiFormLabel-root': {
-        color: theme.palette.secondary.light,
-    },
-    '& .MuiOutlinedInput-root': {
-        fontSize: '28px',
-        '& input': {
-            zIndex: 1,
-        },
-        '& fieldset': {
-            background: 'transparent',
-            borderRadius: '10px',
-            borderColor: theme.palette.background.default,
-        },
-        '&:hover fieldset': {
-            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
-        },
-    },
-    '& .MuiFormHelperText-root': {
+    ...textFieldStyle(theme, error),
+    '& .MuiOutlinedInput-root': titleInputStyle(theme, error),
+})
+
+export const textOutlineInputStyle = (theme: Theme, error: boolean = false) => ({
+    '& input': {
         zIndex: 1,
-        marginLeft: 0,
-    }
-});
+    },
+    '& fieldset': {
+        borderRadius: '10px',
+        borderColor: theme.palette.background.default,
+    },
+    '&:hover fieldset': {
+        borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+    },
+    '&.Mui-focused fieldset': {
+        borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+    },
+})
+
+export const titleInputStyle = (theme: Theme, error: boolean = false) => ({
+    fontSize: '28px',
+    '& input': {
+        zIndex: 1,
+    },
+    '& fieldset': {
+        background: 'transparent',
+        borderRadius: '10px',
+        borderColor: theme.palette.background.default,
+    },
+    '&:hover fieldset': {
+        borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+    },
+    '&.Mui-focused fieldset': {
+        borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
+    },
+})
 
 export const textTipsFieldStyle = (theme: Theme) => ({
     width: '100%',

@@ -24,28 +24,16 @@ import AddIcon from '@mui/icons-material/Add';
 import TipsModal from '../modules/TipsModal.tsx';
 import CopyToClipboardWrapper from "../modules/CopyToClipboardWrapper.tsx";
 import {littleButtonStyle} from "../style/buttonStyle.ts";
+import {flexBetweenCenter} from "../style/globalStyle.ts";
 
 function TipsBoard() {
     const theme = useTheme()
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const [openModale, setOpenModale] = useState(false);
+    const [openCreateModal, setOpenCreateModal] = useState(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [selectedTip, setSelectedTip] = useState<Tips | undefined>(undefined);
     const lengthPerPage = 14;
-
-    const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
-        setCurrentPage(value);
-    };
-
-    const handleOpenModal = () => {
-        setOpenModale(true);
-    };
-
-    const handleCloseModal = () => {
-        setOpenModale(false);
-    };
 
     const tips = useSelector((state: RootState) => state.tipsReducer.data);
     const totalTips = useSelector((state: RootState) => state.tipsReducer.totalTips);
@@ -75,11 +63,7 @@ function TipsBoard() {
                 {tips.map((oneTips: Tips) => (
                     <Grid item xs={12} sm={6} md={4} key={oneTips.id}>
                         <CopyToClipboardWrapper>
-                            <TipsCard
-                                handleOpenModal={handleOpenModal}
-                                setSelectedTips={setSelectedTip}
-                                oneTips={oneTips}
-                            />
+                            <TipsCard oneTips={oneTips} />
                         </CopyToClipboardWrapper>
                     </Grid>
                 ))}
@@ -89,16 +73,16 @@ function TipsBoard() {
         content = (
             <Alert severity="error">
                 <AlertTitle>Erreur !</AlertTitle>
-                Erreur inattendue — <strong>Réessayez ultérieurement !</strong>
+                Unknown error — <strong>Retry later !</strong>
             </Alert>
         );
     } else {
-        content = <Alert severity="info">Aucun Tips dans votre Tips Board !</Alert>;
+        content = <Alert severity="info">No tips in your Tips board !</Alert>;
     }
 
     return (
         <Container maxWidth="xl">
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 3 }}>
+            <Box sx={{ ...flexBetweenCenter(), my: 3 }}>
                 <Box>
                     <Typography variant={'h1'}>
                         My Tips Board
@@ -108,7 +92,10 @@ function TipsBoard() {
                     </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                    <Button sx={littleButtonStyle(theme)} onClick={handleOpenModal}><AddIcon sx={{fontSize: '2rem'}}/></Button>
+                    <Button sx={littleButtonStyle(theme)} onClick={() => setOpenCreateModal(true)}>
+                        <AddIcon sx={{fontSize: '2rem'}}/>
+                    </Button>
+                    <TipsModal open={openCreateModal} handleClose={() => setOpenCreateModal(false)} />
                 </Box>
             </Box>
 
@@ -122,14 +109,14 @@ function TipsBoard() {
                         content
                     )}
                 </Box>
-                <TipsModal open={openModale} handleClose={handleCloseModal} setSelectedTips={setSelectedTip} tipsToEdit={selectedTip} />
+
                 {totalTips > lengthPerPage && (
                     <Box display="flex" justifyContent="center" mt={4} mb={4}>
                         <Pagination
                             shape="rounded"
                             count={Math.ceil(totalTips / lengthPerPage)}
                             page={currentPage}
-                            onChange={handleChange}
+                            onChange={(_, value) => setCurrentPage(value)}
                         />
                     </Box>
                 )}

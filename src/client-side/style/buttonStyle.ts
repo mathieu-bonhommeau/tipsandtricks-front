@@ -32,6 +32,15 @@ export const iconArrowStyle = (theme: Theme) => ({
         transform: 'scale(1)'
 })
 
+export const iconArrowBackStyle = (theme: Theme) => ({
+    ...iconArrowStyle(theme),
+    transform: 'scale(1) rotate(180deg)',
+    '&:hover': {
+        transform: 'rotate(180deg) scale(1.1)',
+        color: theme.palette.text.primary,
+    }
+})
+
 export const iconStyle = (theme: Theme) => ({
     color: theme.palette.primary.light,
     '&:hover': {

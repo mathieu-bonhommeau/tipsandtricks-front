@@ -4,27 +4,25 @@ import { TipsContent } from './TipsContent.tsx';
 import EditIcon from '@mui/icons-material/Edit';
 import ShareTipsModal from './ShareTipsModal.tsx';
 import ConfirmDeleteTipsModal from './ConfirmDeleteTipsModal.tsx';
-import React from 'react';
+import {useState} from 'react';
 import {formatDateWithTime} from "../../domain/core/utils/format.ts";
 import {tagStyle} from "../style/tagStyle.ts";
 import {iconStyle} from "../style/buttonStyle.ts";
+import {commandStyle} from "../style/tipsStyle.ts";
+import TipsModal from "./TipsModal.tsx";
 
 type TipsCardProps = {
     oneTips: Tips;
     handleCopy?: (command: string) => void;
     textCopied?: boolean;
     failCopied?: boolean;
-    setSelectedTips: React.Dispatch<React.SetStateAction<Tips | undefined>>;
-    handleOpenModal: () => void;
 };
 
 function TipsCard({ oneTips, ...props }: TipsCardProps) {
     const theme = useTheme()
-    const { id, title, command, description, tags } = oneTips;
-    const handleEdit = () => {
-        props.setSelectedTips(oneTips);
-        props.handleOpenModal();
-    };
+    const { title, command, description, tags } = oneTips;
+
+    const [openEditModal, setOpenEditModal] = useState(false);
 
     return (
         <>
@@ -34,18 +32,14 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
                     subheader={formatDateWithTime(oneTips.published_at, 'en')}
                     action={<ShareTipsModal oneTips={oneTips} {...props} />}
                     sx={{
+                        paddingBottom: '0',
                         '& .MuiCardHeader-content .MuiCardHeader-subheader': {
                             fontSize: '0.8rem',
                         },
                     }}
                 />
                 <CardContent>
-                    <Box sx={{
-                        p: 2,
-                        background: theme.palette.secondary.main,
-                        boxShadow: '10px 10px 15px #000',
-                        borderRadius: '10px',
-                    }}>
+                    <Box sx={commandStyle(theme)}>
                         <TipsContent
                             tipsDetails={{
                                 title: title,
@@ -53,6 +47,7 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
                                 description: description,
                                 tags: tags,
                             }}
+                            nbDescriptionLines={1}
                             {...props}
                         />
                     </Box>
@@ -63,12 +58,13 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
                             <Chip label="tag 3" style={tagStyle('tag 3')} />
                         </div>
                         <div>
-                            <IconButton aria-label="edit" onClick={handleEdit}>
+                            <IconButton aria-label="edit" onClick={() => setOpenEditModal(true)}>
                                 <EditIcon sx={iconStyle(theme)}/>
                             </IconButton>
-                            <ConfirmDeleteTipsModal tipsId={id} />
+                            <ConfirmDeleteTipsModal tips={oneTips} />
                         </div>
                     </Box>
+                    <TipsModal open={openEditModal} tipsToEdit={oneTips} handleClose={() => setOpenEditModal(false)} />
                 </CardContent>
             </Card>
         </>

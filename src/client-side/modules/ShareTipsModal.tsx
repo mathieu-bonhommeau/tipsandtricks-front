@@ -4,16 +4,19 @@ import dependencyContainer from '../../_dependencyContainer/dependencyContainer.
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
 import { useState } from 'react';
 import ShareIcon from '@mui/icons-material/Share';
+import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch } from '../utils/dispatch.ts';
 import { useNavigate } from 'react-router-dom';
 import { TipsContent } from './TipsContent.tsx';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
 import {buttonStyle, iconStyle} from "../style/buttonStyle.ts";
 import {TitleTextField} from './components/TitleTextField.tsx';
-import {boxInModalStyle, boxStyle} from "../style/modalStyle.ts";
+import {boxInModalStyle, boxStyle, formInModalStyle} from "../style/modalStyle.ts";
 import {tagStyle} from "../style/tagStyle.ts";
 import TextField from "@mui/material/TextField";
 import {textOutlineFieldStyle} from "../style/textFieldStyle.ts";
+import {flexBetweenCenter} from "../style/globalStyle.ts";
+import {commandStyle} from "../style/tipsStyle.ts";
 
 type ShareTipsModalProps = {
     oneTips: Tips;
@@ -65,73 +68,64 @@ const ShareTipsModal = ({ oneTips }: ShareTipsModalProps) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={boxInModalStyle()}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{
-                        marginBottom: '1rem',
-                    }}>
-                        Share a tips
-                    </Typography>
+                    <Box sx={{ ...flexBetweenCenter(), marginBottom: '20px'}}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Share a tips
+                        </Typography>
+                        <IconButton aria-label="close" onClick={handleCloseShareModal}>
+                            <CloseIcon sx={iconStyle(theme)}/>
+                        </IconButton>
+                    </Box>
                     <form
                         onSubmit={onShareTipsHandler}
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '10px',
-                            flex: '1',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}
                     >
-                        <TitleTextField
-                            label="Titre du tips"
-                            isRequired={true}
-                            title={postTitle}
-                            setTitle={setTitle}
-                        />
-                        <TextField
-                            sx={textOutlineFieldStyle(theme)}
-                            label="Your message ..."
-                            variant="outlined"
-                            required
-                            fullWidth
-                            multiline
-                            rows={3}
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                        />
-                        <Box sx={{
-                            width: '100%',
-                            margin: '10px 0',
-                            p: 2,
-                            background: theme.palette.secondary.main,
-                            boxShadow: '15px 15px 30px #000',
-                            borderRadius: '10px',
-                        }}>
-                            <TipsContent
-                                tipsDetails={{
-                                    title: postTitle,
-                                    command: command,
-                                    description: description,
-                                    tags: tags,
-                                }}
-                                disableCopy={true}
+                        <Box sx={formInModalStyle()}>
+                            <TitleTextField
+                                label="Tips title"
+                                isRequired={true}
+                                title={postTitle}
+                                setTitle={setTitle}
                             />
+                            <TextField
+                                sx={textOutlineFieldStyle(theme)}
+                                label="Your message ..."
+                                variant="outlined"
+                                required
+                                fullWidth
+                                multiline
+                                rows={3}
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            />
+                            <Box sx={{...commandStyle(theme), margin: '10px 0'}}>
+                                <TipsContent
+                                    tipsDetails={{
+                                        title: postTitle,
+                                        command: command,
+                                        description: description,
+                                        tags: tags,
+                                    }}
+                                    disableCopy={true}
+                                />
+                            </Box>
+                            <Box sx={{ width: '100%' }}>
+                                <Chip label="tag 1" style={tagStyle('tag 1')}/>
+                                <Chip label="tag 2" style={tagStyle('tag 2')} />
+                                <Chip label="tag 3" style={tagStyle('tag 3')} />
+                            </Box>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                style={{
+                                    ...buttonStyle(theme),
+                                    width: '100%'
+                                }}
+                                color="primary"
+                            >
+                                Share your tips
+                            </Button>
                         </Box>
-                        <Box sx={{ width: '100%' }}>
-                            <Chip label="tag 1" style={tagStyle('tag 1')}/>
-                            <Chip label="tag 2" style={tagStyle('tag 2')} />
-                            <Chip label="tag 3" style={tagStyle('tag 3')} />
-                        </Box>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            style={{
-                                ...buttonStyle(theme),
-                                width: '100%'
-                        }}
-                            color="primary"
-                        >
-                            Partager votre tips
-                        </Button>
+
                     </form>
                 </Box>
             </Modal>
@@ -141,16 +135,3 @@ const ShareTipsModal = ({ oneTips }: ShareTipsModalProps) => {
 
 export default ShareTipsModal;
 
-/*const boxStyle = {
-    width: '80vw',
-    maxWidth: '400px',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 2,
-    mx: 'auto',
-    my: '20vh',
-    borderRadius: 2,
-};*/

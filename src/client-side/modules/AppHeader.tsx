@@ -8,6 +8,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import {Logo} from "./Logo.tsx";
 import {Link} from "react-router-dom";
 import {MenuItemComponent} from "./components/MenuItem.tsx";
+import {LinkAnimation} from "./animations/LinkAnimation.tsx";
 
 function AppHeader() {
     const user = useSelector((state: RootState) => state.authentication.user);
@@ -37,37 +38,18 @@ function AppHeader() {
                         <MenuItemComponent label="Explore Tips" path={routes.feed} />
                     </Box>
                     {user ? (
-                        <UserMenu username={user.username}/>
+                        <LinkAnimation>
+                            <UserMenu username={user.username}/>
+                        </LinkAnimation>
                     ) : (
                         <Link to={routes.login} style={{
                             textDecoration: 'none',
                             color: 'inherit'
                         }}>
-                            <Box sx={{
-                                width: '250px',
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                                color: theme.palette.text.primary,
-                                position: 'relative',
-                                gap: 1,
-                                alignItems: 'center',
-                                '&:hover .login-line': {
-                                    transform: 'scaleX(0.4)',
-                                }
-                            }}>
+                            <LinkAnimation>
                                 LOGIN
                                 <LoginIcon />
-                                <Box className="login-line" sx={{
-                                    width: '100%',
-                                    borderBottom: '1px solid',
-                                    textAlign: 'right',
-                                    transformOrigin: 'right',
-                                    transform: 'scaleX(0)',
-                                    transition: 'transform 0.2s ease-in-out',
-                                    position: 'absolute',
-                                    bottom: -5,
-                                }}/>
-                            </Box>
+                            </LinkAnimation>
                         </Link>
                     )}
 

@@ -1,4 +1,5 @@
 import {Theme} from "@mui/material";
+import {flexBetweenCenter} from "./globalStyle.ts";
 
 export const boxStyle = (theme: Theme) => ({
     width: '50vw',
@@ -24,4 +25,12 @@ export const boxInModalStyle = () => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+})
+
+export const formInModalStyle = () => ({
+    ...flexBetweenCenter(),
+    height: '100%',
+    flexDirection: 'column',
+    gap: '10px',
+    flex: '1'
 })

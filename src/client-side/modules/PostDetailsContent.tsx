@@ -9,11 +9,14 @@ import { Post } from '../../domain/posts/models/post.model.ts';
 import ConfirmSaveTipsModal from './ConfirmSaveTipsModal.tsx';
 import Reactions from './Reactions.tsx';
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import {iconArrowStyle} from "../style/buttonStyle.ts";
+import {iconArrowBackStyle} from "../style/buttonStyle.ts";
 import {tagStyle} from "../style/tagStyle.ts";
 import {formatDateWithTime} from "../../domain/core/utils/format.ts";
 import {TipsContent} from "./TipsContent.tsx";
 import { HashLink } from 'react-router-hash-link';
+import {commandStyle} from "../style/tipsStyle.ts";
+import {postCardMessageStyle, postDateStyle, postDetailsAvatarStyle, postDetailsBoxStyle} from "../style/postStyle.ts";
+import {flexBetweenCenter} from "../style/globalStyle.ts";
 
 type PostCardProps = {
     post: Post;
@@ -27,29 +30,17 @@ function PostDetailsContent({ post, ...props }: PostCardProps) {
     const { username, title, message } = post;
     return (
         <>
-            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} sx={{
-                width: '100%',
-                borderRadius: '10px',
-                backgroundColor: theme.palette.background.paper,
-                p: 2
-            }}>
+            <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} sx={postDetailsBoxStyle(theme)}>
                 <Box gridColumn="span 6">
                     <Box>
                         <HashLink to={'/flux#post-' + post.id}>
-                            <ArrowRightAltIcon sx={{
-                                ...iconArrowStyle(theme),
-                                transform: 'scale(1) rotate(180deg)',
-                                '&:hover': {
-                                    transform: 'rotate(180deg) scale(1.1)',
-                                    color: theme.palette.text.primary,
-                                }
-                            }} />
+                            <ArrowRightAltIcon sx={iconArrowBackStyle(theme)} />
                         </HashLink>
                     </Box>
                 </Box>
                 <Box gridColumn="span 6">
                     <Typography variant="h3" sx={{ px: 2, display: 'flex', justifyContent: 'flex-end' }} component="div">
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div style={flexBetweenCenter()}>
                             <Chip label="tag 1" style={tagStyle('tag 1')}/>
                             <Chip label="tag 2" style={tagStyle('tag 2')} />
                             <Chip label="tag 3" style={tagStyle('tag 3')} />
@@ -58,20 +49,16 @@ function PostDetailsContent({ post, ...props }: PostCardProps) {
                 </Box>
                 <Box gridColumn="span 1" />
                 <Box gridColumn="span 10" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} >
-                    <Box gridColumn="span 12" sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        borderBottom: '1px solid',
-                        paddingBottom: '15px',
-                        borderColor: theme.palette.primary.light,
-                    }}>
+                    <Box gridColumn="span 12" sx={postDetailsAvatarStyle(theme)}>
                         <Avatar
                             alt={username}
                             sx={{ width: 36, height: 36 }}
                         />
                         <Box>
                             <Typography sx={{ px: 2 }} component="div">{username}</Typography>
-                            <Typography sx={{ px: 2, color: theme.palette.secondary.light, fontSize: '0.8rem'}} component="div">{formatDateWithTime(post.published_at, 'en')}</Typography>
+                            <Typography sx={{ px: 2, ...postDateStyle(theme)}} component="div">
+                                {formatDateWithTime(post.published_at, 'en')}
+                            </Typography>
                         </Box>
                     </Box>
 
@@ -86,24 +73,10 @@ function PostDetailsContent({ post, ...props }: PostCardProps) {
                         </div>
                     </Box>
                     <Box gridColumn="span 12" >
-                        <Typography
-                            style={{
-                                margin: '15px 0 30px 0',
-                                display: '-webkit-box',
-                                WebkitLineClamp: '3',
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden',
-                            }}
-                        >
+                        <Typography sx={{...postCardMessageStyle(), margin: '15px 0 30px 0'}}>
                             {message}
                         </Typography>
-                        <Box sx={{
-                            margin: '10px 0',
-                            p: 2,
-                            background: theme.palette.secondary.main,
-                            boxShadow: '15px 15px 30px #000',
-                            borderRadius: '10px',
-                        }}>
+                        <Box sx={commandStyle(theme)}>
                             <TipsContent
                                 fullContent={true}
                                 tipsDetails={{

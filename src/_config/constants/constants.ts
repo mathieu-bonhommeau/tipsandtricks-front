@@ -13,5 +13,7 @@ export const constants = {
     unknownError: 'Unknown error, please try again later.',
     badCredentials: 'Bad credentials !',
     accountCreateSuccess: 'Your account has been successfully created ! Please log in.',
-    copyTipsToTipsBoard: "Would you want to save this tips ?"
+    copyTipsToTipsBoard: "Would you want to save this tips ?",
+    modalTitleRequired: "Title is required.",
+    modalCommandRequired: "Command is required.",
 }

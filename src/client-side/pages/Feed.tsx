@@ -6,14 +6,16 @@ import { useEffect, useState } from 'react';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { getMorePosts, getPosts } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import { Alert, AlertTitle, Box, Button, CircularProgress, Container, Stack } from '@mui/material';
+import {Alert, AlertTitle, Box, Button, CircularProgress, Container, Stack, useTheme} from '@mui/material';
 import PostCard from '../modules/PostCard.tsx';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import CopyToClipboardWrapper from '../modules/CopyToClipboardWrapper.tsx';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
+import {buttonStyle} from "../style/buttonStyle.ts";
 
 function Feed() {
     const length = 10;
+    const theme = useTheme();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -97,12 +99,12 @@ function Feed() {
                 <Box display="flex" justifyContent="center" mt={4} mb={4}>
                     <Button
                         variant="contained"
-                        sx={{ bgcolor: 'primary.main' }}
+                        sx={buttonStyle(theme)}
                         onClick={() => {
                             handleGetMorePosts();
                         }}
                     >
-                        Voir plus
+                        See more
                     </Button>
                 </Box>
         </Container>
