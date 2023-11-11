@@ -28,7 +28,7 @@ export const ConfirmModal = ({ question, confirmButtonLabel, dataToDisplay, acti
                     <Typography id="modal-modal-description" sx={{ mb: 2 }}>
                         {dataToDisplay}
                     </Typography>
-                    <Box style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+                    <Box style={{ display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
                         <Button variant="contained" sx={littleButtonStyle(theme)} onClick={() => setOpen(false)}>
                             Cancel
                         </Button>
@@ -49,12 +49,11 @@ const styleModal = {
     maxWidth: '400px',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    p: 4,
+    p: {xs: 3, md: 4},
     display: 'flex',
     flexDirection: 'column',
     gap: 2,
     mx: 'auto',
     my: '20vh',
     borderRadius: 2,
-    textAlign: 'center',
 };

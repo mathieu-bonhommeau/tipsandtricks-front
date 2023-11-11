@@ -57,7 +57,7 @@ function Login() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            p: '40px !important'
+            padding: {xs: '15px', md: '40px'},
         }}>
             <form
                 onSubmit={onSubmitHandler}

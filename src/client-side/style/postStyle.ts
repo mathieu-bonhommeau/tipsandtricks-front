@@ -3,7 +3,7 @@ import {Theme} from "@mui/material";
 export const postCardStyle = () => ({
     maxWidth: 1000,
     borderRadius: '10px',
-    px: 2,
+    px: {xs: 1, md: 2},
     py: 1
 })
 
@@ -21,6 +21,7 @@ export const postCardHeaderStyle = (theme: Theme) => ({
 export const postCardTitleStyle = (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     cursor: 'pointer',
     '&:hover .icon-post-title': {
         transform: 'scale(1.1)',
@@ -45,6 +46,7 @@ export const postDetailsBoxStyle = (theme: Theme) => ({
 
 export const postDetailsAvatarStyle = (theme: Theme) => ({
     display: 'flex',
+    gap: {xs: '0px', md: '10px'},
     alignItems: 'center',
     borderBottom: '1px solid',
     paddingBottom: '15px',

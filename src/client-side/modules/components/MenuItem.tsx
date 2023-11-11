@@ -4,14 +4,17 @@ import Box from "@mui/material/Box";
 export type MenuItemProps = {
     label: string,
     path: string,
+    customCss?: { [key: string]: string },
+    closeMenu?: () => void,
 }
 
-export function MenuItemComponent({label, path}: MenuItemProps) {
+export function MenuItemComponent({label, path, customCss = {}, closeMenu = () => {}}: MenuItemProps) {
     return (
-        <Box sx={{
+        <Box onClick={() => closeMenu!()} sx={{
             padding: '10px 20px',
             position: 'relative',
             display: 'inline-block',
+            ...customCss,
             '&:hover .MuiBox-root': {
                 transform: 'scaleX(1)',
             }

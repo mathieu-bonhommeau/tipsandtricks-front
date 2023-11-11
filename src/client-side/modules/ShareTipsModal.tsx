@@ -108,7 +108,13 @@ const ShareTipsModal = ({ oneTips }: ShareTipsModalProps) => {
                                     disableCopy={true}
                                 />
                             </Box>
-                            <Box sx={{ width: '100%' }}>
+                            <Box sx={{
+                                display: 'flex',
+                                gap: '10px',
+                                flexWrap: 'wrap',
+                                py: {xs: 2, md: 2},
+                                width: '100%'
+                            }}>
                                 <Chip label="tag 1" style={tagStyle('tag 1')}/>
                                 <Chip label="tag 2" style={tagStyle('tag 2')} />
                                 <Chip label="tag 3" style={tagStyle('tag 3')} />

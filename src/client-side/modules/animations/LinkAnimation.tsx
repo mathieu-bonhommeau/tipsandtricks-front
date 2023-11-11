@@ -10,7 +10,6 @@ export function LinkAnimation({children}: LinkAnimationProps) {
     const theme = useTheme()
     return (
         <Box sx={{
-            width: '250px',
             display: 'flex',
             justifyContent: 'flex-end',
             color: theme.palette.text.primary,
@@ -18,7 +17,7 @@ export function LinkAnimation({children}: LinkAnimationProps) {
             gap: 1,
             alignItems: 'center',
             '&:hover .login-line': {
-                transform: 'scaleX(0.4)',
+                transform: 'scaleX(1)',
             }
         }}>
             {children}

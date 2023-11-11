@@ -29,12 +29,13 @@ export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy, f
 
     const copy = () => {
         if (textCopied) {
-           return <span style={copyCommandResultStyle(theme)}>{textCopied && 'Copy !'}</span>
+           return <span style={{...copyCommandResultStyle(theme), alignSelf: 'flex-start',}}>{textCopied && 'Copy !'}</span>
         }
         if (failCopied) {
-            return <span style={copyCommandResultStyle(theme, true)}>{failCopied && 'Failed to copy !'}</span>
+            return <span style={{...copyCommandResultStyle(theme, true), alignSelf: 'flex-start',}}>{failCopied && 'Failed to copy !'}</span>
         }
         return (<IconButton onClick={() => handleCopy!(tipsDetails.command)} sx={{
+            alignSelf: 'flex-start',
             '$:hover': {
                 background: 'none',
                 color: theme.palette.text.primary,
@@ -46,11 +47,11 @@ export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy, f
 
     return (
         <>
-            <div style={{
+            <Box sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
             }}>
-                <Box sx={textTipsFieldStyle(theme)}>
+                <Box sx={{...textTipsFieldStyle(theme), display: {xs: 'none', md: 'flex'}}}>
                     <Typography component="div" sx={commandStyle(fullContent)}>
                     <span style={{
                         width: '10%',
@@ -60,7 +61,17 @@ export function TipsContent({ tipsDetails, textCopied, failCopied, handleCopy, f
                     </Typography>
                     {copy()}
                 </Box>
-            </div>
+                <Box sx={{...textTipsFieldStyle(theme), display: {xs: 'flex', md: 'none'}}}>
+                    <Typography component="div" sx={commandStyle(fullContent)}>
+                    <span style={{
+                        width: '10%',
+                        color: '#16B90C',
+                        marginRight: '5px'
+                    }}>$</span> {tipsDetails.command}
+                    </Typography>
+                    {copy()}
+                </Box>
+            </Box>
             <Typography
                 sx={descriptionStyle(fullContent, nbDescriptionLines)}
             >

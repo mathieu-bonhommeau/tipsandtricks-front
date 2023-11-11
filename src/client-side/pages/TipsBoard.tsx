@@ -61,7 +61,7 @@ function TipsBoard() {
         content = (
             <Grid container spacing={4} alignItems="stretch">
                 {tips.map((oneTips: Tips) => (
-                    <Grid item xs={12} sm={6} md={4} key={oneTips.id}>
+                    <Grid item xs={12} md={6} xl={4} key={oneTips.id}>
                         <CopyToClipboardWrapper>
                             <TipsCard oneTips={oneTips} />
                         </CopyToClipboardWrapper>
@@ -99,28 +99,26 @@ function TipsBoard() {
                 </Box>
             </Box>
 
-            <Grid container direction="column">
-                <Box flex="1" display="flex" flexDirection="column">
-                    {loading ? (
-                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <CircularProgress />
-                        </Box>
-                    ) : (
-                        content
-                    )}
-                </Box>
-
-                {totalTips > lengthPerPage && (
-                    <Box display="flex" justifyContent="center" mt={4} mb={4}>
-                        <Pagination
-                            shape="rounded"
-                            count={Math.ceil(totalTips / lengthPerPage)}
-                            page={currentPage}
-                            onChange={(_, value) => setCurrentPage(value)}
-                        />
+            <Box flex="1" display="flex" flexDirection="column">
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <CircularProgress />
                     </Box>
+                ) : (
+                    content
                 )}
-            </Grid>
+            </Box>
+
+            {totalTips > lengthPerPage && (
+                <Box display="flex" justifyContent="center" mt={4} mb={4}>
+                    <Pagination
+                        shape="rounded"
+                        count={Math.ceil(totalTips / lengthPerPage)}
+                        page={currentPage}
+                        onChange={(_, value) => setCurrentPage(value)}
+                    />
+                </Box>
+            )}
         </Container>
     );
 }

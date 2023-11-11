@@ -13,7 +13,12 @@ export const buttonStyle = (theme: Theme) => ({
 
 export const littleButtonStyle = (theme: Theme, unable: boolean = true) => {
     return {
-        minWidth: '75px',
+        minWidth: {xs: 'auto',md: '75px'},
+        display: 'flex',
+        justifyContent: 'center',
+        alignSelf: {xs: 'flex-end'},
+        px: {xs: 1, md: 1},
+        py: {xs: 0.5, md: 1},
         background: unable ? theme.palette.primary.dark : theme.palette.primary.light,
         boxShadow: `3px 3px 10px #000`,
         borderRadius: '5px',

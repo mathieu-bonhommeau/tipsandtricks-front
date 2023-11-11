@@ -6,5 +6,4 @@ export const tagStyle = (tag: string) => ({
     borderColor: tagColors[tag],
     border: '1px solid',
     color: tagColors[tag],
-    margin: '15px',
 })

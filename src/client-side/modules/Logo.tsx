@@ -4,7 +4,11 @@ import {constants} from "../../_config/constants/constants.ts";
 import {WriteAnimation} from "./animations/WriteAnimation.tsx";
 import {Link} from "react-router-dom";
 
-export const Logo = () => {
+export type LogoProps = {
+    customCss?: { [key: string]: { [key: string]: string } },
+}
+
+export const Logo = ({customCss}: LogoProps) => {
     return (
         <Link to={routes.homepage} style={{
             textDecoration: 'none',
@@ -16,12 +20,13 @@ export const Logo = () => {
                 fontWeight='fontWeightMedium'
                 sx={{
                     mr: 2,
-                    display: { xs: 'none', md: 'flex' },
                     fontFamily: 'monospace',
                     fontWeight: 700,
-                    letterSpacing: '.2rem',
+                    fontSize: {xs: '1rem', md: '1.2rem'},
+                    letterSpacing: {xs: '.1rem', md: '.2rem'},
                     color: 'inherit',
                     textDecoration: 'none',
+                    ...customCss
                 }}
             >
                 <WriteAnimation textToWrite={constants.logoText} />

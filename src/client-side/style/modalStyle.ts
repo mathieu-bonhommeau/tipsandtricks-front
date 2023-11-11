@@ -2,10 +2,9 @@ import {Theme} from "@mui/material";
 import {flexBetweenCenter} from "./globalStyle.ts";
 
 export const boxStyle = (theme: Theme) => ({
-    width: '50vw',
-    minWidth: '400px',
+    width: {xs: '90vw', md:'50vw'},
     maxWidth: '800px',
-    height: '600px',
+    height: {xs: 'auto', md: '600px'},
     background: theme.palette.primary.light,
     boxShadow: 24,
     py: 2,
@@ -15,7 +14,7 @@ export const boxStyle = (theme: Theme) => ({
     justifyContent: 'space-between',
     gap: 2,
     mx: 'auto',
-    my: '10vh',
+    my: {xs: '15vh',sm: '10vh'},
     borderRadius: 2,
 });
 

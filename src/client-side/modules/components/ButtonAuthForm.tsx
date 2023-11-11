@@ -12,7 +12,13 @@ export type ButtonAuthFormProps = {
 export function ButtonAuthForm({formType}: ButtonAuthFormProps) {
     const theme = useTheme()
     return (
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: {xs: 'column', md: 'row'},
+            width: '100%',
+            gap: {xs: 2, md: 0},
+            justifyContent: 'space-between'
+        }}>
             <Button
                 type="submit"
                 variant="contained"
@@ -21,12 +27,12 @@ export function ButtonAuthForm({formType}: ButtonAuthFormProps) {
                 {formType === 'login' && "Join us !"}
                 {formType === 'register' && "Log in !"}
             </Button>
-            <Box sx={{ color: theme.palette.secondary.light }}>
+            <Box sx={{ color: {xs: theme.palette.primary.main, md: theme.palette.secondary.light} }}>
                 <Typography component="p">
                     {formType === 'login' && "You already have an account ?"}
                     {formType === 'register' && "You haven't an account ?"}
                 </Typography>
-                <Box sx={{display: 'flex', justifyContent: 'flex-end', cursor: 'pointer'}}>
+                <Box sx={{display: 'flex', justifyContent: {xs: 'flex-start', md: 'flex-end'}, cursor: 'pointer'}}>
                     <Link to={formType === 'register' ? routes.homepage : routes[formType]} style={{
                         textDecoration: 'none',
                         color: 'inherit'

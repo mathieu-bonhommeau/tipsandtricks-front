@@ -21,22 +21,25 @@ function Home({formType}: HomeProps) {
             flexDirection: 'column',
             gap: 3,
             justifyContent: 'center',
-            flex: 1
+            flex: 1,
+            p: {xs: 0, sm: 2},
         }}>
             <Box sx={{
                 display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                flexDirection: {xs: 'column', md: 'row'},
+                justifyContent: {xs: 'flex-start', md: 'space-around'},
+                gap: {xs: 8, md: 0},
                 my: 3,
             }}>
                 <Box sx={{
-                    width: '45%',
+                    width: {xs: '100%', md: '45%'},
+                    px: {xs: 2, md: 0},
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 3
                 }}>
                     <Typography variant="h1" sx={{
-                        fontSize: "48px",
+                        fontSize: {xs: '32px', sm: '36px', md: '48px'},
                         height: '20%'
                     }}>
                         {constants.appName}
@@ -61,7 +64,7 @@ function Home({formType}: HomeProps) {
                 </Box>
                 <Box sx={{
                     display: 'flex',
-                    width: '45%',
+                    width: {xs: '100%', md: '45%'},
                     flexDirection: 'column',
                     gap: 3,
                     justifyContent: 'center',
@@ -70,8 +73,16 @@ function Home({formType}: HomeProps) {
                     }
                 }}>
                     <Box>
-                        {formType == 'register' && <Typography variant="h1" sx={{marginBottom: '20px',}}>Join the community !</Typography>}
-                        {formType == 'login' && <Typography variant="h1" sx={{marginBottom: '20px',}}>Log in !</Typography>}
+                        {formType == 'register' && <Typography variant="h1" sx={{
+                            marginBottom: {xs: '10px', md: '20px'},
+                            px: {xs: 2, md: 0},
+                            fontSize: {xs: '24px', md: '32px'}
+                        }}>Join the community !</Typography>}
+                        {formType == 'login' && <Typography variant="h1" sx={{
+                            marginBottom: {xs: '10px', md: '20px'},
+                            px: {xs: 2, md: 0},
+                            fontSize: {xs: '24px', md: '32px'}
+                        }}>Log in !</Typography>}
                         <Box className="form-title-line" sx={{
                             width: '20%',
                             borderBottom: '1px solid',

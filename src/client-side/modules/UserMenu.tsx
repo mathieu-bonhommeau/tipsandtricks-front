@@ -51,7 +51,7 @@ function UserMenu({ username }: UserMenuProps) {
     };
 
     return (
-        <Box sx={{ flexGrow: 0, width: '250px'}}>
+        <Box sx={{ flexGrow: 0 }}>
             <MenuItem onClick={handleOpenUserMenu} sx={{
                 display: 'flex',
                 justifyContent: 'flex-end',

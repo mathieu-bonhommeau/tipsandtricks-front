@@ -65,7 +65,7 @@ function Feed() {
 
     if (posts.length > 0) {
         content = (
-            <Stack spacing={5}>
+            <Stack spacing={{xs: 3, md: 5}}>
                 {posts.map((onePost: Post) => (
                     <CopyToClipboardWrapper key={onePost.id}>
                         <PostCard post={onePost}/>
@@ -85,7 +85,7 @@ function Feed() {
     }
 
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{p: {xs: 0, sm: 2},}}>
                 <Box flex="1" display="flex" flexDirection="column">
                     {loading ? (
                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>

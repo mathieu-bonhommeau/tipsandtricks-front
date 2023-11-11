@@ -67,7 +67,12 @@ function PostCard({ post, ...props }: PostCardProps) {
                 </Box>
 
                 <Box sx={{ ...flexBetweenCenter(), marginTop: '20px' }}>
-                    <Box>
+                    <Box sx={{
+                        display: 'flex',
+                        gap: '10px',
+                        flexWrap: 'wrap',
+                        paddingTop: {xs: 2, md: 0},
+                    }}>
                         <Chip label="tag 1" style={tagStyle('tag 1')}/>
                         <Chip label="tag 2" style={tagStyle('tag 2')} />
                         <Chip label="tag 3" style={tagStyle('tag 3')} />
