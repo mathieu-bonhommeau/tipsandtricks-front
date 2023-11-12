@@ -5,18 +5,25 @@ const getDesignTokens = (mode: PaletteMode) => {
         return {
             background: {
                 paper: '#F3F4FD',
-                default: '#202CA8',
+                default: '#F4FAFF',
             },
             text: {
-                primary: '#000000',
+                primary: '#030313',
                 secondary: '#4970CC',
             },
             primary: {
-                main: '#4970CC',
-                light: '#ECECF3',
+                main: '#030313',
+                light: '#9BDAE3',
                 dark: '#3853A9',
-                contrastText: '#FFFFFF',
-            }
+                contrastText: '#030313',
+            },
+            secondary: {
+                main: 'linear-gradient(-220deg, #F4FAFF, #E0F7FC, #E0F7FC)',
+                light: '#7F7F7F',
+                lightLess: '#4A4B4D',
+                dark: '#E51A1A',
+                contrastText: '#030313',
+            },
         }
     } else if (mode === 'dark') {
         return {

@@ -38,26 +38,27 @@ export const registrationSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(registerUserAsync.fulfilled, (state: RegistrationState, action: PayloadAction<User | null>) => {
-            state.user = action.payload;
-            state.unknownServerError = false;
-        });
-        builder.addCase(registerUserAsync.rejected, (state: RegistrationState, action: PayloadAction) => {
-            switch (action.error.code) {
-                case 'USERNAME_ALREADY_USED':
-                    state.usernameAlreadyUsedError = true;
-                    state.unknownServerError = false;
-                    break;
-                case 'EMAIL_ALREADY_USED':
-                    state.emailAlreadyUsedError = true;
-                    state.unknownServerError = false;
-                    break;
-                default:
-                    state.usernameAlreadyUsedError = false;
-                    state.emailAlreadyUsedError = false;
-                    state.unknownServerError = true;
-            }
-        });
+        builder
+            .addCase(registerUserAsync.fulfilled, (state: RegistrationState, action) => {
+                state.user = action.payload as User | null;
+                state.unknownServerError = false;
+            })
+            .addCase(registerUserAsync.rejected, (state: RegistrationState, action) => {
+                switch (action.error.code) {
+                    case 'USERNAME_ALREADY_USED':
+                        state.usernameAlreadyUsedError = true;
+                        state.unknownServerError = false;
+                        break;
+                    case 'EMAIL_ALREADY_USED':
+                        state.emailAlreadyUsedError = true;
+                        state.unknownServerError = false;
+                        break;
+                    default:
+                        state.usernameAlreadyUsedError = false;
+                        state.emailAlreadyUsedError = false;
+                        state.unknownServerError = true;
+                }
+            });
     },
 });
 

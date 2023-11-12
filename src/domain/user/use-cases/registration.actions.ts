@@ -6,7 +6,6 @@ import type {} from 'redux-thunk/extend-redux';
 import { RegistrationUserInput } from '../models/registration.model.ts';
 import { handleErrors, Params } from '../../core/handlers/handle.errors.ts';
 import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
-import {User} from "../models/user.model.ts";
 
 export type registerUserParams = {
     userInput: RegistrationUserInput;

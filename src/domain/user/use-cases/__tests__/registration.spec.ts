@@ -153,8 +153,7 @@ describe('When the registration form is submitted', () => {
                 params: userParams,
             }),
         );
-
-        expect(mockNavigate).toHaveBeenCalledWith('/connexion');
+        expect(mockNavigate).toHaveBeenCalledWith('/connexion', { state: { reload: false } });
     });
 
     test('if the response from API says the username is already used, there is a corresponding error', async () => {

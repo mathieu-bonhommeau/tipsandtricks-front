@@ -62,21 +62,23 @@ function AppHeader() {
                         <MenuItemComponent label="Home" path={routes.homepage}/>
                         <MenuItemComponent label="Explore Tips" path={routes.feed}/>
                     </Box>
-                    {user ? (
-                        <LinkAnimation>
-                            <UserMenu username={user.username}/>
-                        </LinkAnimation>
-                    ) : (
-                        <Link to={routes.login} style={{
-                            textDecoration: 'none',
-                            color: 'inherit'
-                        }}>
+                    <Box sx={{width: {xs: 'auto', md: '250px'}}}>
+                        {user ? (
                             <LinkAnimation>
-                                LOGIN
-                                <LoginIcon/>
+                                <UserMenu username={user.username}/>
                             </LinkAnimation>
-                        </Link>
-                    )}
+                        ) : (
+                            <Link to={routes.login} style={{
+                                textDecoration: 'none',
+                                color: 'inherit'
+                            }}>
+                                <LinkAnimation>
+                                    LOGIN
+                                    <LoginIcon/>
+                                </LinkAnimation>
+                            </Link>
+                        )}
+                    </Box>
 
                 </Toolbar>
             </Container>
