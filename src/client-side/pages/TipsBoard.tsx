@@ -15,19 +15,20 @@ import {
     Grid,
     Pagination,
     Typography,
-    useTheme, Button
+    useTheme,
+    Button,
 } from '@mui/material';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
 import { useNavigate } from 'react-router-dom';
 import { resetError } from '../../domain/tips/use-cases/tips.slice.ts';
 import AddIcon from '@mui/icons-material/Add';
 import TipsModal from '../modules/TipsModal.tsx';
-import CopyToClipboardWrapper from "../modules/CopyToClipboardWrapper.tsx";
-import {littleButtonStyle} from "../style/buttonStyle.ts";
-import {flexBetweenCenter} from "../style/globalStyle.ts";
+import CopyToClipboardWrapper from '../modules/CopyToClipboardWrapper.tsx';
+import { littleButtonStyle } from '../style/buttonStyle.ts';
+import { flexBetweenCenter } from '../style/globalStyle.ts';
 
 function TipsBoard() {
-    const theme = useTheme()
+    const theme = useTheme();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -84,16 +85,14 @@ function TipsBoard() {
         <Container maxWidth="xl">
             <Box sx={{ ...flexBetweenCenter(), my: 3 }}>
                 <Box>
-                    <Typography variant={'h1'}>
-                        My Tips Board
-                    </Typography>
-                    <Typography sx={{color: theme.palette.primary.light, my: 1}}>
+                    <Typography variant={'h1'}>My Tips Board</Typography>
+                    <Typography sx={{ color: theme.palette.primary.light, my: 1 }}>
                         {totalTips} tips in your Tips Bank
                     </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
                     <Button sx={littleButtonStyle(theme)} onClick={() => setOpenCreateModal(true)}>
-                        <AddIcon sx={{fontSize: '2rem'}}/>
+                        <AddIcon sx={{ fontSize: '2rem' }} />
                     </Button>
                     <TipsModal open={openCreateModal} handleClose={() => setOpenCreateModal(false)} />
                 </Box>

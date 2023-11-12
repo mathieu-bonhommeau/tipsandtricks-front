@@ -13,7 +13,7 @@ export const authenticationSlice = createSlice({
     name: 'authentication',
     initialState,
     reducers: {
-        resetErrorState: (state:AuthenticationState) => {
+        resetErrorState: (state: AuthenticationState) => {
             state.credentialsError = false;
             state.unknownServerLoginError = false;
         },

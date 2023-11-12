@@ -24,12 +24,12 @@ const getDesignTokens = (mode: PaletteMode) => {
                 dark: '#E51A1A',
                 contrastText: '#030313',
             },
-        }
+        };
     } else if (mode === 'dark') {
         return {
             background: {
                 paper: '#24282C',
-                default: '#111316'
+                default: '#111316',
             },
             text: {
                 primary: '#FFFFFF',
@@ -51,34 +51,34 @@ const getDesignTokens = (mode: PaletteMode) => {
             error: {
                 main: '#E82F21',
             },
-        }
+        };
     }
-}
+};
 
-export const theme = (mode: PaletteMode) => createTheme({
-    palette: getDesignTokens(mode),
-    typography: {
-        fontFamily: 'IBM Plex Sans, sans-serif',
-        fontWeightBold: 700,
-        fontWeightMedium: 600,
-        fontWeightRegular: 400,
-        body1: {
-            fontSize: 16,
-            fontWeight: 400,
-            lineHeight: 1.5,
+export const theme = (mode: PaletteMode) =>
+    createTheme({
+        palette: getDesignTokens(mode),
+        typography: {
+            fontFamily: 'IBM Plex Sans, sans-serif',
+            fontWeightBold: 700,
+            fontWeightMedium: 600,
+            fontWeightRegular: 400,
+            body1: {
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: 1.5,
+            },
+            h1: {
+                fontFamily: 'Roboto mono, sans-serif',
+                fontSize: 32,
+                fontWeight: 700,
+                lineHeight: 1.2,
+            },
         },
-        h1: {
-            fontFamily: 'Roboto mono, sans-serif',
-            fontSize: 32,
-            fontWeight: 700,
-            lineHeight: 1.2,
-        },
-    },
-});
-
+    });
 
 export const tagColors: { [key: string]: string } = {
     'tag 1': '#F6D912',
     'tag 2': '#E74645',
     'tag 3': '#6592FD',
-}
+};

@@ -6,15 +6,9 @@ import { useEffect } from 'react';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { getPost } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import {
-    Alert,
-    AlertTitle,
-    Box,
-    CircularProgress,
-    Container,
-} from '@mui/material';
+import { Alert, AlertTitle, Box, CircularProgress, Container } from '@mui/material';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
-import PostDetailsContent from "../modules/PostDetailsContent.tsx";
+import PostDetailsContent from '../modules/PostDetailsContent.tsx';
 import CopyToClipboardWrapper from '../modules/CopyToClipboardWrapper.tsx';
 
 function PostDetails() {
@@ -47,10 +41,9 @@ function PostDetails() {
 
     if (post) {
         content = (
-            <CopyToClipboardWrapper >
+            <CopyToClipboardWrapper>
                 <PostDetailsContent post={post} />
             </CopyToClipboardWrapper>
-
         );
     } else if (error) {
         content = (

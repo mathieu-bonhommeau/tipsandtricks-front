@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RegistrationState } from '../models/registration.model.ts';
 import { registerUserAsync } from './registration.actions.ts';
-import {User} from "../models/user.model.ts";
+import { User } from '../models/user.model.ts';
 
 const initialState: RegistrationState = {
     user: null,

@@ -1,4 +1,4 @@
-import {Box, IconButton, Typography, useTheme} from '@mui/material';
+import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { ReactionType } from '../../domain/reactions/models/reaction.ts';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
@@ -18,7 +18,7 @@ type ReactionsProps = {
 };
 
 const Reactions = ({ post }: ReactionsProps) => {
-    const theme = useTheme()
+    const theme = useTheme();
     const reactions = useSelector((state: RootState) => state.reactionReducer.reactions);
     const user = useSelector((state: RootState) => state.authentication.user);
     const dispatch = useDispatch();
@@ -84,9 +84,8 @@ const Reactions = ({ post }: ReactionsProps) => {
                         '&:hover': {
                             transform: 'scale(1.2)',
                             color: theme.palette.text.primary,
-                        }
+                        },
                     }}
-
                 >
                     {likeIcon()}
                 </IconButton>
@@ -106,7 +105,7 @@ const Reactions = ({ post }: ReactionsProps) => {
                         '&:hover': {
                             transform: 'scale(1.2)',
                             color: theme.palette.text.primary,
-                        }
+                        },
                     }}
                 >
                     {dislikeIcon()}

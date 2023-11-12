@@ -5,10 +5,9 @@ export const formatDateWithTime = (date: string, locale: string) => {
             month: 'long',
             day: 'numeric',
             hour: '2-digit',
-            minute:'2-digit'
-        })
+            minute: '2-digit',
+        });
     } catch {
-        return date
+        return date;
     }
-
-}
+};

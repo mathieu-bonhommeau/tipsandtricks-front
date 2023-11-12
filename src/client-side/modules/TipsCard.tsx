@@ -5,11 +5,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import ShareTipsModal from './ShareTipsModal.tsx';
 import ConfirmDeleteTipsModal from './ConfirmDeleteTipsModal.tsx';
 import { useState } from 'react';
-import { formatDateWithTime } from "../../domain/core/utils/format.ts";
-import { tagStyle } from "../style/tagStyle.ts";
-import { iconStyle } from "../style/buttonStyle.ts";
-import { commandStyle } from "../style/tipsStyle.ts";
-import TipsModal from "./TipsModal.tsx";
+import { formatDateWithTime } from '../../domain/core/utils/format.ts';
+import { tagStyle } from '../style/tagStyle.ts';
+import { iconStyle } from '../style/buttonStyle.ts';
+import { commandStyle } from '../style/tipsStyle.ts';
+import TipsModal from './TipsModal.tsx';
 
 type TipsCardProps = {
     oneTips: Tips;
@@ -19,7 +19,7 @@ type TipsCardProps = {
 };
 
 function TipsCard({ oneTips, ...props }: TipsCardProps) {
-    const theme = useTheme()
+    const theme = useTheme();
     const { title, command, description, tags } = oneTips;
 
     const [openEditModal, setOpenEditModal] = useState(false);
@@ -51,24 +51,28 @@ function TipsCard({ oneTips, ...props }: TipsCardProps) {
                             {...props}
                         />
                     </Box>
-                    <Box sx={{
-                        pt: 2,
-                        display: 'flex',
-                        flexDirection: { xs: 'column-reverse', sm: 'row' },
-                        alignItems: {xs: 'flex-start',sm: 'center'},
-                        justifyContent: 'space-between',
-                    }}>
-                        <Box sx={{
+                    <Box
+                        sx={{
+                            pt: 2,
                             display: 'flex',
-                            gap: '10px',
-                            flexWrap: 'wrap',
-                            paddingTop: { xs: 2, md: 0 },
-                        }}>
+                            flexDirection: { xs: 'column-reverse', sm: 'row' },
+                            alignItems: { xs: 'flex-start', sm: 'center' },
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                gap: '10px',
+                                flexWrap: 'wrap',
+                                paddingTop: { xs: 2, md: 0 },
+                            }}
+                        >
                             <Chip label="tag 1" style={tagStyle('tag 1')} />
                             <Chip label="tag 2" style={tagStyle('tag 2')} />
                             <Chip label="tag 3" style={tagStyle('tag 3')} />
                         </Box>
-                        <Box sx={{ pt: { xs: 2, md: 0 }, alignSelf: {xs: 'flex-end' }}}>
+                        <Box sx={{ pt: { xs: 2, md: 0 }, alignSelf: { xs: 'flex-end' } }}>
                             <IconButton aria-label="edit" onClick={() => setOpenEditModal(true)}>
                                 <EditIcon sx={iconStyle(theme)} />
                             </IconButton>

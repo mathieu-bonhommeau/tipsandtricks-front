@@ -1,17 +1,24 @@
-import {Box, Button, Modal, Typography, useTheme} from '@mui/material';
-import {littleButtonStyle} from "../../style/buttonStyle.ts";
+import { Box, Button, Modal, Typography, useTheme } from '@mui/material';
+import { littleButtonStyle } from '../../style/buttonStyle.ts';
 
 type ConfirmModalProps = {
     question: string;
-    confirmButtonLabel: string,
+    confirmButtonLabel: string;
     dataToDisplay: string;
     action: () => void;
     open: boolean;
     setOpen: (boolean: boolean) => void;
 };
 
-export const ConfirmModal = ({ question, confirmButtonLabel, dataToDisplay, action, open, setOpen }: ConfirmModalProps) => {
-    const theme = useTheme()
+export const ConfirmModal = ({
+    question,
+    confirmButtonLabel,
+    dataToDisplay,
+    action,
+    open,
+    setOpen,
+}: ConfirmModalProps) => {
+    const theme = useTheme();
 
     return (
         <>
@@ -49,7 +56,7 @@ const styleModal = {
     maxWidth: '400px',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    p: {xs: 3, md: 4},
+    p: { xs: 3, md: 4 },
     display: 'flex',
     flexDirection: 'column',
     gap: 2,

@@ -1,26 +1,26 @@
-import {Box, IconButton, InputAdornment, Popover, TextField, Typography, useTheme} from "@mui/material";
-import {constants} from "../../../_config/constants/constants.ts";
+import { Box, IconButton, InputAdornment, Popover, TextField, Typography, useTheme } from '@mui/material';
+import { constants } from '../../../_config/constants/constants.ts';
 import {
     buttonIconTextFieldStyle,
     dividerInTextFieldStyle,
     iconInTextFieldStyle,
-    textFieldStyle
-} from "../../style/textFieldStyle.ts";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import InfoIcon from "@mui/icons-material/Info";
-import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../domain/store.ts";
-import {checkPasswordValidity} from "../../../domain/user/use-cases/registration.actions.ts";
-import {useAppDispatch} from "../../utils/dispatch.ts";
+    textFieldStyle,
+} from '../../style/textFieldStyle.ts';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import InfoIcon from '@mui/icons-material/Info';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../domain/store.ts';
+import { checkPasswordValidity } from '../../../domain/user/use-cases/registration.actions.ts';
+import { useAppDispatch } from '../../utils/dispatch.ts';
 
 export type PasswordTextFieldProps = {
-    password: string,
-    setPassword: Dispatch<SetStateAction<string>>
-}
+    password: string;
+    setPassword: Dispatch<SetStateAction<string>>;
+};
 
-export function PasswordTextField({password, setPassword}: PasswordTextFieldProps) {
-    const theme = useTheme()
+export function PasswordTextField({ password, setPassword }: PasswordTextFieldProps) {
+    const theme = useTheme();
     const dispatch = useAppDispatch();
     const [viewPassword, setViewPassword] = useState(false);
     const [anchorElPopover, setAnchorElPopover] = useState<(EventTarget & HTMLButtonElement) | null>(null);
@@ -37,7 +37,7 @@ export function PasswordTextField({password, setPassword}: PasswordTextFieldProp
             <TextField
                 label="Password"
                 variant="outlined"
-                type={viewPassword ? "text" : "password"}
+                type={viewPassword ? 'text' : 'password'}
                 error={!isPasswordValid}
                 required
                 value={password}
@@ -56,10 +56,11 @@ export function PasswordTextField({password, setPassword}: PasswordTextFieldProp
                                     <RemoveRedEyeIcon />
                                 </IconButton>
                             </InputAdornment>
-                            <Box sx={dividerInTextFieldStyle(theme)}/>
+                            <Box sx={dividerInTextFieldStyle(theme)} />
                             <InputAdornment position="start" sx={iconInTextFieldStyle(theme)}>
-                                <IconButton sx={buttonIconTextFieldStyle(theme)}
-                                            onClick={(e) => setAnchorElPopover(e.currentTarget)}
+                                <IconButton
+                                    sx={buttonIconTextFieldStyle(theme)}
+                                    onClick={(e) => setAnchorElPopover(e.currentTarget)}
                                 >
                                     <InfoIcon />
                                 </IconButton>
@@ -78,13 +79,13 @@ export function PasswordTextField({password, setPassword}: PasswordTextFieldProp
                 }}
                 sx={{
                     width: '100%',
-                    marginTop: '20px'
+                    marginTop: '20px',
                 }}
             >
-                <Typography sx={{ p: 2, background: theme.palette.primary.light}}>
+                <Typography sx={{ p: 2, background: theme.palette.primary.light }}>
                     {constants.infosRegisterPassword}
                 </Typography>
             </Popover>
         </>
-    )
+    );
 }

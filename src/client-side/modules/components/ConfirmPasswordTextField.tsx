@@ -1,25 +1,25 @@
-import {IconButton, InputAdornment, TextField, useTheme} from "@mui/material";
-import {constants} from "../../../_config/constants/constants.ts";
-import {
-    buttonIconTextFieldStyle,
-    iconInTextFieldStyle,
-    textFieldStyle
-} from "../../style/textFieldStyle.ts";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../domain/store.ts";
-import {checkConfirmationPassword} from "../../../domain/user/use-cases/registration.actions.ts";
-import {useAppDispatch} from "../../utils/dispatch.ts";
+import { IconButton, InputAdornment, TextField, useTheme } from '@mui/material';
+import { constants } from '../../../_config/constants/constants.ts';
+import { buttonIconTextFieldStyle, iconInTextFieldStyle, textFieldStyle } from '../../style/textFieldStyle.ts';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../domain/store.ts';
+import { checkConfirmationPassword } from '../../../domain/user/use-cases/registration.actions.ts';
+import { useAppDispatch } from '../../utils/dispatch.ts';
 
 export type ConfirmPasswordTextFieldProps = {
-    password: string,
-    confirmationPassword: string,
-    setConfirmationPassword: Dispatch<SetStateAction<string>>
-}
+    password: string;
+    confirmationPassword: string;
+    setConfirmationPassword: Dispatch<SetStateAction<string>>;
+};
 
-export function ConfirmPasswordTextField({password, confirmationPassword, setConfirmationPassword}: ConfirmPasswordTextFieldProps) {
-    const theme = useTheme()
+export function ConfirmPasswordTextField({
+    password,
+    confirmationPassword,
+    setConfirmationPassword,
+}: ConfirmPasswordTextFieldProps) {
+    const theme = useTheme();
     const dispatch = useAppDispatch();
     const [viewConfirmPassword, setViewConfirmPassword] = useState(false);
 
@@ -35,7 +35,7 @@ export function ConfirmPasswordTextField({password, confirmationPassword, setCon
             <TextField
                 label="Password confirmation"
                 variant="outlined"
-                type={viewConfirmPassword ? "text" : "password"}
+                type={viewConfirmPassword ? 'text' : 'password'}
                 error={!arePasswordsEqual}
                 required
                 value={confirmationPassword}
@@ -57,5 +57,5 @@ export function ConfirmPasswordTextField({password, confirmationPassword, setCon
                 }}
             />
         </>
-    )
+    );
 }

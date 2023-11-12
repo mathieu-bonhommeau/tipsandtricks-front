@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {emailValidity, passwordsEquality, passwordValidity, usernameValidity} from './registration.slice.ts';
+import { emailValidity, passwordsEquality, passwordValidity, usernameValidity } from './registration.slice.ts';
 import { AppDispatch, RootState } from '../../store.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
@@ -14,7 +14,7 @@ export type registerUserParams = {
 
 const checkEmailValidityRegex = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    return emailRegex.test(email)
+    return emailRegex.test(email);
 };
 
 const checkPasswordsEquality = (password: string, confirmationPassword: string) => {
@@ -106,14 +106,14 @@ export function registerUser({ params, userInput }: registerUserParams) {
 export const registerUserAsync = createAsyncThunk(
     'registration/registerUser',
     async ({ params, userInput }: registerUserParams, { dispatch }) => {
-        return (await handleErrors(
+        return await handleErrors(
             async () => {
                 const user = await (params.gatewayInterface as UserGatewayInterface).registerUser(userInput);
-                params.navigate!('/connexion', {state: {reload: false}});
-                return user
+                params.navigate!('/connexion', { state: { reload: false } });
+                return user;
             },
             params,
             dispatch,
-        ));
+        );
     },
 );

@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { getMorePosts, getPosts } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import {Alert, AlertTitle, Box, Button, CircularProgress, Container, Stack, useTheme} from '@mui/material';
+import { Alert, AlertTitle, Box, Button, CircularProgress, Container, Stack, useTheme } from '@mui/material';
 import PostCard from '../modules/PostCard.tsx';
 import { Post } from '../../domain/posts/models/post.model.ts';
 import CopyToClipboardWrapper from '../modules/CopyToClipboardWrapper.tsx';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
-import {buttonStyle} from "../style/buttonStyle.ts";
+import { buttonStyle } from '../style/buttonStyle.ts';
 
 function Feed() {
     const length = 10;
@@ -65,10 +65,10 @@ function Feed() {
 
     if (posts.length > 0) {
         content = (
-            <Stack spacing={{xs: 3, md: 5}}>
+            <Stack spacing={{ xs: 3, md: 5 }}>
                 {posts.map((onePost: Post) => (
                     <CopyToClipboardWrapper key={onePost.id}>
-                        <PostCard post={onePost}/>
+                        <PostCard post={onePost} />
                     </CopyToClipboardWrapper>
                 ))}
             </Stack>
@@ -85,28 +85,28 @@ function Feed() {
     }
 
     return (
-        <Container maxWidth="md" sx={{p: {xs: 0, sm: 2},}}>
-                <Box flex="1" display="flex" flexDirection="column">
-                    {loading ? (
-                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <CircularProgress />
-                        </Box>
-                    ) : (
-                        content
-                    )}
-                </Box>
+        <Container maxWidth="md" sx={{ p: { xs: 0, sm: 2 } }}>
+            <Box flex="1" display="flex" flexDirection="column">
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <CircularProgress />
+                    </Box>
+                ) : (
+                    content
+                )}
+            </Box>
 
-                <Box display="flex" justifyContent="center" mt={4} mb={4}>
-                    <Button
-                        variant="contained"
-                        sx={buttonStyle(theme)}
-                        onClick={() => {
-                            handleGetMorePosts();
-                        }}
-                    >
-                        See more
-                    </Button>
-                </Box>
+            <Box display="flex" justifyContent="center" mt={4} mb={4}>
+                <Button
+                    variant="contained"
+                    sx={buttonStyle(theme)}
+                    onClick={() => {
+                        handleGetMorePosts();
+                    }}
+                >
+                    See more
+                </Button>
+            </Box>
         </Container>
     );
 }

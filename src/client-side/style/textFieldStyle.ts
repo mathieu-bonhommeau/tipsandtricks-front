@@ -1,4 +1,4 @@
-import {Theme} from "@mui/material";
+import { Theme } from '@mui/material';
 
 export const textFieldStyle = (theme: Theme, error: boolean = false) => ({
     width: '100%',
@@ -12,7 +12,7 @@ export const textFieldStyle = (theme: Theme, error: boolean = false) => ({
         marginLeft: 0,
     },
     '& .MuiOutlinedInput-root': textInputStyle(theme, error),
-})
+});
 
 export const textInputStyle = (theme: Theme, error: boolean = false) => ({
     '& input': {
@@ -30,17 +30,17 @@ export const textInputStyle = (theme: Theme, error: boolean = false) => ({
     '&.Mui-focused fieldset': {
         borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
     },
-})
+});
 
 export const textOutlineFieldStyle = (theme: Theme, error: boolean = false) => ({
     ...textFieldStyle(theme, error),
     '& .MuiOutlinedInput-root': textOutlineInputStyle(theme, error),
-})
+});
 
 export const titleFieldStyle = (theme: Theme, error: boolean = false) => ({
     ...textFieldStyle(theme, error),
     '& .MuiOutlinedInput-root': titleInputStyle(theme, error),
-})
+});
 
 export const textOutlineInputStyle = (theme: Theme, error: boolean = false) => ({
     '& input': {
@@ -56,7 +56,7 @@ export const textOutlineInputStyle = (theme: Theme, error: boolean = false) => (
     '&.Mui-focused fieldset': {
         borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
     },
-})
+});
 
 export const titleInputStyle = (theme: Theme, error: boolean = false) => ({
     fontSize: '28px',
@@ -74,7 +74,7 @@ export const titleInputStyle = (theme: Theme, error: boolean = false) => ({
     '&.Mui-focused fieldset': {
         borderColor: error ? theme.palette.error.main : theme.palette.primary.main,
     },
-})
+});
 
 export const textTipsFieldStyle = (theme: Theme) => ({
     width: '100%',
@@ -97,14 +97,14 @@ export const textTipsFieldStyle = (theme: Theme) => ({
         '&:hover': {
             color: theme.palette.text.primary,
             transform: 'scale(1.2)',
-        }
+        },
     },
 });
 
 export const copyCommandResultStyle = (theme: Theme, error: boolean = false) => ({
     fontSize: '12px',
     color: error ? theme.palette.primary.dark : theme.palette.text.primary,
-})
+});
 
 export const iconInTextFieldStyle = (theme: Theme) => ({
     zIndex: 1,
@@ -113,9 +113,9 @@ export const iconInTextFieldStyle = (theme: Theme) => ({
     height: '20px',
     '& .MuiIconButton-root': {
         padding: '0px',
-        color: 'inherit'
+        color: 'inherit',
     },
-})
+});
 
 export const dividerInTextFieldStyle = (theme: Theme) => ({
     height: '35px',
@@ -123,10 +123,10 @@ export const dividerInTextFieldStyle = (theme: Theme) => ({
     margin: '0 12px',
     backgroundColor: theme.palette.primary.light,
     width: '1px',
-})
+});
 
 export const buttonIconTextFieldStyle = (theme: Theme) => ({
     '&:hover': {
         color: theme.palette.text.primary,
     },
-})
+});

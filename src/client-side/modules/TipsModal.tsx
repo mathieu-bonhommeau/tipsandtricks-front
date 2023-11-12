@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import { FC, useEffect, useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,21 +8,21 @@ import { createTips, updateTips } from '../../domain/tips/use-cases/tips.actions
 import dependencyContainer from '../../_config/dependencies/dependencies.ts';
 import { TipsGatewayInterface } from '../../domain/tips/port/tips-gateway.interface.ts';
 import { Tips } from '../../domain/tips/models/tips.model.ts';
-import {boxInModalStyle, boxStyle} from "../style/modalStyle.ts";
-import {IconButton, Typography, useTheme} from "@mui/material";
-import {buttonStyle, iconStyle} from "../style/buttonStyle.ts";
-import CloseIcon from "@mui/icons-material/Close";
-import {flexBetweenCenter} from "../style/globalStyle.ts";
-import {constants} from "../../_config/constants/constants.ts";
-import {textOutlineFieldStyle, titleFieldStyle} from "../style/textFieldStyle.ts";
+import { boxInModalStyle, boxStyle } from '../style/modalStyle.ts';
+import { IconButton, Typography, useTheme } from '@mui/material';
+import { buttonStyle, iconStyle } from '../style/buttonStyle.ts';
+import CloseIcon from '@mui/icons-material/Close';
+import { flexBetweenCenter } from '../style/globalStyle.ts';
+import { constants } from '../../_config/constants/constants.ts';
+import { textOutlineFieldStyle, titleFieldStyle } from '../style/textFieldStyle.ts';
 
 interface Props {
     open: boolean;
     handleClose: () => void;
     tipsToEdit?: Tips;
 }
-const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit}) => {
-    const theme = useTheme()
+const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit }) => {
+    const theme = useTheme();
     const dispatch = useAppDispatch();
 
     const [title, setTitle] = useState<string>('');
@@ -37,14 +37,14 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit}) => {
             setCommand(tipsToEdit.command || '');
             setDescription(tipsToEdit.description || '');
         }
-    }, [tipsToEdit])
+    }, [tipsToEdit]);
 
     const onCloseModal = () => {
         setTitle('');
         setCommand('');
         setDescription('');
         handleClose();
-    }
+    };
 
     console.log(tipsToEdit);
 
@@ -96,17 +96,20 @@ const TipsModal: FC<Props> = ({ open, handleClose, tipsToEdit}) => {
     };
 
     const body = (
-        <Box
-            sx={boxInModalStyle()}
-        >
-            <Box sx={{ ...flexBetweenCenter()}}>
-                <Typography id="modal-modal-title" variant="h6" component="h2" sx={{
-                    marginBottom: '1rem',
-                }}>
+        <Box sx={boxInModalStyle()}>
+            <Box sx={{ ...flexBetweenCenter() }}>
+                <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                    sx={{
+                        marginBottom: '1rem',
+                    }}
+                >
                     {tipsToEdit ? 'Update a Tips' : 'Add a Tips'}
                 </Typography>
                 <IconButton aria-label="close" onClick={handleClose}>
-                    <CloseIcon sx={iconStyle(theme)}/>
+                    <CloseIcon sx={iconStyle(theme)} />
                 </IconButton>
             </Box>
             <TextField
