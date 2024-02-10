@@ -1,5 +1,4 @@
-name: Push-to-EC2
-
+name: Deploy
 # Trigger deployment only on push to master branch
 on:
     push:
@@ -12,7 +11,7 @@ permissions:
 
 jobs:
     deploy:
-        name: Deploy to EC2 on push on main branch
+        name: Deploy on server push on main branch
         runs-on: ubuntu-latest
 
         steps:
@@ -24,26 +23,27 @@ jobs:
               with:
                   node-version: '18.13'
 
-            - name: Deploy on AWS EC2
+            - name: Deploy
               uses: easingthemes/ssh-deploy@main
               with:
-                  SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
                   REMOTE_HOST: ${{ secrets.HOST_DNS }}
                   REMOTE_USER: ${{ secrets.USERNAME }}
                   TARGET: ${{ secrets.TARGET }}
 
             - name: Build and Run
               env:
-                  SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
                   HOST_DNS: ${{ secrets.HOST_DNS }}
                   USERNAME: ${{ secrets.USERNAME }}
                   NODE_PORT: ${{ secrets.NODE_PORT }}
               run: |
                   echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
                   ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST_DNS} '
-                      source /home/ubuntu/.profile &&
-                      cd tipsandtricks-webapp &&
-                      export NVM_DIR=/home/ubuntu/.nvm &&
-                      source /home/ubuntu/.nvm/nvm.sh &&
-                      npm install && npm run build && npm run restart-prod
+                      source /home/${USERNAME}/.profile &&
+                      cd /www/tipsandtricks/webapp &&
+                      export NVM_DIR=/home/${USERNAME}/.nvm &&
+                      source /home/${USERNAME}/.nvm/nvm.sh &&
+                      npm install && npm run build &&
+                      npm run restart-prod
                   '
