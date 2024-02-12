@@ -6,12 +6,10 @@ import { useEffect } from 'react';
 import dependencyContainer from '../../_dependencyContainer/dependencyContainer.ts';
 import { getPost } from '../../domain/posts/use-cases/post.actions.ts';
 import { PostGatewayInterface } from '../../domain/posts/port/post-gateway-interface.ts';
-import { Alert, AlertTitle, Box, CircularProgress, Container, Grid, IconButton, Stack } from '@mui/material';
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-
-import CardWrapper from '../components/CardWrapper.tsx';
+import { Alert, AlertTitle, Box, CircularProgress, Container } from '@mui/material';
 import { resetError } from '../../domain/posts/use-cases/post.slice.ts';
-import PostCardDetails from '../components/PostCardDetails.tsx';
+import PostDetailsContent from '../modules/PostDetailsContent.tsx';
+import CopyToClipboardWrapper from '../modules/CopyToClipboardWrapper.tsx';
 
 function PostDetails() {
     const dispatch = useAppDispatch();
@@ -43,22 +41,9 @@ function PostDetails() {
 
     if (post) {
         content = (
-            <Stack spacing={2} sx={{ flexDirection: 'row' }}>
-                <Box style={{ marginRight: '25px' }}>
-                    <IconButton
-                        aria-label="share"
-                        onClick={() => {
-                            return navigate('/flux/');
-                        }}
-                    >
-                        <ArrowBackRoundedIcon sx={{ scale: '1.8' }} />
-                    </IconButton>
-                </Box>
-
-                <CardWrapper>
-                    <PostCardDetails post={post} />
-                </CardWrapper>
-            </Stack>
+            <CopyToClipboardWrapper>
+                <PostDetailsContent post={post} />
+            </CopyToClipboardWrapper>
         );
     } else if (error) {
         content = (
@@ -72,18 +57,14 @@ function PostDetails() {
     }
 
     return (
-        <Container maxWidth="md">
-            <Grid container direction="column">
-                <Box flex="1" display="flex" flexDirection="column">
-                    {loading ? (
-                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <CircularProgress />
-                        </Box>
-                    ) : (
-                        content
-                    )}
+        <Container maxWidth="xl">
+            {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
                 </Box>
-            </Grid>
+            ) : (
+                content
+            )}
         </Container>
     );
 }

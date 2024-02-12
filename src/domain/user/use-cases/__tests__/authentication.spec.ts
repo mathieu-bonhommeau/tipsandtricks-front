@@ -107,7 +107,7 @@ describe('Logout : when a connected user wants to disconnect', () => {
         );
 
         expect(store.getState().authentication.user).toEqual(null);
-        expect(mockNavigate).toHaveBeenCalledWith('/');
+        expect(mockNavigate).toHaveBeenCalledWith('/connexion', { state: { reload: false } });
     });
 
     test('if the API request fails, his data are not lost and he is not redirected toward homepage', async () => {

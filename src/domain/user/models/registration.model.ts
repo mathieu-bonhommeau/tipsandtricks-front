@@ -2,6 +2,7 @@ import { User } from './user.model.ts';
 
 export interface RegistrationState {
     user: User | null;
+    emailValidity: boolean;
     passwordValidity: boolean;
     passwordsEquality: boolean;
     usernameValidity: boolean;

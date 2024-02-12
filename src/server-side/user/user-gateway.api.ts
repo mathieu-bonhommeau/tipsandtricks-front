@@ -34,8 +34,8 @@ export class UserGatewayApi implements UserGatewayInterface {
         } catch (error: unknown) {
             if (error instanceof AxiosError) {
                 const errorData = error.response?.data;
-                if (errorData.code === 'EMAIL_ALREADY_EXIST_ERROR') throw new EmailAlreadyUsedError();
-                if (errorData.code === 'USERNAME_ALREADY_EXIST_ERROR') throw new UsernameAlreadyUsedError();
+                if (errorData?.code === 'EMAIL_ALREADY_EXIST_ERROR') throw new EmailAlreadyUsedError();
+                if (errorData?.code === 'USERNAME_ALREADY_EXIST_ERROR') throw new UsernameAlreadyUsedError();
                 throw new RegisterError();
             }
             throw new Error('UNKNOWN_ERROR');

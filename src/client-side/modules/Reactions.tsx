@@ -1,5 +1,4 @@
-import { Box, IconButton, Typography } from '@mui/material';
-import { theme } from '../theme.ts';
+import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { ReactionType } from '../../domain/reactions/models/reaction.ts';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
@@ -19,6 +18,7 @@ type ReactionsProps = {
 };
 
 const Reactions = ({ post }: ReactionsProps) => {
+    const theme = useTheme();
     const reactions = useSelector((state: RootState) => state.reactionReducer.reactions);
     const user = useSelector((state: RootState) => state.authentication.user);
     const dispatch = useDispatch();
@@ -69,7 +69,7 @@ const Reactions = ({ post }: ReactionsProps) => {
                 flexDirection: 'row',
                 justifyContent: 'flex-end',
                 gap: 3,
-                color: theme.palette.primary.main,
+                color: '#fff',
             }}
         >
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
@@ -77,7 +77,15 @@ const Reactions = ({ post }: ReactionsProps) => {
                     aria-label="share"
                     onClick={() => handleReaction(ReactionType.like)}
                     disabled={!user}
-                    sx={{ color: 'inherit' }}
+                    sx={{
+                        color: 'inherit',
+                        transition: 'transform 0.2s ease-in-out',
+                        transform: 'scale(1)',
+                        '&:hover': {
+                            transform: 'scale(1.2)',
+                            color: theme.palette.text.primary,
+                        },
+                    }}
                 >
                     {likeIcon()}
                 </IconButton>
@@ -90,7 +98,15 @@ const Reactions = ({ post }: ReactionsProps) => {
                     aria-label="share"
                     onClick={() => handleReaction(ReactionType.dislike)}
                     disabled={!user}
-                    sx={{ color: 'inherit' }}
+                    sx={{
+                        color: 'inherit',
+                        transition: 'transform 0.2s ease-in-out',
+                        transform: 'scale(1)',
+                        '&:hover': {
+                            transform: 'scale(1.2)',
+                            color: theme.palette.text.primary,
+                        },
+                    }}
                 >
                     {dislikeIcon()}
                 </IconButton>

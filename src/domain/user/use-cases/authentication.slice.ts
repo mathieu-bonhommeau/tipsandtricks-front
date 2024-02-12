@@ -13,19 +13,19 @@ export const authenticationSlice = createSlice({
     name: 'authentication',
     initialState,
     reducers: {
-        resetErrorState: (state) => {
+        resetErrorState: (state: AuthenticationState) => {
             state.credentialsError = false;
             state.unknownServerLoginError = false;
         },
-        deconnectUser: (state) => {
+        deconnectUser: (state: AuthenticationState) => {
             state.user = null;
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(loginUser.fulfilled, (state, action) => {
+        builder.addCase(loginUser.fulfilled, (state: AuthenticationState, action) => {
             state.user = action.payload;
         });
-        builder.addCase(loginUser.rejected, (state, action) => {
+        builder.addCase(loginUser.rejected, (state: AuthenticationState, action) => {
             switch (action.error.code) {
                 case 'WRONG_CREDENTIALS_ERROR':
                     state.unknownServerLoginError = false;
@@ -36,10 +36,10 @@ export const authenticationSlice = createSlice({
                     state.credentialsError = false;
             }
         });
-        builder.addCase(logoutUser.fulfilled, (state) => {
+        builder.addCase(logoutUser.fulfilled, (state: AuthenticationState) => {
             state.user = null;
         });
-        builder.addCase(reconnectUser.fulfilled, (state, action) => {
+        builder.addCase(reconnectUser.fulfilled, (state: AuthenticationState, action) => {
             state.user = action.payload;
             state.isReconnecting = false;
         });

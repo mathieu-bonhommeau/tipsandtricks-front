@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { passwordsEquality, passwordValidity, usernameValidity } from './registration.slice.ts';
+import { emailValidity, passwordsEquality, passwordValidity, usernameValidity } from './registration.slice.ts';
 import { AppDispatch, RootState } from '../../store.ts';
-import { User } from '../models/user.model.ts';
 // Empty type-import to clue TS into redux toolkit action type
 import type {} from 'redux-thunk/extend-redux';
 import { RegistrationUserInput } from '../models/registration.model.ts';
@@ -11,6 +10,11 @@ import { UserGatewayInterface } from '../port/user-gateway.interface.ts';
 export type registerUserParams = {
     userInput: RegistrationUserInput;
     params: Params;
+};
+
+const checkEmailValidityRegex = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    return emailRegex.test(email);
 };
 
 const checkPasswordsEquality = (password: string, confirmationPassword: string) => {
@@ -25,6 +29,18 @@ export const checkPasswordRegex = (password: string): boolean => {
 const checkUsernameLength = (username: string) => {
     return username.length >= 2;
 };
+
+export function checkEmailValidity(email: string) {
+    return function checkEmailValidityThunk(dispatch: AppDispatch) {
+        const isEmailValid = checkEmailValidityRegex(email);
+
+        if (!isEmailValid) {
+            dispatch(emailValidity(false));
+        } else {
+            dispatch(emailValidity(true));
+        }
+    };
+}
 
 export function checkUsernameValidity(username: string) {
     return function checkUsernameValidityThunk(dispatch: AppDispatch) {
@@ -62,9 +78,10 @@ export function checkConfirmationPassword(password: string, confirmationPassword
 
 export function registerUser({ params, userInput }: registerUserParams) {
     return async function registerUserThunk(dispatch: AppDispatch, getState: RootState) {
-        const { username, password, confirmationPassword } = userInput;
+        const { email, username, password, confirmationPassword } = userInput;
 
         dispatch(checkPasswordValidity(password));
+        dispatch(checkEmailValidity(email));
         dispatch(checkConfirmationPassword(password, confirmationPassword));
         dispatch(checkUsernameValidity(username));
 
@@ -73,6 +90,7 @@ export function registerUser({ params, userInput }: registerUserParams) {
         if (
             state.registration.usernameValidity &&
             state.registration.passwordValidity &&
+            state.registration.emailValidity &&
             state.registration.passwordsEquality
         ) {
             await dispatch(
@@ -87,15 +105,15 @@ export function registerUser({ params, userInput }: registerUserParams) {
 
 export const registerUserAsync = createAsyncThunk(
     'registration/registerUser',
-    async ({ params, userInput }: registerUserParams, { dispatch }): Promise<User | null> => {
-        return (await handleErrors(
+    async ({ params, userInput }: registerUserParams, { dispatch }) => {
+        return await handleErrors(
             async () => {
-                const result = await (params.gatewayInterface as UserGatewayInterface).registerUser(userInput);
-                params.navigate!('/connexion');
-                return result;
+                const user = await (params.gatewayInterface as UserGatewayInterface).registerUser(userInput);
+                params.navigate!('/connexion', { state: { reload: false } });
+                return user;
             },
             params,
             dispatch,
-        )) as User | null;
+        );
     },
 );
