@@ -23,6 +23,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN pwd && ls -la
+
 CMD npm install && npm run build && npm run start-prod
 
 
