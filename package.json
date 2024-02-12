@@ -8,8 +8,7 @@
     "build": "tsc && vite build",
     "pretty-lint": "prettier src --check --write && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "start": "vite preview",
-    "start-prod": "pm2 start --name webapp npm -- start",
-    "restart-prod": "pm2 restart webapp",
+    "start-prod": "serve -s dist -l 3000",
     "test": "vitest"
   },
   "dependencies": {
