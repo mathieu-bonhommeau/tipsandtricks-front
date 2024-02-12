@@ -20,8 +20,9 @@ RUN npm install -g serve
 EXPOSE 3000
 
 WORKDIR /app
+RUN pwd && ls -la
 
-COPY . .
+COPY ../../. .
 
 RUN pwd && ls -la
 
