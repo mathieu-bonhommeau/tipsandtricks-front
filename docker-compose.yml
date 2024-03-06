@@ -4,7 +4,7 @@ services:
     webapp:
         build:
             context: .
-            dockerfile: docker/webapp/Dockerfile
+            dockerfile: docker/webapp/dev.dockerfile
 
         container_name: "webapp_react"
         ports:
