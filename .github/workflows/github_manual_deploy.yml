@@ -1,4 +1,4 @@
-name: Manual Deploy
+name: Deploy
 # Trigger deployment only on push to master branch
 on:
     workflow_dispatch:
