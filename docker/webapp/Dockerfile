@@ -15,7 +15,7 @@ RUN . $NVM_DIR/nvm.sh && \
     nvm install $NODE_VERSION && \
     nvm alias default $NODE_VERSION
 
-RUN npm install -g serve
+# RUN npm install -g serve
 
 EXPOSE 3000
 
@@ -26,6 +26,6 @@ COPY ../../. .
 
 RUN pwd && ls -la
 
-CMD npm install && npm run build && npm run start-prod
+CMD npm install && npm run build && npm run dev
 
 
