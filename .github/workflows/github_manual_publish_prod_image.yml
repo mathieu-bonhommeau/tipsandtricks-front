@@ -51,7 +51,7 @@ jobs:
                     context: .
                     file: ./docker/webapp/prod.dockerfile
                     push: true
-                    tags: ${{ steps.meta.outputs.tags }}
+                    tags: ${{ production }}:${{ steps.meta.outputs.tags }}
                     labels: ${{ steps.meta.outputs.labels }}
 
 ## Ajouter les jobs pour la prod - création d'image pour la prod avec un dev.dockerfile different ou adapté
