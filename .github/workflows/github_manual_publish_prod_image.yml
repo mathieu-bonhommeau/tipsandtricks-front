@@ -1,5 +1,5 @@
 #
-name: Manual Create and publish a Docker image
+name: Publish production image
 
 on:
     workflow_dispatch:
