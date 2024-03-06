@@ -2,7 +2,8 @@ name: Deploy
 # Trigger deployment only on push to master branch
 on:
     workflow_dispatch:
-        branches: [ main ]
+        branches:
+            - main
         inputs:
             logLevel:
                 description: 'Log level'
