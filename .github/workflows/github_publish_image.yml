@@ -54,4 +54,4 @@ jobs:
                     tags: ${{ steps.meta.outputs.tags }}
                     labels: ${{ steps.meta.outputs.labels }}
 
-## Ajouter les jobs pour la prod - création d'image pour la prod avec un dev.dockerfile different ou adapté
+## Ajouter les jobs pour la prod - création d'image pour la prod avec un prod.dockerfile different ou adapté
